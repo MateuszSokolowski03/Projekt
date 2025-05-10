@@ -42,8 +42,13 @@
                     <i class="ri-user-line text-primary ri-lg"></i>
                 </div>
                 <div>
+                    {% if user.is_authenticated %}
+                    <h3 class="font-medium text-gray-800">{{ user.username }}</h3>
+                    <p class="text-xs text-gray-500">Organizator</p>
+                    {% else %}
                     <h3 class="font-medium text-gray-800">Gość</h3>
                     <p class="text-xs text-gray-500">Guest</p>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -129,6 +134,19 @@
                 </ul>
             </div>
         </nav>
+        {% if user.is_authenticated %}
+        <div class="absolute bottom-0 left-0 w-full px-4 py-2">
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="sidebar-link flex items-center px-2 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                    <div class="w-8 h-8 flex items-center justify-center">
+                        <i class="ri-logout-box-line ri-lg"></i>
+                    </div>
+                    <span>Wyloguj się</span>
+                </button>
+            </form>
+        </div>
+        {% endif %}
     </aside>
     <!-- Main Content -->
     <main class="flex-1 md:ml-64 min-h-screen pt-16">

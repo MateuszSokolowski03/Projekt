@@ -5,6 +5,7 @@ from .forms import TeamForm, PlayerForm, LeagueForm, RoundForm, MatchForm, Match
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
 
 def index(request):
     return render(request, 'base.html')
@@ -107,6 +108,7 @@ def register_view(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
+            messages.success(request, 'Konto zostało pomyślnie utworzone!')
             return redirect('team_list')
     else:
         form = UserCreationForm()

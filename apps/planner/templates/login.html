@@ -8,10 +8,37 @@
         <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Logowanie</h1>
         <form method="post" class="space-y-4">
             {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="w-full bg-primary text-white py-2 rounded-md shadow hover:bg-primary/90">Zaloguj się</button>
+            
+            <div class="space-y-2">
+                <label for="id_username" class="block text-sm font-medium text-gray-700">Nazwa użytkownika lub Email:</label>
+                <input type="text" name="username" id="id_username" required 
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
+                              focus:outline-none focus:ring-primary focus:border-primary">
+            </div>
+            
+            <div class="space-y-2">
+                <label for="id_password" class="block text-sm font-medium text-gray-700">Hasło:</label>
+                <input type="password" name="password" id="id_password" required 
+                       class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm 
+                              focus:outline-none focus:ring-primary focus:border-primary">
+                <a href="{% url 'password_reset' %}" class="text-xs text-primary hover:underline">Zapomniałeś hasła?</a>
+            </div>
+            
+            <button type="submit" class="w-full bg-primary text-white py-2 rounded-md shadow hover:bg-primary/90 transition-colors">
+                Zaloguj się
+            </button>
+            
+            {% if form.errors %}
+            <div class="p-3 mt-4 text-sm text-red-700 bg-red-100 rounded-lg">
+                Nieprawidłowa nazwa użytkownika lub hasło. Spróbuj ponownie.
+            </div>
+            {% endif %}
         </form>
-        <p class="text-sm text-center text-gray-500 mt-4">Nie masz konta? <a href="{% url 'register' %}" class="text-primary hover:underline">Zarejestruj się</a></p>
+        
+        <p class="text-sm text-center text-gray-500 mt-4">
+            Nie masz konta? 
+            <a href="{% url 'register' %}" class="text-primary hover:underline">Zarejestruj się</a>
+        </p>
     </div>
 </div>
 {% endblock %}
