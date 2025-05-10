@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth.views import LogoutView
 from apps.planner import views
+from apps.planner.views import register_view, login_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,4 +37,7 @@ urlpatterns = [
     path('team-rankings/', views.team_ranking_list, name='team_ranking_list'),
     path('events/', views.event_list, name='event_list'),
     path('events/add/', views.add_event, name='add_event'),
+    path('register/', register_view, name='register'),
+    path('login/', login_view, name='login'),
+    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
 ]
