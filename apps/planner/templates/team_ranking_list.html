@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Ranking Drużyn{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Ranking Drużyn</h1>
+        <table class="table-auto w-full border-collapse">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th class="px-4 py-2 text-left">ID</th>
+                    <th class="px-4 py-2 text-left">Drużyna</th>
+                    <th class="px-4 py-2 text-left">Punkty</th>
+                    <th class="px-4 py-2 text-left">Pozycja</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for ranking in rankings %}
+                <tr class="hover:bg-gray-100">
+                    <td class="px-4 py-2 text-gray-700">{{ ranking.ranking_id }}</td>
+                    <td class="px-4 py-2 text-gray-700">{{ ranking.team.name }}</td>
+                    <td class="px-4 py-2 text-gray-700">{{ ranking.points }}</td>
+                    <td class="px-4 py-2 text-gray-700">{{ ranking.position }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

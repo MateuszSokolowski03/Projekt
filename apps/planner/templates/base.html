@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Panel główny{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>tailwind.config={theme:{extend:{colors:{primary:'#3b82f6',secondary:'#64748b'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .sidebar-link.active {
+            color: #3b82f6;
+            background-color: #eff6ff;
+            border-left: 3px solid #3b82f6;
+        }
+        .sidebar-link.active i {
+            color: #3b82f6;
+        }
+        input:focus {
+            outline: none;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-gray-50">
+<div class="flex min-h-screen relative">
+    <!-- Overlay -->
+    <div id="overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden md:hidden z-40"></div>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="w-64 bg-white shadow-lg h-screen fixed left-0 top-0 z-50 transform -translate-x-full md:translate-x-0 transition-all duration-300 overflow-y-auto">
+        <!-- User Profile -->
+        <div class="p-5 border-b border-gray-100">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <i class="ri-user-line text-primary ri-lg"></i>
+                </div>
+                <div>
+                    <h3 class="font-medium text-gray-800">Gość</h3>
+                    <p class="text-xs text-gray-500">Guest</p>
+                </div>
+            </div>
+        </div>
+        <!-- Navigation -->
+        <nav class="p-4">
+            <div class="mb-4">
+                <p class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2 px-2">Zespół</p>
+                <ul class="space-y-1">
+                    <li>
+                        <a href="{% url 'team_list' %}" class="sidebar-link flex items-center px-2 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-team-line ri-lg"></i>
+                            </div>
+                            <span>Drużyny</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'player_list' %}" class="sidebar-link flex items-center px-2 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-user-star-line ri-lg"></i>
+                            </div>
+                            <span>Piłkarze</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mb-4">
+                <p class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2 px-2">Rozgrywka</p>
+                <ul class="space-y-1">
+                    <li>
+                        <a href="{% url 'league_list' %}" class="sidebar-link flex items-center px-2 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-trophy-line ri-lg"></i>
+                            </div>
+                            <span>Ligi</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'round_list' %}" class="sidebar-link flex items-center px-2 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-calendar-line ri-lg"></i>
+                            </div>
+                            <span>Kolejki</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'match_list' %}" class="sidebar-link flex items-center px-2 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-football-line ri-lg"></i>
+                            </div>
+                            <span>Mecze</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'event_list' %}" class="sidebar-link flex items-center px-2 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-calendar-event-line ri-lg"></i>
+                            </div>
+                            <span>Wydarzenia</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="mb-4">
+                <p class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2 px-2">Statystyki</p>
+                <ul class="space-y-1">
+                    <li>
+                        <a href="{% url 'player_statistics_list' %}" class="sidebar-link flex items-center px-2 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-user-chart-line ri-lg"></i>
+                            </div>
+                            <span>Piłkarzy</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'team_ranking_list' %}" class="sidebar-link flex items-center px-2 py-2 rounded-md text-sm font-medium text-gray-600 hover:bg-gray-50 transition-colors">
+                            <div class="w-8 h-8 flex items-center justify-center">
+                                <i class="ri-bar-chart-line ri-lg"></i>
+                            </div>
+                            <span>Drużyn</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+    <!-- Main Content -->
+    <main class="flex-1 md:ml-64 min-h-screen pt-16">
+        <!-- Top Navbar -->
+        <header class="bg-white shadow-sm fixed top-0 right-0 left-0 md:left-64 z-30">
+            <div class="flex items-center justify-between h-16 px-4 md:px-6">
+                <!-- Left: Menu toggle and breadcrumbs -->
+                <div class="flex items-center">
+                    <button id="menu-toggle" class="w-10 h-10 flex items-center justify-center text-gray-500 md:hidden !rounded-button">
+                        <i class="ri-menu-line ri-lg"></i>
+                    </button>
+                    <div class="hidden md:flex items-center text-sm text-gray-500 ml-4">
+                    </div>
+                </div>
+                <!-- Right: profile dropdown -->
+                <div class="flex items-center">
+                    <div class="relative">
+                        <button id="profile-menu-button" class="flex items-center space-x-2 !rounded-button">
+                            <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                                <i class="ri-user-line text-primary"></i>
+                            </div>
+                            <span class="hidden md:inline-block text-sm font-medium">Gość</span>
+                            <i class="ri-arrow-down-s-line hidden md:inline-block"></i>
+                        </button>
+                        <div id="profile-menu" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden">
+                            <a href="/login/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Zaloguj się</a>
+                            <a href="/register/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Zarejestruj się</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Page Content -->
+        <div class="p-4 md:p-6 lg:p-8">
+            <div class="max-w-7xl mx-auto">
+                {% block content %}
+                <div class="min-h-[calc(100vh-4rem)] flex items-center justify-center">
+                    <h1 class="text-2xl text-gray-400">Wybierz opcję z menu</h1>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+    </main>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.getElementById('menu-toggle');
+        const overlay = document.getElementById('overlay');
+        menuToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+        });
+        overlay.addEventListener('click', function() {
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
+        });
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 768) {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        });
+        const sidebarLinks = document.querySelectorAll('.sidebar-link');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                if (window.innerWidth < 768) {
+                    sidebar.classList.add('-translate-x-full');
+                    overlay.classList.add('hidden');
+                }
+            });
+        });
+
+        const profileMenuButton = document.getElementById('profile-menu-button');
+        const profileMenu = document.getElementById('profile-menu');
+
+        profileMenuButton.addEventListener('click', function() {
+            profileMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!profileMenuButton.contains(event.target) && !profileMenu.contains(event.target)) {
+                profileMenu.classList.add('hidden');
+            }
+        });
+    });
+</script>
+</body>
+</html>

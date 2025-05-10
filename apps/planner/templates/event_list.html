@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista Wydarzeń{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Lista Wydarzeń</h1>
+            <table class="table-auto w-full border-collapse">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th class="px-4 py-2 text-left">ID</th>
+                        <th class="px-4 py-2 text-left">Mecz</th>
+                        <th class="px-4 py-2 text-left">Minuta</th>
+                        <th class="px-4 py-2 text-left">Typ Wydarzenia</th>
+                        <th class="px-4 py-2 text-left">Piłkarz</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    {% for event in events %}
+                    <tr class="hover:bg-gray-100">
+                        <td class="px-4 py-2 text-gray-700">{{ event.event_id }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ event.match }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ event.minute }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ event.get_event_type_display }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ event.player }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="flex justify-end mt-6 pt-4 border-t border-gray-200 px-4">
+                <a href="{% url 'add_event' %}" class="bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90">Dodaj Wydarzenie</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

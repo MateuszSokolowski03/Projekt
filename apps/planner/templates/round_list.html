@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista Kolejek{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Lista Kolejek</h1>
+            <table class="table-auto w-full border-collapse">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th class="px-4 py-2 text-left">ID</th>
+                        <th class="px-4 py-2 text-left">Nazwa</th>
+                        <th class="px-4 py-2 text-left">Liga</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    {% for round in rounds %}
+                    <tr class="hover:bg-gray-100">
+                        <td class="px-4 py-2 text-gray-700">{{ round.round_id }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ round.name }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ round.league.name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="flex justify-end mt-6 pt-4 border-t border-gray-200 px-4">
+            <a href="{% url 'add_round' %}" class="bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90">Dodaj Kolejkę</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,5 +1,5 @@
 """
-URL configuration for config project.
+URL configuration for PlanerApp project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.2/topics/http/urls/
@@ -16,7 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from apps.planner import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index, name='index'),
+    path('teams/', views.team_list, name='team_list'),
+    path('teams/add/', views.add_team, name='add_team'),
+    path('players/', views.player_list, name='player_list'),
+    path('players/add/', views.add_player, name='add_player'),
+    path('leagues/', views.league_list, name='league_list'),
+    path('leagues/add/', views.add_league, name='add_league'),
+    path('rounds/', views.round_list, name='round_list'),
+    path('rounds/add/', views.add_round, name='add_round'),
+    path('matches/', views.match_list, name='match_list'),
+    path('matches/add/', views.add_match, name='add_match'),
+    path('player-statistics/', views.player_statistics_list, name='player_statistics_list'),
+    path('team-rankings/', views.team_ranking_list, name='team_ranking_list'),
+    path('events/', views.event_list, name='event_list'),
+    path('events/add/', views.add_event, name='add_event'),
 ]
