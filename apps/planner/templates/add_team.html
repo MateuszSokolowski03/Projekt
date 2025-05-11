@@ -4,13 +4,33 @@
 
 {% block content %}
 <div class="container mx-auto p-4">
-    <div class="bg-white shadow-md rounded-lg p-6">
-        <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Dodaj Drużynę</h1>
-        <form method="post" class="space-y-4">
+    <div class="bg-white shadow-md rounded-lg p-6 max-w-lg mx-auto">
+        <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Dodaj Drużynę</h1>
+        <form method="post" class="space-y-6">
             {% csrf_token %}
-            {{ form.as_p }}
+            <div class="space-y-6"> <!-- Dodano większy odstęp między polami -->
+                {% for field in form %}
+                <div class="space-y-2"> <!-- Dodano odstęp między etykietą a polem -->
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                        {% if field.label == "Name" %}Nazwa{% else %}{{ field.label }}{% endif %}
+                    </label>
+                    <input 
+                        type="text" 
+                        name="{{ field.name }}" 
+                        id="{{ field.id_for_label }}" 
+                        value="{{ field.value|default:'' }}" 
+                        class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full""
+                    >
+                    {% if field.errors %}
+                    <p class="text-sm text-red-600 mt-1">{{ field.errors }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
             <div class="flex justify-end">
-                <button type="submit" class="bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90">Zapisz</button>
+                <button type="submit" class="bg-primary text-white px-6 py-2 rounded-md shadow hover:bg-primary/90">
+                    Zapisz
+                </button>
             </div>
         </form>
     </div>
