@@ -1,4 +1,5 @@
 from django.db import models
+import locale
 from django.shortcuts import render
 
 class Team(models.Model):
@@ -47,8 +48,16 @@ class Match(models.Model):
     score_team_2 = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.team_1.name} vs {self.team_2.name} - {self.match_date} {self.match_time}"
-
+        # Mapowanie nazw miesięcy na 3-literowe skróty po polsku
+        months = {
+            1: "sty", 2: "lut", 3: "mar", 4: "kwi", 5: "maj", 6: "cze",
+            7: "lip", 8: "sie", 9: "wrz", 10: "paź", 11: "lis", 12: "gru"
+        }
+        day = self.match_date.day
+        month = months[self.match_date.month]
+        year = self.match_date.year
+        return f"{self.team_1.name} vs {self.team_2.name} - {day} {month} {year} {self.match_time}"
+    
 class MatchEvent(models.Model):
     event_id = models.AutoField(primary_key=True)  # Klucz główny
     match = models.ForeignKey('Match', on_delete=models.CASCADE, related_name='events')
