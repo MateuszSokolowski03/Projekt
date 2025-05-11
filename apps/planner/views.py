@@ -117,7 +117,10 @@ def add_match(request):
             return redirect('match_list')
     else:
         form = MatchForm()
-    return render(request, 'add_match.html', {'form': form})
+
+    leagues = League.objects.all()  # Pobranie listy lig
+    teams = Team.objects.all()  # Pobranie listy drużyn
+    return render(request, 'add_match.html', {'form': form, 'leagues': leagues, 'teams': teams})
 
 def add_event(request):
     if request.method == 'POST':
