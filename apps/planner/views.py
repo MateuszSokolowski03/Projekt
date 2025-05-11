@@ -130,7 +130,12 @@ def add_event(request):
             return redirect('event_list')
     else:
         form = MatchEventForm()
-    return render(request, 'add_event.html', {'form': form})
+
+    matches = Match.objects.all()
+    event_types = MatchEvent.EVENT_TYPES
+    print("Matches:", matches)  # Debugowanie
+    print("Event Types:", event_types)  # Debugowanie
+    return render(request, 'add_event.html', {'form': form, 'matches': matches, 'event_types': event_types})
 
 def register_view(request):
     if request.method == 'POST':
