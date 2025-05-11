@@ -11,13 +11,33 @@ def index(request):
     return render(request, 'base.html')
 
 def team_list(request):
-    teams = Team.objects.all()
-    return render(request, 'team_list.html', {'teams': teams})
+    sort_by = request.GET.get('sort', 'name')
+    direction = request.GET.get('direction', 'asc')
+    if direction == 'desc':
+        sort_by = f'-{sort_by}'
+    teams = Team.objects.all().order_by(sort_by)
+    return render(request, 'team_list.html', {'teams': teams, 'sort_by': sort_by.lstrip('-'), 'direction': direction})
+
+def team_detail(request, team_id):
+    team = Team.objects.get(pk=team_id)
+    players = team.players.all()  # Pobranie składu drużyny
+    return render(request, 'team_detail.html', {'team': team, 'players': players})
 
 def player_list(request):
-    players = Player.objects.all()
-    return render(request, 'player_list.html', {'players': players})
+    sort_by = request.GET.get('sort', 'last_name')
+    direction = request.GET.get('direction', 'asc')
+    if direction == 'desc':
+        sort_by = f'-{sort_by}'
+    players = Player.objects.all().order_by(sort_by)
+    return render(request, 'player_list.html', {'players': players, 'sort_by': sort_by.lstrip('-'), 'direction': direction})
 
+def player_detail(request, player_id):
+    player = Player.objects.get(pk=player_id)
+    try:
+        statistics = player.statistics # Pobranie statystyk piłkarza
+    except PlayerStatistics.DoesNotExist:
+        statistics = None
+    return render(request, 'player_detail.html', {'player': player, 'statistics': statistics})
 def league_list(request):
     leagues = League.objects.all()
     return render(request, 'league_list.html', {'leagues': leagues})
@@ -27,9 +47,12 @@ def round_list(request):
     return render(request, 'round_list.html', {'rounds': rounds})
 
 def match_list(request):
-    matches = Match.objects.all()
-    return render(request, 'match_list.html', {'matches': matches})
-
+    sort_by = request.GET.get('sort', 'match_date')
+    direction = request.GET.get('direction', 'asc')
+    if direction == 'desc':
+        sort_by = f'-{sort_by}'
+    matches = Match.objects.all().order_by(sort_by)
+    return render(request, 'match_list.html', {'matches': matches, 'sort_by': sort_by.lstrip('-'), 'direction': direction})
 def player_statistics_list(request):
     statistics = PlayerStatistics.objects.all()
     return render(request, 'player_statistics_list.html', {'statistics': statistics})

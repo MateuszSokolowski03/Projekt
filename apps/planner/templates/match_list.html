@@ -23,18 +23,8 @@
                         <td class="px-4 py-2 text-gray-700">{{ match.match_id }}</td>
                         <td class="px-4 py-2 text-gray-700">{{ match.team_1.name }}</td>
                         <td class="px-4 py-2 text-gray-700">{{ match.team_2.name }}</td>
-                        <td class="px-4 py-2 text-gray-700">
-                            {{ match.match_date.day }} 
-                            {% with match.match_date.month as month %}
-                                {% if month == 1 %}sty{% elif month == 2 %}lut{% elif month == 3 %}mar
-                                {% elif month == 4 %}kwi{% elif month == 5 %}maj{% elif month == 6 %}cze
-                                {% elif month == 7 %}lip{% elif month == 8 %}sie{% elif month == 9 %}wrz
-                                {% elif month == 10 %}paź{% elif month == 11 %}lis{% elif month == 12 %}gru
-                                {% endif %}
-                            {% endwith %}
-                            {{ match.match_date.year }}
-                        </td>
-                        <td class="px-4 py-2 text-gray-700">{{ match.match_time|time:"H:i" }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ match.match_date }}</td>
+                        <td class="px-4 py-2 text-gray-700">{{ match.match_time }}</td>
                     </tr>
                     {% endfor %}
                 </tbody>
