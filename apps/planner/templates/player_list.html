@@ -25,7 +25,7 @@
             </thead>
             <tbody class="divide-y divide-gray-200">
                 {% for player in players %}
-                <tr class="hover:bg-gray-100">
+                <tr class="hover:bg-gray-100 cursor-pointer" onclick="window.location='{% url 'player_detail' player.player_id %}'">
                     <td class="px-4 py-2 text-gray-700">{{ player.first_name }}</td>
                     <td class="px-4 py-2 text-gray-700">{{ player.last_name }}</td>
                     <td class="px-4 py-2 text-gray-700">{{ player.get_position_display }}</td>
