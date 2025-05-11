@@ -12,9 +12,15 @@ class PlayerForm(forms.ModelForm):
         fields = ['player_id', 'first_name', 'last_name', 'position', 'team']
 
 class LeagueForm(forms.ModelForm):
+    teams = forms.ModelMultipleChoiceField(
+        queryset=Team.objects.all(),
+        required=False,
+        widget=forms.CheckboxSelectMultiple
+    )
+
     class Meta:
         model = League
-        fields = ['league_id', 'name']
+        fields = ['league_id', 'name', 'teams']
 
 class RoundForm(forms.ModelForm):
     class Meta:

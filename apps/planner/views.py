@@ -89,8 +89,10 @@ def add_league(request):
     if request.method == 'POST':
         form = LeagueForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('league_list')
+            league = form.save(commit=False)
+            league.save()
+            form.save_m2m()  # Zapisz relacje ManyToMany (drużyny)
+            return redirect('league_list')  # Zmień na odpowiednią nazwę widoku
     else:
         form = LeagueForm()
     return render(request, 'add_league.html', {'form': form})
