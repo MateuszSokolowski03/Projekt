@@ -101,8 +101,10 @@ def add_round(request):
     if request.method == 'POST':
         form = RoundForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('round_list')
+            round_instance = form.save(commit=False)
+            round_instance.save()
+            form.save_m2m()  # Zapisz relacje ManyToMany (mecze)
+            return redirect('round_list')  # Zmień na odpowiednią nazwę widoku
     else:
         form = RoundForm()
     return render(request, 'add_round.html', {'form': form})

@@ -22,10 +22,17 @@ class LeagueForm(forms.ModelForm):
         model = League
         fields = ['league_id', 'name', 'teams']
 
+from .models import Round, Match
+
 class RoundForm(forms.ModelForm):
+    matches = forms.ModelMultipleChoiceField(
+        queryset=Match.objects.all(),
+        required=False
+    )
+
     class Meta:
         model = Round
-        fields = ['round_id', 'name', 'league']
+        fields = ['round_id', 'name', 'league', 'matches']
 
 class MatchForm(forms.ModelForm):
     class Meta:
