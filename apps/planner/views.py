@@ -9,7 +9,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from django.db.models import Count, Sum, Q
+import logging
 
 def index(request):
     return render(request, 'base.html')
@@ -54,12 +55,11 @@ def player_list(request):
     })
 
 def player_detail(request, player_id):
-    player = Player.objects.get(pk=player_id)
-    try:
-        statistics = player.statistics # Pobranie statystyk piłkarza
-    except PlayerStatistics.DoesNotExist:
-        statistics = None
+    player = get_object_or_404(Player, pk=player_id)
+    generate_statistics_for_player(player)  # Generowanie statystyk
+    statistics = PlayerStatistics.objects.filter(player=player)  # Pobranie statystyk
     return render(request, 'player_detail.html', {'player': player, 'statistics': statistics})
+
 def league_list(request):
     leagues = League.objects.all()
     return render(request, 'league_list.html', {'leagues': leagues})
@@ -75,10 +75,31 @@ def match_list(request):
         sort_by = f'-{sort_by}'
     matches = Match.objects.all().order_by(sort_by)
     return render(request, 'match_list.html', {'matches': matches, 'sort_by': sort_by.lstrip('-'), 'direction': direction})
-def player_statistics_list(request):
-    statistics = PlayerStatistics.objects.all()
-    return render(request, 'player_statistics_list.html', {'statistics': statistics})
 
+def player_statistics_list(request):
+    leagues = League.objects.all()
+    selected_league_id = request.GET.get('league')
+    sort_by = request.GET.get('sort', 'player__last_name')
+    direction = request.GET.get('direction', 'asc')
+
+    if direction == 'desc':
+        sort_by = f'-{sort_by}'
+
+    if selected_league_id:
+        selected_league = get_object_or_404(League, pk=selected_league_id)
+        generate_statistics(selected_league)  # Generowanie statystyk dla wybranej ligi
+        statistics = PlayerStatistics.objects.filter(league=selected_league)
+    else:
+        statistics = PlayerStatistics.objects.none()
+        selected_league = None
+
+    return render(request, 'player_statistics_list.html', {
+        'leagues': leagues,
+        'statistics': statistics,
+        'selected_league': selected_league,
+        'sort_by': sort_by.lstrip('-'),
+        'direction': direction,
+    })
 def team_ranking_list(request):
     leagues = League.objects.all()
     selected_league_id = request.GET.get('league')
@@ -267,5 +288,81 @@ def update_rankings_after_match(sender, instance, **kwargs):
     league = instance.league
     generate_rankings(league)
 
+def generate_statistics(league):
+    try:
+        teams = league.teams.all()
+        if not teams.exists():
+            print(f"Brak drużyn w lidze: {league.name}")
+            return
+
+        players = Player.objects.filter(team__in=teams)
+
+        for player in players:
+            # Liczba meczów rozegranych przez drużynę piłkarza
+            matches_played = Match.objects.filter(
+                Q(team_1=player.team) | Q(team_2=player.team),
+                league=league
+            ).count()
+
+            # Domyślne wartości statystyk
+            goals = 0
+            yellow_cards = 0
+            red_cards = 0
+
+            # Aktualizacja statystyk tylko jeśli istnieją wydarzenia
+            if MatchEvent.objects.filter(player=player).exists():
+                goals = MatchEvent.objects.filter(player=player, event_type='goal').count()
+                yellow_cards = MatchEvent.objects.filter(player=player, event_type='yellow_card').count()
+                red_cards = MatchEvent.objects.filter(player=player, event_type='red_card').count()
+
+            # Tworzenie lub aktualizacja statystyk
+            PlayerStatistics.objects.update_or_create(
+                player=player,
+                league=league,
+                defaults={
+                    'matches_played': matches_played,
+                    'goals': goals,
+                    'yellow_cards': yellow_cards,
+                    'red_cards': red_cards,
+                }
+            )
+    except Exception as e:
+        print(f"Błąd podczas generowania statystyk: {str(e)}")
+
+def generate_statistics_for_player(player):
+    try:
+        leagues = League.objects.filter(teams__players=player).distinct()
+
+        for league in leagues:
+            # Liczba meczów rozegranych przez drużynę piłkarza w danej lidze
+            matches_played = Match.objects.filter(
+                Q(team_1=player.team) | Q(team_2=player.team),
+                league=league
+            ).count()
+
+            # Domyślne wartości statystyk
+            goals = 0
+            yellow_cards = 0
+            red_cards = 0
+
+            # Aktualizacja statystyk tylko jeśli istnieją wydarzenia
+            if MatchEvent.objects.filter(player=player).exists():
+                goals = MatchEvent.objects.filter(player=player, event_type='goal').count()
+                yellow_cards = MatchEvent.objects.filter(player=player, event_type='yellow_card').count()
+                red_cards = MatchEvent.objects.filter(player=player, event_type='red_card').count()
+
+            # Tworzenie lub aktualizacja statystyk
+            PlayerStatistics.objects.update_or_create(
+                player=player,
+                league=league,
+                defaults={
+                    'matches_played': matches_played,
+                    'goals': goals,
+                    'yellow_cards': yellow_cards,
+                    'red_cards': red_cards,
+                }
+            )
+    except Exception as e:
+        print(f"Błąd podczas generowania statystyk dla piłkarza: {str(e)}")
 
 # Create your views here.
