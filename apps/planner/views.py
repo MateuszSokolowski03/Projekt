@@ -1,11 +1,15 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse
 from .models import Team, Player, League, Round, Match, PlayerStatistics, TeamRanking, MatchEvent
 from .forms import TeamForm, PlayerForm, LeagueForm, RoundForm, MatchForm, MatchEventForm
 from django.contrib.auth import login, authenticate
+from .forms import TeamRankingForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 
 def index(request):
     return render(request, 'base.html')
@@ -76,8 +80,26 @@ def player_statistics_list(request):
     return render(request, 'player_statistics_list.html', {'statistics': statistics})
 
 def team_ranking_list(request):
-    rankings = TeamRanking.objects.all()
-    return render(request, 'team_ranking_list.html', {'rankings': rankings})
+    leagues = League.objects.all()
+    selected_league_id = request.GET.get('league')
+
+    if selected_league_id:
+        selected_league = get_object_or_404(League, pk=selected_league_id)
+
+        # Wygeneruj ranking dynamicznie
+        generate_rankings(selected_league)
+
+        # Pobierz zaktualizowane rankingi
+        rankings = TeamRanking.objects.filter(league=selected_league).order_by('position')
+    else:
+        rankings = TeamRanking.objects.none()
+        selected_league = None
+
+    return render(request, 'team_ranking_list.html', {
+        'leagues': leagues,
+        'rankings': rankings,
+        'selected_league': selected_league,
+    })
 
 def event_list(request):
     events = MatchEvent.objects.all()
@@ -177,5 +199,73 @@ def login_view(request):
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
+def league_ranking_list(request):
+    # Pobierz wszystkie ligi
+    leagues = League.objects.all()
+
+    # Pobierz wybraną ligę z parametrów GET
+    selected_league_id = request.GET.get('league')
+
+    if selected_league_id:
+        # Pobierz wybraną ligę lub zwróć 404, jeśli nie istnieje
+        selected_league = get_object_or_404(League, pk=selected_league_id)
+        # Pobierz rankingi dla wybranej ligi
+        rankings = TeamRanking.objects.filter(league=selected_league).order_by('position')
+    else:
+        # Jeśli liga nie została wybrana, nie pokazuj rankingów
+        rankings = TeamRanking.objects.none()
+        selected_league = None
+
+    # Przekaż dane do szablonu
+    return render(request, 'team_ranking_list.html', {
+        'leagues': leagues,
+        'rankings': rankings,
+        'selected_league': selected_league,
+    })
+
+def generate_rankings(league):
+    try:
+        teams = league.teams.all()
+        if not teams.exists():
+            print("Brak drużyn w lidze:", league.name)
+            return
+
+        team_points = {team.team_id: 0 for team in teams}
+        matches = Match.objects.filter(league=league)
+
+        for match in matches:
+            if match.team_1 and match.team_2:
+                if match.score_team_1 > match.score_team_2:
+                    team_points[match.team_1.team_id] += 3
+                elif match.score_team_1 < match.score_team_2:
+                    team_points[match.team_2.team_id] += 3
+                else:
+                    team_points[match.team_1.team_id] += 1
+                    team_points[match.team_2.team_id] += 1
+
+        # Tworzymy lub aktualizujemy ranking nawet jeśli punkty = 0
+        for team_id, points in team_points.items():
+            team = Team.objects.get(team_id=team_id)
+            TeamRanking.objects.update_or_create(
+                team=team,
+                league=league,
+                defaults={'points': points}
+            )
+
+        # Nadaj pozycje (po sortowaniu punktów malejąco)
+        rankings = TeamRanking.objects.filter(league=league).order_by('-points', 'team__name')
+        for position, ranking in enumerate(rankings, start=1):
+            ranking.position = position
+            ranking.save()
+
+    except Exception as e:
+        print("Błąd podczas generowania rankingów:", str(e))
+
+@receiver(post_save, sender=Match)
+def update_rankings_after_match(sender, instance, **kwargs):
+    league = instance.league
+    generate_rankings(league)
+
 
 # Create your views here.

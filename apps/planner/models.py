@@ -75,12 +75,13 @@ class MatchEvent(models.Model):
 
 class TeamRanking(models.Model):
     ranking_id = models.AutoField(primary_key=True)  # Klucz główny
-    team = models.OneToOneField('Team', on_delete=models.CASCADE, related_name='ranking')
+    team = models.ForeignKey('Team', on_delete=models.CASCADE, related_name='rankings')  # Zmieniono na ForeignKey
+    league = models.ForeignKey('League', on_delete=models.CASCADE, related_name='rankings')
     points = models.IntegerField(default=0)
     position = models.IntegerField(default=0)
 
     def __str__(self):
-        return f"{self.team.name} - {self.points} points, position {self.position}"
+        return f"{self.team.name} - {self.points} points, position {self.position} in {self.league.name}"
 
 class League(models.Model):
     league_id = models.AutoField(primary_key=True)  # Klucz główny

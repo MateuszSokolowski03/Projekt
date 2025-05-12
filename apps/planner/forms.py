@@ -1,5 +1,5 @@
 from django import forms
-from .models import Team, Player, League, Round, Match, MatchEvent
+from .models import Team, Player, League, Round, Match, MatchEvent,TeamRanking
 
 class TeamForm(forms.ModelForm):
     class Meta:
@@ -43,3 +43,13 @@ class MatchEventForm(forms.ModelForm):
     class Meta:
         model = MatchEvent
         fields = ['match', 'minute', 'event_type', 'player']
+class TeamRankingForm(forms.ModelForm):
+    class Meta:
+        model = TeamRanking
+        fields = ['team', 'league', 'points', 'position']
+        widgets = {
+            'league': forms.Select(attrs={'class': 'form-control'}),
+            'team': forms.Select(attrs={'class': 'form-control'}),
+            'points': forms.NumberInput(attrs={'class': 'form-control'}),
+            'position': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
