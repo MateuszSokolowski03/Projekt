@@ -28,8 +28,26 @@ def player_list(request):
     direction = request.GET.get('direction', 'asc')
     if direction == 'desc':
         sort_by = f'-{sort_by}'
-    players = Player.objects.all().order_by(sort_by)
-    return render(request, 'player_list.html', {'players': players, 'sort_by': sort_by.lstrip('-'), 'direction': direction})
+
+    # Pobierz wybrane pozycje z parametrów GET
+    selected_positions = request.GET.getlist('position', [])
+
+    # Filtrowanie wybranych pozycji
+    if selected_positions:
+        players = Player.objects.filter(position__in=selected_positions).order_by(sort_by)
+    else:
+        players = Player.objects.all().order_by(sort_by)
+
+    # Pobierz wszystkie dostępne pozycje (unikalne wartości)
+    all_positions = Player.objects.values_list('position', flat=True).distinct()
+
+    return render(request, 'player_list.html', {
+        'players': players,
+        'sort_by': sort_by.lstrip('-'),
+        'direction': direction,
+        'all_positions': all_positions,
+        'selected_positions': selected_positions
+    })
 
 def player_detail(request, player_id):
     player = Player.objects.get(pk=player_id)

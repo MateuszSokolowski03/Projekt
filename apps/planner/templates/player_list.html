@@ -6,6 +6,42 @@
 <div class="container mx-auto p-4">
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Lista Piłkarzy</h1>
+
+        <!-- Przycisk rozwijający sekcję filtrowania -->
+        <button 
+            type="button" 
+            class="mb-4 bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90" 
+            onclick="toggleFilterSection()"
+        >
+            Filtruj
+        </button>
+
+        <!-- Sekcja filtrowania -->
+        <form method="get" id="filter-form" class="mb-4 hidden">
+            <h3 class="text-lg font-semibold mb-2">Filtruj po pozycji:</h3>
+            <div class="flex flex-wrap gap-4">
+                {% for position in all_positions %}
+                    <label class="flex items-center space-x-2">
+                        <input 
+                            type="checkbox" 
+                            name="position" 
+                            value="{{ position }}" 
+                            {% if position in selected_positions %}checked{% endif %}
+                            class="form-checkbox h-5 w-5 text-primary border-gray-300 rounded focus:ring-primary"
+                        >
+                        <span class="text-gray-700">{{ position }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+            <button 
+                type="submit" 
+                class="mt-4 bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90"
+            >
+                Zastosuj filtry
+            </button>
+        </form>
+
+        <!-- Tabela z listą piłkarzy -->
         <table class="table-auto w-full border-collapse">
             <thead class="bg-primary text-white">
                 <tr>
@@ -28,7 +64,7 @@
                 <tr class="hover:bg-gray-100 cursor-pointer" onclick="window.location='{% url 'player_detail' player.player_id %}'">
                     <td class="px-4 py-2 text-gray-700">{{ player.first_name }}</td>
                     <td class="px-4 py-2 text-gray-700">{{ player.last_name }}</td>
-                    <td class="px-4 py-2 text-gray-700">{{ player.get_position_display }}</td>
+                    <td class="px-4 py-2 text-gray-700">{{ player.position }}</td>
                     <td class="px-4 py-2 text-gray-700">{{ player.team.name }}</td>
                 </tr>
                 {% endfor %}
@@ -36,9 +72,16 @@
         </table>
     </div>
     <div class="flex justify-end mt-6 pt-4 border-t border-gray-200 px-4">
-            {% if user.is_authenticated %}
-            <a href="{% url 'add_player' %}" class="bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90">Dodaj Piłkarza</a>
-            {% endif %}
+        {% if user.is_authenticated %}
+        <a href="{% url 'add_player' %}" class="bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90">Dodaj Piłkarza</a>
+        {% endif %}
     </div>
 </div>
+
+<script>
+    function toggleFilterSection() {
+        const filterForm = document.getElementById('filter-form');
+        filterForm.classList.toggle('hidden');
+    }
+</script>
 {% endblock %}
