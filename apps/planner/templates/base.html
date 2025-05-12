@@ -168,12 +168,24 @@
                             <div class="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                                 <i class="ri-user-line text-primary"></i>
                             </div>
+                            {% if user.is_authenticated %}
+                            <span class="hidden md:inline-block text-sm font-medium">{{ user.username }}</span>
+                            {% else %}
                             <span class="hidden md:inline-block text-sm font-medium">Gość</span>
+                            {% endif %}
                             <i class="ri-arrow-down-s-line hidden md:inline-block"></i>
                         </button>
                         <div id="profile-menu" class="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg hidden">
-                            <a href="/login/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Zaloguj się</a>
-                            <a href="/register/" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Zarejestruj się</a>
+                            {% if user.is_authenticated %}
+                            <p class="block px-4 py-2 text-sm text-gray-700">Jesteś zalogowany</p>
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Wyloguj się</button>
+                            </form>
+                            {% else %}
+                            <a href="{% url 'login' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Zaloguj się</a>
+                            <a href="{% url 'register' %}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Zarejestruj się</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
