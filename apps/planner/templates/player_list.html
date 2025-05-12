@@ -16,8 +16,11 @@
             Filtruj
         </button>
 
-        <!-- Sekcja filtrowania -->
-        <form method="get" id="filter-form" class="mb-4 hidden">
+       <!-- Sekcja filtrowania -->
+<form method="get" id="filter-form" class="mb-4 hidden">
+    <div class="space-y-6">
+        <!-- Filtrowanie po pozycji -->
+        <div>
             <h3 class="text-lg font-semibold mb-2">Filtruj po pozycji:</h3>
             <div class="flex flex-wrap gap-4">
                 {% for position in all_positions %}
@@ -33,13 +36,35 @@
                     </label>
                 {% endfor %}
             </div>
-            <button 
-                type="submit" 
-                class="mt-4 bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90"
-            >
-                Zastosuj filtry
-            </button>
-        </form>
+        </div>
+
+        <!-- Filtrowanie po drużynie -->
+        <div>
+            <h3 class="text-lg font-semibold mb-2">Filtruj po drużynie:</h3>
+            <div class="flex flex-wrap gap-4">
+                {% for team in all_teams %}
+                    <label class="flex items-center space-x-2">
+                        <input 
+                            type="checkbox" 
+                            name="team" 
+                            value="{{ team.team_id }}" 
+                            {% if team.team_id|slugify in selected_teams %}checked{% endif %}
+                            class="form-checkbox h-5 w-5 text-primary border-gray-300 rounded focus:ring-primary"
+                        >
+                        <span class="text-gray-700">{{ team.name }}</span>
+                    </label>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <button 
+        type="submit" 
+        class="mt-4 bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90"
+    >
+        Zastosuj filtry
+    </button>
+</form>
 
         <!-- Tabela z listą piłkarzy -->
         <table class="table-auto w-full border-collapse">
