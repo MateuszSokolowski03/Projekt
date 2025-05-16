@@ -85,6 +85,26 @@ def match_list(request):
     matches = Match.objects.all().order_by(sort_by)
     return render(request, 'match_list.html', {'matches': matches, 'sort_by': sort_by.lstrip('-'), 'direction': direction})
 
+
+def match_detail(request, match_id):
+    match = get_object_or_404(Match, pk=match_id)
+    events = MatchEvent.objects.filter(match=match)
+
+    # Zliczanie statystyk meczu
+    goals_team_1 = events.filter(event_type='goal', player__team=match.team_1).count()
+    goals_team_2 = events.filter(event_type='goal', player__team=match.team_2).count()
+    yellow_cards = events.filter(event_type='yellow_card').count()
+    red_cards = events.filter(event_type='red_card').count()
+
+    return render(request, 'match_detail.html', {
+        'match': match,
+        'events': events,
+        'goals_team_1': goals_team_1,
+        'goals_team_2': goals_team_2,
+        'yellow_cards': yellow_cards,
+        'red_cards': red_cards,
+    })
+
 def player_statistics_list(request):
     leagues = League.objects.all()
     selected_league_id = request.GET.get('league')

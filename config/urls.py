@@ -35,6 +35,7 @@ urlpatterns = [
     path('rounds/', views.round_list, name='round_list'),
     path('rounds/add/', views.add_round, name='add_round'),
     path('matches/', views.match_list, name='match_list'),
+    path('match/<int:match_id>/', views.match_detail, name='match_detail'),
     path('matches/add/', views.add_match, name='add_match'),
     path('player-statistics/', views.player_statistics_list, name='player_statistics_list'),
     path('team-rankings/', views.team_ranking_list, name='team_ranking_list'),

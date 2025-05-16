@@ -4,13 +4,13 @@
 
 {% block content %}
 <div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Lista Meczów</h1>
     <div class="bg-white shadow-md rounded-lg overflow-hidden">
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
-            <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Lista Meczów</h1>
+
             <table class="table-auto w-full border-collapse">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <th class="px-4 py-2 text-left">ID</th>
                         <th class="px-4 py-2 text-left">Drużyna 1</th>
                         <th class="px-4 py-2 text-left">Drużyna 2</th>
                         <th class="px-4 py-2 text-left">Data</th>
@@ -19,12 +19,11 @@
                 </thead>
                 <tbody class="divide-y divide-gray-200">
                     {% for match in matches %}
-                    <tr class="hover:bg-gray-100">
-                        <td class="px-4 py-2 text-gray-700">{{ match.match_id }}</td>
+                    <tr class="hover:bg-gray-100 cursor-pointer" onclick="window.location='{% url 'match_detail' match.match_id %}'">
                         <td class="px-4 py-2 text-gray-700">{{ match.team_1.name }}</td>
                         <td class="px-4 py-2 text-gray-700">{{ match.team_2.name }}</td>
                         <td class="px-4 py-2 text-gray-700">
-                            {{ match.match_date.day }} 
+                            {{ match.match_date.day }}
                             {% with match.match_date.month as month %}
                                 {% if month == 1 %}sty{% elif month == 2 %}lut{% elif month == 3 %}mar
                                 {% elif month == 4 %}kwi{% elif month == 5 %}maj{% elif month == 6 %}cze
@@ -40,11 +39,11 @@
                 </tbody>
             </table>
         </div>
-        <div class="flex justify-end mt-6 pt-4 border-t border-gray-200 px-4">
-            {% if user.is_authenticated %}
+    </div>
+    <div class="flex justify-end mt-6 pt-4 border-t border-gray-200 px-4">
+        {% if user.is_authenticated %}
             <a href="{% url 'add_match' %}" class="bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90">Dodaj Mecz</a>
-            {% endif %}
-        </div>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
