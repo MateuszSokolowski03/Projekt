@@ -4,61 +4,44 @@
 
 {% block content %}
 <div class="container mx-auto p-4">
-     <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Ranking Drużyn</h1>
-        <div class="bg-white shadow-md float-right w-[200px] mb-4 ml-5 mx-auto p-4 rounded-lg overflow-hidden">
-             <!-- Formularz wyboru ligi -->
-                <form method="get" class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Wybierz ligę:</label>
-                <div class="space-y-2">
-                    {% for league in leagues %}
-                    <div class="flex items-center">
-                        <input type="checkbox" name="league" value="{{ league.league_id }}" id="league_{{ league.league_id }}"
-                               class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
-                               {% if selected_league and league.league_id in selected_league %}checked{% endif %}>
-                        <label for="league_{{ league.league_id }}" class="ml-2 text-sm text-gray-700">
-                            {{ league.name }}
-                        </label>
-                    </div>
-                    {% endfor %}
+    <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Ranking Drużyn</h1>
+    <!-- Filtrowanie po lidze -->
+    <div class="bg-white shadow-md float-right w-1/5 mb-4 ml-5 mx-auto p-4 border-2 border-solid border-primary/25 rounded-lg overflow-hidden">
+        <form method="get" class="mb-6">
+            <label class="block text-sm font-medium text-gray-700 mb-2">Wybierz ligę:</label>
+            <div class="space-y-2">
+                {% for league in leagues %}
+                <div class="flex items-center">
+                    <input type="checkbox" name="league" value="{{ league.league_id }}" id="league_{{ league.league_id }}"
+                           class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
+                           {% if selected_league and league.league_id == selected_league.league_id %}checked{% endif %}>
+                    <label for="league_{{ league.league_id }}" class="ml-2 text-sm text-gray-700">
+                        {{ league.name }}
+                    </label>
                 </div>
-                <button type="submit" class="mt-4 bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90">Filtruj</button>
-            </form>
+                {% endfor %}
+            </div>
+            <button type="submit" class="mt-4 bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90">Filtruj</button>
+        </form>
+    </div>
+
+    <!-- Lista rankingów jako divy -->
+    <div class="space-y-4">
+        {% for ranking in rankings %}
+        <div class="bg-white shadow-md w-9/12 rounded-lg p-4 border-2 border-solid hover:bg-gray-100 cursor-pointer mr-5
+                    {% if ranking.position == 1 %}border-4 border-yellow-500{% elif ranking.position == 2 %}border-4 border-gray-400{% elif ranking.position == 3 %}border-4 border-orange-400{% else %}border-primary/25{% endif %}">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-lg font-semibold text-gray-800">{{ ranking.team.name }}</p>
+                    <p class="text-sm text-gray-600">{{ ranking.league.name }}</p>
+                </div>
+                <div>
+                    <p class="text-sm text-gray-600">Punkty: {{ ranking.points }}</p>
+                    <p class="text-sm text-gray-600">Pozycja: {{ ranking.position }}</p>
+                </div>
+            </div>
         </div>
-
-
-        <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <!-- Tabela rankingów -->
-        {% if rankings %}
-        <table class="table-auto w-full border-collapse">
-            <table class="table-auto w-full border-collapse">
-                <thead class="bg-primary text-white">
-                    <tr>
-                        <th class="px-4 py-2 text-left">Pozycja</th>
-                        <th class="px-4 py-2 text-left">Drużyna</th>
-                        <th class="px-4 py-2 text-left">Punkty</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200">
-                    {% if rankings %}
-                        {% for ranking in rankings %}
-                        <tr class="
-                            {% if ranking.position == 1 %}bg-yellow-200{% elif ranking.position == 2 %}bg-gray-200{% elif ranking.position == 3 %}bg-orange-200{% else %}hover:bg-gray-100{% endif %}
-                        ">
-                            <td class="px-4 py-2 text-gray-700 font-semibold">{{ ranking.position }}</td>
-                            <td class="px-4 py-2 text-gray-700">{{ ranking.team.name }}</td>
-                            <td class="px-4 py-2 text-gray-700">{{ ranking.points }}</td>
-                        </tr>
-                        {% endfor %}
-                    {% else %}
-                        <tr>
-                            <td colspan="3" class="px-4 py-2 text-center text-gray-600">Brak drużyn lub rankingów dla tej ligi.</td>
-                        </tr>
-                    {% endif %}
-                </tbody>
-            </table>
-        {% else %}
-        <p class="text-center text-gray-600">Brak rankingów dla wybranej ligi.</p>
-        {% endif %}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}

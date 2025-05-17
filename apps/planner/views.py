@@ -74,17 +74,54 @@ def league_list(request):
     return render(request, 'league_list.html', {'leagues': leagues})
 
 def round_list(request):
-    rounds = Round.objects.all()
-    return render(request, 'round_list.html', {'rounds': rounds})
+    selected_league_id = request.GET.get('league')
+    leagues = League.objects.all()
+
+    if selected_league_id:
+        rounds = Round.objects.filter(league_id=selected_league_id)
+    else:
+        rounds = Round.objects.all()
+
+    return render(request, 'round_list.html', {
+        'rounds': rounds,
+        'leagues': leagues,
+        'selected_league_id': selected_league_id,
+    })
 
 def match_list(request):
     sort_by = request.GET.get('sort', 'match_date')
     direction = request.GET.get('direction', 'asc')
     if direction == 'desc':
         sort_by = f'-{sort_by}'
-    matches = Match.objects.all().order_by(sort_by)
-    return render(request, 'match_list.html', {'matches': matches, 'sort_by': sort_by.lstrip('-'), 'direction': direction})
 
+    # Pobierz wybrane drużyny
+    selected_teams = request.GET.getlist('team', [])
+
+    #Pobierz wybraną datę
+    match_date = request.GET.get('match_date')
+
+    # Bazowe zapytanie
+    matches = Match.objects.all()
+
+    # Filtrowanie
+    if selected_teams:
+        matches = matches.filter(Q(team_1__in=selected_teams) | Q(team_2__in=selected_teams))
+    if match_date:
+        matches = matches.filter(match_date=match_date)
+
+    matches = matches.order_by(sort_by)
+
+    # Pobierz wszystkie drużyny
+    all_teams = Team.objects.all()
+
+    return render(request, 'match_list.html', {
+        'matches': matches,
+        'sort_by': sort_by.lstrip('-'),
+        'direction': direction,
+        'all_teams': all_teams,
+        'selected_teams': selected_teams,
+        'match_date': match_date,
+    })
 
 def match_detail(request, match_id):
     match = get_object_or_404(Match, pk=match_id)
