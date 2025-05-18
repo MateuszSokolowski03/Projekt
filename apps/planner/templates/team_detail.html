@@ -1,30 +1,81 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Szczegóły Drużyny{% endblock %}
 
 {% block content %}
 <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">{{ team.name }}</h1>
-    <h2 class="text-xl font-semibold mb-2">Skład:</h2>
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <table class="table-auto w-full border-collapse">
-            <thead class="bg-primary text-white">
-                <tr>
-                    <th class="px-4 py-2 text-left">Imię</th>
-                    <th class="px-4 py-2 text-left">Nazwisko</th>
-                    <th class="px-4 py-2 text-left">Pozycja</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-                {% for player in players %}
-                <tr class="hover:bg-gray-100">
-                    <td class="px-4 py-2 text-gray-700">{{ player.first_name }}</td>
-                    <td class="px-4 py-2 text-gray-700">{{ player.last_name }}</td>
-                    <td class="px-4 py-2 text-gray-700">{{ player.get_position_display }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="bg-white shadow-md rounded-lg overflow-hidden p-6 border-2 border-solid border-primary/25 flex items-center justify-between p-4">
+        <div>
+            <p class="text-3xl font-bold text-center m-4">{{ team.name }}</p>
+        </div>
+        <div>
+            <!-- Miejsce na logo drużyny -->
+            <img src="{{ team.logo.url }}" alt="Logo {{ team.name }}" class="w-30 h-20 object-cover">
+        </div>
+    </div>
+    <h2 class="text-xl font-semibold text-center mb-2">Skład:</h2>
+    <div class="bg-green-500 relative text-nowrap flex flex-col items-center space-y-6 mt-8 border-2 border-solid border-black">
+        <!-- Pole karne -->
+        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-[500px] h-[200px] border-b-[6px] border-l-[6px] border-r-[6px] border-white"></div>
+
+        <!-- Linia środkowa -->
+        <div class="absolute bottom-0 left-0 w-full h-[6px] bg-white"></div>
+
+        <!-- Półokrąg środka boiska -->
+        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-[400px] h-[200px] border-[6px] border-white rounded-t-full border-b-0"></div>
+
+        <!-- Punkt środkowy -->
+        <div class="absolute bottom-[18px] left-1/2 transform -translate-x-1/2 translate-y-full w-5 h-5 bg-white rounded-full"></div>
+
+        <!-- Bramkarz -->
+        <div class="flex justify-center space-x-4 mt-4">
+            {% for player in players %}
+                {% if player.position == 'GK' %}
+                <div class="bg-gray-300 text-sm border-2 border-solid border-green-600/50 rounded-lg shadow p-4 size-40 text-center">
+                    <p class="font-bold">{{ player.first_name }} {{ player.last_name }}</p>
+                    <img src="{% static 'images/person.png' %}" alt="Zdjęcie piłkarza" class="w-20 h-20 mx-auto object-cover">
+                    <p class="text-sm text-gray-600">Bramkarz</p>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <!-- Obrońcy -->
+        <div class="flex justify-center space-x-4">
+            {% for player in players %}
+                {% if player.position == 'DEF' %}
+                <div class="bg-gray-300 text-sm border-2 border-solid border-blue-600/50 rounded-lg shadow p-4 size-40 text-center">
+                    <p class="font-bold">{{ player.first_name }} {{ player.last_name }}</p>
+                    <img src="{% static 'images/person.png' %}" alt="Zdjęcie piłkarza" class="w-20 h-20 mx-auto object-cover">
+                    <p class="text-sm text-gray-600">Obrońca</p>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <!-- Pomocnicy -->
+        <div class="flex justify-center space-x-4">
+            {% for player in players %}
+                {% if player.position == 'MID' %}
+                <div class="bg-gray-300 text-sm border-2 border-solid border-yellow-600/50 rounded-lg shadow p-4 size-40 text-center">
+                    <p class="font-bold">{{ player.first_name }} {{ player.last_name }}</p>
+                    <img src="{% static 'images/person.png' %}" alt="Zdjęcie piłkarza" class="w-20 h-20 mx-auto object-cover">
+                    <p class="text-sm text-gray-600">Pomocnik</p>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <!-- Napastnicy -->
+        <div class="flex justify-center space-x-4">
+            {% for player in players %}
+                {% if player.position == 'FWD' %}
+                <div class="bg-gray-300 text-sm border-2 border-solid border-red-600/50 rounded-lg shadow p-4 size-40 text-center">
+                    <p class="font-bold">{{ player.first_name }} {{ player.last_name }}</p>
+                    <img src="{% static 'images/person.png' %}" alt="Zdjęcie piłkarza" class="w-20 h-20 mx-auto object-cover">
+                    <p class="text-sm text-gray-600">Napastnik</p>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
 </div>
 {% endblock %}

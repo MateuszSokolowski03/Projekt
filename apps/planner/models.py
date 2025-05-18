@@ -5,6 +5,7 @@ from django.shortcuts import render
 class Team(models.Model):
     team_id = models.AutoField(primary_key=True)  # Klucz główny
     name = models.CharField(max_length=255, unique=True)
+    logo = models.ImageField(upload_to='team_logos/', null=True, blank=True)
 
     def __str__(self):
         return self.name

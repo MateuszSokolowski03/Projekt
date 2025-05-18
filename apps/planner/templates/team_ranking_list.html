@@ -29,7 +29,8 @@
     <div class="space-y-4">
         {% for ranking in rankings %}
         <div class="bg-white shadow-md w-9/12 rounded-lg p-4 border-2 border-solid hover:bg-gray-100 cursor-pointer mr-5
-                    {% if ranking.position == 1 %}border-4 border-yellow-500{% elif ranking.position == 2 %}border-4 border-gray-400{% elif ranking.position == 3 %}border-4 border-orange-400{% else %}border-primary/25{% endif %}">
+                    {% if ranking.position == 1 %}border-4 border-yellow-500{% elif ranking.position == 2 %}border-4 border-gray-400{% elif ranking.position == 3 %}border-4 border-orange-400{% else %}border-primary/25{% endif %}"
+                    onclick="window.location='{% url 'team_detail' ranking.team.team_id %}'">
             <div class="flex justify-between items-center text-center">
                 <div>
                     <p class="text-3xl font-bold text-gray-600">#{{ ranking.position }}</p>
