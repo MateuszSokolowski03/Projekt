@@ -47,7 +47,7 @@
             </thead>
             <tbody class="divide-y divide-gray-200">
                 {% for stat in statistics %}
-                <tr class="hover:bg-gray-100">
+                <tr class="hover:bg-gray-100 {% if stat.player.player_id == best_scorer_id %}ring-4 ring-yellow-400 bg-yellow-100{% endif %}">
                     <td class="px-4 py-2 text-gray-700">{{ stat.player.first_name }} {{ stat.player.last_name }}</td>
                     <td class="px-4 py-2 text-gray-700">{{ stat.matches_played }}</td>
                     <td class="px-4 py-2 text-gray-700">{{ stat.goals }}</td>

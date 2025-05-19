@@ -156,10 +156,43 @@ def player_statistics_list(request):
     else:
         order_by = sort_by
 
+    best_scorer_id = None
+
     if selected_league_id:
         selected_league = get_object_or_404(League, pk=selected_league_id)
         generate_statistics(selected_league)
         statistics = PlayerStatistics.objects.filter(league=selected_league).order_by(order_by)
+
+        # --- Król strzelców ---
+        stats = list(PlayerStatistics.objects.filter(league=selected_league))
+        if stats:
+            max_goals = max(s.goals for s in stats)
+            top_scorers = [s for s in stats if s.goals == max_goals and max_goals > 0]
+            if top_scorers:
+                # Bez kartek
+                clean_scorers = [s for s in top_scorers if s.yellow_cards == 0 and s.red_cards == 0]
+                candidates = clean_scorers if clean_scorers else top_scorers
+
+                # Ostatni gol
+                if len(candidates) > 1:
+                    # Pobierz ostatni czas gola dla każdego kandydata
+                    last_goal_times = []
+                    for s in candidates:
+                        last_goal = (
+                            MatchEvent.objects
+                            .filter(player=s.player, event_type='goal', match__league=selected_league)
+                            .order_by('-match__match_date', '-match__match_time', '-minute')
+                            .first()
+                        )
+                        if last_goal:
+                            last_goal_times.append((s, last_goal.match.match_date, last_goal.match.match_time, last_goal.minute))
+                        else:
+                            last_goal_times.append((s, None, None, None))
+                    # Sortuj po dacie, godzinie, minucie
+                    last_goal_times.sort(key=lambda x: (x[1] or '', x[2] or '', x[3] or 0), reverse=True)
+                    best_scorer_id = last_goal_times[0][0].player.player_id
+                else:
+                    best_scorer_id = candidates[0].player.player_id
     else:
         statistics = PlayerStatistics.objects.none()
         selected_league = None
@@ -170,6 +203,7 @@ def player_statistics_list(request):
         'selected_league': selected_league,
         'sort_by': sort_by.lstrip('-'),
         'direction': direction,
+        'best_scorer_id': best_scorer_id,
     })
 def team_ranking_list(request):
     leagues = League.objects.all()
