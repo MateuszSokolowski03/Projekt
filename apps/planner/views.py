@@ -197,6 +197,11 @@ def player_statistics_list(request):
         statistics = PlayerStatistics.objects.none()
         selected_league = None
 
+    # Krol strzelcow zawsze na gorze listy
+    if best_scorer_id and statistics.exists():
+        statistics = list(statistics)
+        statistics.sort(key=lambda s: s.player.player_id != best_scorer_id)
+
     return render(request, 'player_statistics_list.html', {
         'leagues': leagues,
         'statistics': statistics,
