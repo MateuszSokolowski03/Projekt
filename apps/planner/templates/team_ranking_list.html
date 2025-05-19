@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Ranking Drużyn{% endblock %}
 
@@ -33,14 +34,23 @@
                     onclick="window.location='{% url 'team_detail' ranking.team.team_id %}'">
             <div class="flex justify-between items-center text-center">
                 <div>
-                    <p class="text-3xl font-bold text-gray-600">#{{ ranking.position }}</p>
+                    <p class="text-7xl font-bold text-gray-600">#{{ ranking.position }}</p>
                 </div>
                 <div>
-                    <p class="text-lg font-semibold text-gray-800">{{ ranking.team.name }}</p>
-                    <p class="text-sm text-gray-600">{{ ranking.league.name }}</p>
+                    <div>
+                        {% if ranking.team.logo %}
+                            <img src="{{ ranking.team.logo.url }}" alt="Logo {{ ranking.team.name }}" class="w-30 h-20 object-cover mx-auto mb-1">
+                        {% else %}
+                            <img src="{% static 'images/none.png' %}" alt="Brak loga" class="w-30 h-20 object-cover mx-auto mb-1">
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p class="text-lg font-semibold text-gray-800 w-[200px]">{{ ranking.team.name }}</p>
+                        <p class="text-sm text-gray-600">{{ ranking.league.name }}</p>
+                    </div>
                 </div>
                 <div>
-                    <p class="text-lg text-gray-600">{{ ranking.points }} pkt</p>
+                    <p class="text-4xl text-gray-600">{{ ranking.points }} pkt</p>
                 </div>
             </div>
         </div>
