@@ -38,10 +38,10 @@
                         <a href="?league={{ selected_league.league_id }}&sort=goals&direction={% if sort_by == 'goals' %}{% if direction == 'asc' %}desc{% else %}asc{% endif %}{% else %}desc{% endif %}" class="hover:underline">Gole</a>
                     </th>
                     <th class="px-4 py-2 text-left">
-                        <a href="?league={{ selected_league.league_id }}&sort=yellow_cards&direction={% if sort_by == 'yellow_cards' and direction == 'asc' %}desc{% else %}asc{% endif %}" class="hover:underline">Żółte Kartki</a>
+                        <a href="?league={{ selected_league.league_id }}&sort=yellow_cards&direction={% if sort_by == 'yellow_cards' %}{% if direction == 'asc' %}desc{% else %}asc{% endif %}{% else %}desc{% endif %}" class="hover:underline">Żółte Kartki</a>
                     </th>
                     <th class="px-4 py-2 text-left">
-                        <a href="?league={{ selected_league.league_id }}&sort=red_cards&direction={% if sort_by == 'red_cards' and direction == 'asc' %}desc{% else %}asc{% endif %}" class="hover:underline">Czerwone Kartki</a>
+                        <a href="?league={{ selected_league.league_id }}&sort=red_cards&direction={% if sort_by == 'red_cards' %}{% if direction == 'asc' %}desc{% else %}asc{% endif %}{% else %}desc{% endif %}" class="hover:underline">Czerwone Kartki</a>
                     </th>
                 </tr>
             </thead>
