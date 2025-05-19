@@ -149,15 +149,17 @@ def player_statistics_list(request):
     leagues = League.objects.all()
     selected_league_id = request.GET.get('league')
     sort_by = request.GET.get('sort', 'player__last_name')
-    direction = request.GET.get('direction', 'asc')
+    direction = request.GET.get('direction', 'desc' if sort_by == 'goals' else 'asc')  # domyślnie gole malejąco
 
     if direction == 'desc':
-        sort_by = f'-{sort_by}'
+        order_by = f'-{sort_by}'
+    else:
+        order_by = sort_by
 
     if selected_league_id:
         selected_league = get_object_or_404(League, pk=selected_league_id)
-        generate_statistics(selected_league)  # Generowanie statystyk dla wybranej ligi
-        statistics = PlayerStatistics.objects.filter(league=selected_league)
+        generate_statistics(selected_league)
+        statistics = PlayerStatistics.objects.filter(league=selected_league).order_by(order_by)
     else:
         statistics = PlayerStatistics.objects.none()
         selected_league = None

@@ -35,7 +35,7 @@
                         <a href="?league={{ selected_league.league_id }}&sort=matches_played&direction={% if sort_by == 'matches_played' and direction == 'asc' %}desc{% else %}asc{% endif %}" class="hover:underline">Mecze</a>
                     </th>
                     <th class="px-4 py-2 text-left">
-                        <a href="?league={{ selected_league.league_id }}&sort=goals&direction={% if sort_by == 'goals' and direction == 'asc' %}desc{% else %}asc{% endif %}" class="hover:underline">Gole</a>
+                        <a href="?league={{ selected_league.league_id }}&sort=goals&direction={% if sort_by == 'goals' %}{% if direction == 'asc' %}desc{% else %}asc{% endif %}{% else %}desc{% endif %}" class="hover:underline">Gole</a>
                     </th>
                     <th class="px-4 py-2 text-left">
                         <a href="?league={{ selected_league.league_id }}&sort=yellow_cards&direction={% if sort_by == 'yellow_cards' and direction == 'asc' %}desc{% else %}asc{% endif %}" class="hover:underline">Żółte Kartki</a>
