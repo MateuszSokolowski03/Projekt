@@ -9,34 +9,57 @@
         <form method="post" class="space-y-6">
             {% csrf_token %}
             <div class="space-y-4">
-                <!-- Ręcznie dodany div z rozwijaną listą dla meczu -->
+                <!-- Mecz -->
                 <div class="space-y-2">
                     <label for="match" class="block text-sm font-medium text-gray-700">Mecz</label>
                     <select 
                         name="match" 
                         id="match" 
                         class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full bg-white text-gray-700"
+                        required
                     >
                         <option value="" disabled selected>Wybierz mecz</option>
                         {% for match in matches %}
-                        <option value="{{ match.id }}">{{ match }}</option>
+                        <option value="{{ match.match_id }}">{{ match }}</option>
                         {% endfor %}
                     </select>
                 </div>
-                <!-- Renderowanie pozostałych pól formularza -->
+                <!-- Typ zdarzenia -->
+                <div class="space-y-2">
+                    <label for="event_type" class="block text-sm font-medium text-gray-700">Typ zdarzenia</label>
+                    <select 
+                        name="event_type" 
+                        id="event_type"
+                        class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full bg-white text-gray-700"
+                        required
+                    >
+                        <option value="" disabled selected>Wybierz typ zdarzenia</option>
+                        {% for value, label in event_types %}
+                        <option value="{{ value }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- Piłkarz -->
+                <div class="space-y-2">
+                    <label for="player" class="block text-sm font-medium text-gray-700">Piłkarz</label>
+                    <select 
+                        name="player" 
+                        id="player"
+                        class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full bg-white text-gray-700"
+                        required
+                    >
+                        <option value="" disabled selected>Najpierw wybierz mecz</option>
+                    </select>
+                </div>
+                <!-- Pozostałe pola formularza -->
                 {% for field in form %}
-                {% if field.name != "match" %} <!-- Pomijamy pole match -->
+                {% if field.name != "match" and field.name != "event_type" and field.name != "player" %}
+
                 <div class="space-y-2">
                     <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
                         {{ field.label }}
                     </label>
-                    <input 
-                        type="text" 
-                        name="{{ field.name }}" 
-                        id="{{ field.id_for_label }}" 
-                        value="{{ field.value|default:'' }}" 
-                        class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full"
-                    >
+                    {{ field }}
                     {% if field.errors %}
                     <p class="text-sm text-red-600 mt-1">{{ field.errors }}</p>
                     {% endif %}
@@ -52,4 +75,44 @@
         </form>
     </div>
 </div>
+<script>
+const matchSelect = document.getElementById('match');
+const playerSelect = document.getElementById('player');
+
+matchSelect.addEventListener('change', function () {
+    const matchId = this.value;
+    if (!matchId) return;
+
+    playerSelect.innerHTML = '<option disabled selected>Ładowanie...</option>';
+    playerSelect.disabled = true;
+
+    fetch(`/api/match_players/${matchId}/`)
+        .then(response => response.json())
+        .then(data => {
+            playerSelect.innerHTML = '';
+            if (data.players.length === 0) {
+                playerSelect.innerHTML = '<option disabled selected>Brak piłkarzy</option>';
+            } else {
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.disabled = true;
+                defaultOption.selected = true;
+                defaultOption.textContent = 'Wybierz piłkarza';
+                playerSelect.appendChild(defaultOption);
+
+                data.players.forEach(player => {
+                    const option = document.createElement('option');
+                    option.value = player.id;
+                    option.textContent = player.name;
+                    playerSelect.appendChild(option);
+                });
+            }
+            playerSelect.disabled = false;
+        })
+        .catch(() => {
+            playerSelect.innerHTML = '<option disabled selected>Błąd ładowania</option>';
+            playerSelect.disabled = true;
+        });
+});
+</script>
 {% endblock %}

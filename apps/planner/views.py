@@ -11,6 +11,9 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.db.models import Count, Sum, Q
 import logging
+from django.http import JsonResponse
+from django.views.decorators.cache import cache_page
+
 
 def index(request):
     return render(request, 'base.html')
@@ -430,5 +433,16 @@ def generate_statistics_for_player(player):
             )
     except Exception as e:
         print(f"Błąd podczas generowania statystyk dla piłkarza: {str(e)}")
+
+def match_players(request, match_id):
+    match = get_object_or_404(Match, pk=match_id)
+    players_team_1 = Player.objects.filter(team=match.team_1)
+    players_team_2 = Player.objects.filter(team=match.team_2)
+    players = list(players_team_1) + list(players_team_2)
+    data = {
+        'players': [{'id': p.pk, 'name': str(p)} for p in players]
+    }
+    return JsonResponse(data)
+
 
 # Create your views here.
