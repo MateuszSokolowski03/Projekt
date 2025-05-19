@@ -4,37 +4,28 @@
 
 {% block content %}
 <div class="container mx-auto p-4">
-    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-        <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Lista Wydarzeń</h1>
-        <table class="table-auto w-full border-collapse">
-            <thead class="bg-primary text-white">
-                <tr>
-                    <th class="px-4 py-2 text-left">ID</th>
-                    <th class="px-4 py-2 text-left">Mecz</th>
-                    <th class="px-4 py-2 text-left">Minuta</th>
-                    <th class="px-4 py-2 text-left">Typ Wydarzenia</th>
-                    <th class="px-4 py-2 text-left">Piłkarz</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-                {% for event in events %}
-                <tr class="hover:bg-gray-100">
-                    <td class="px-4 py-2 text-gray-700">{{ event.event_id }}</td>
-                    <td class="px-4 py-2 text-gray-700">{{ event.match }}</td>
-                    <td class="px-4 py-2 text-gray-700">{{ event.minute }}</td>
-                    <td class="px-4 py-2 text-gray-700">{{ event.get_event_type_display }}</td>
-                    <td class="px-4 py-2 text-gray-700">{{ event.player }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- Dodaj Wydarzenie - przycisk na dole strony -->
-<div class="flex justify-end mt-6 pt-4 border-t border-gray-200 px-4">
-    {% if user.is_authenticated %}
+    <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Lista Wydarzeń</h1>
+    <div class="flex justify-end mb-4">
+        {% if user.is_authenticated %}
         <a href="{% url 'add_event' %}" class="bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90">Dodaj Wydarzenie</a>
-    {% endif %}
+        {% endif %}
+    </div>
+    <div class="flex flex-wrap gap-4 justify-center">
+        {% for event in events %}
+            <div class="bg-white border-2
+                {% if event.event_type == 'goal' %}border-green-500/50
+                {% elif event.event_type == 'yellow_card' %}border-yellow-500/50
+                {% elif event.event_type == 'red_card' %}border-red-500/50
+                {% else %}border-primary/25
+                {% endif %}
+                shadow rounded-lg p-2 min-w-[220px] flex flex-col items-start">
+                <span class="text-base text-primary/70 mb-1">{{ event.match.team_1 }} vs. {{ event.match.team_2 }}&nbsp;<span class="text-sm text-gray-500/70 mb-1">{{ event.match.match_date|date:"d M Y" }} | {{ event.match.match_time|time:"H:i" }}</span></span>
+                <span class="text-xl font-semibold mt-1 mb-2">{{ event.get_event_type_display }}&nbsp;<span class="text-2xl font-bold text-primary">{{ event.minute }}'</span></span>
+                <span class="text-lg text-gray-700 mt-2">{{ event.player.first_name }} {{ event.player.last_name }} ({{ event.player.position }}) | {{ event.player.team.name }}</span>
+            </div>
+        {% empty %}
+            <div class="text-gray-500 text-center w-full">Brak wydarzeń.</div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}
