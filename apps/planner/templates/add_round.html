@@ -9,56 +9,49 @@
         <form method="post" class="space-y-6">
             {% csrf_token %}
             <div class="space-y-4">
-                {% for field in form %}
+                <!-- Nazwa kolejki -->
                 <div class="space-y-2">
-                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
-                        {% if field.label == "Name" %}Nazwa Kolejki{% elif field.label == "League" %}Liga{% elif field.label == "Matches" %}Mecze{% else %}{{ field.label }}{% endif %}
-                    </label>
-                    {% if field.name == "league" %}
+                    <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700">Nazwa Kolejki</label>
+                    <input 
+                        type="text" 
+                        name="{{ form.name.name }}" 
+                        id="{{ form.name.id_for_label }}" 
+                        value="{{ form.name.value|default:'' }}" 
+                        class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full"
+                    >
+                    {% if form.name.errors %}
+                    <p class="text-sm text-red-600 mt-1">{{ form.name.errors }}</p>
+                    {% endif %}
+                </div>
+                <!-- Liga -->
+                <div class="space-y-2">
+                    <label for="{{ form.league.id_for_label }}" class="block text-sm font-medium text-gray-700">Liga</label>
                     <select 
-                        name="{{ field.name }}" 
-                        id="{{ field.id_for_label }}" 
+                        name="{{ form.league.name }}" 
+                        id="{{ form.league.id_for_label }}" 
                         class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full bg-white text-gray-700"
                     >
-                        <option value="" disabled selected>Wybierz</option>
-                        {% for league in field.field.queryset %}
-                        <option value="{{ league.pk }}" {% if league.pk == field.value %}selected{% endif %}>
+                        <option value="" disabled {% if not form.league.value %}selected{% endif %}>Wybierz</option>
+                        {% for league in form.league.field.queryset %}
+                        <option value="{{ league.pk }}" {% if league.pk|stringformat:"s" == form.league.value|stringformat:"s" %}selected{% endif %}>
                             {{ league.name }}
                         </option>
                         {% endfor %}
                     </select>
-                    {% elif field.name == "matches" %}
-                    <div class="space-y-2">
-                        {% for match in field.field.queryset %}
-                        <div class="flex items-center">
-                            <input 
-                                type="checkbox" 
-                                name="{{ field.name }}" 
-                                value="{{ match.pk }}" 
-                                id="match_{{ match.pk }}" 
-                                {% if match.pk in field.value %}checked{% endif %}
-                                class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
-                            >
-                            <label for="match_{{ match.pk }}" class="ml-2 text-sm text-gray-700">
-                                {{ match.team_1.name }} vs {{ match.team_2.name }} - {{ match.match_date }}
-                            </label>
-                        </div>
-                        {% endfor %}
-                    </div>
-                    {% else %}
-                    <input 
-                        type="text" 
-                        name="{{ field.name }}" 
-                        id="{{ field.id_for_label }}" 
-                        value="{{ field.value|default:'' }}" 
-                        class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full"
-                    >
-                    {% endif %}
-                    {% if field.errors %}
-                    <p class="text-sm text-red-600 mt-1">{{ field.errors }}</p>
+                    {% if form.league.errors %}
+                    <p class="text-sm text-red-600 mt-1">{{ form.league.errors }}</p>
                     {% endif %}
                 </div>
-                {% endfor %}
+                <!-- Mecze (dynamicznie ładowane przez JS) -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Mecze</label>
+                    <div id="matches-container" class="space-y-2">
+                        <!-- Tutaj pojawią się mecze po wyborze ligi -->
+                    </div>
+                    {% if form.matches.errors %}
+                    <p class="text-sm text-red-600 mt-1">{{ form.matches.errors }}</p>
+                    {% endif %}
+                </div>
             </div>
             <div class="flex justify-end">
                 <button type="submit" class="bg-primary text-white px-6 py-2 rounded-md shadow hover:bg-primary/90">
@@ -68,4 +61,26 @@
         </form>
     </div>
 </div>
+
+<script>
+document.getElementById('id_league').addEventListener('change', function() {
+    const leagueId = this.value;
+    fetch(`/get_matches_by_league/${leagueId}/`)
+        .then(response => response.json())
+        .then(data => {
+            const container = document.getElementById('matches-container');
+            container.innerHTML = '';
+            data.matches.forEach(match => {
+                container.innerHTML += `
+                    <div class="flex items-center">
+                        <input type="checkbox" name="matches" value="${match.id}" id="match_${match.id}" class="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary">
+                        <label for="match_${match.id}" class="ml-2 text-sm text-gray-700">
+                            ${match.team_1} vs ${match.team_2} - ${match.date}
+                        </label>
+                    </div>
+                `;
+            });
+        });
+});
+</script>
 {% endblock %}

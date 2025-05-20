@@ -274,10 +274,20 @@ def add_round(request):
         if form.is_valid():
             round_instance = form.save(commit=False)
             round_instance.save()
-            form.save_m2m()  # Zapisz relacje ManyToMany (mecze)
-            return redirect('round_list')  # Zmień na odpowiednią nazwę widoku
+            form.save_m2m()
+            return redirect('round_list')
     else:
         form = RoundForm()
+
+    league_id = request.GET.get('league')
+    if league_id:
+        used_matches = Round.objects.filter(league_id=league_id).values_list('matches', flat=True)
+        available_matches = Match.objects.filter(league_id=league_id).exclude(pk__in=used_matches)
+        form.fields['matches'].queryset = available_matches
+    else:
+        # PUSTY queryset jeśli liga nie wybrana
+        form.fields['matches'].queryset = Match.objects.none()
+
     return render(request, 'add_round.html', {'form': form})
 
 def add_match(request):
@@ -492,5 +502,26 @@ def get_teams_by_league(request, league_id):
     data = {'teams': [{'id': t.pk, 'name': t.name} for t in teams]}
     return JsonResponse(data)
 
+def get_matches_by_league(request, league_id):
+    matches = Match.objects.filter(league_id=league_id)
+    data = [
+        {
+            'id': m.pk,
+            'team_1': m.team_1.name,
+            'team_2': m.team_2.name,
+            'date': str(m.match_date)
+        }
+        for m in matches
+    ]
+    return JsonResponse({'matches': data})
 
+
+@receiver(post_save, sender=MatchEvent)
+def update_match_score(sender, instance, **kwargs):
+    match = instance.match
+    goals_team_1 = MatchEvent.objects.filter(match=match, event_type='goal', player__team=match.team_1).count()
+    goals_team_2 = MatchEvent.objects.filter(match=match, event_type='goal', player__team=match.team_2).count()
+    match.score_team_1 = goals_team_1
+    match.score_team_2 = goals_team_2
+    match.save()
 # Create your views here.

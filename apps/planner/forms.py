@@ -37,8 +37,12 @@ class RoundForm(forms.ModelForm):
 class MatchForm(forms.ModelForm):
     class Meta:
         model = Match
-        fields = ['league', 'team_1', 'team_2', 'match_date', 'match_time', 'score_team_1', 'score_team_2']
+        fields = ['league', 'team_1', 'team_2', 'match_date', 'match_time']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        
 class MatchEventForm(forms.ModelForm):
     class Meta:
         model = MatchEvent
