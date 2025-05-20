@@ -52,7 +52,12 @@
                     <p class="text-lg font-semibold text-gray-800">{{ player.first_name }} {{ player.last_name }}</p>
                     <p class="text-sm text-gray-600">{{ player.position }}</p>
                 </div>
-                <div>
+                <div class="w-[150px] text-center">
+                    {% if player.team.logo %}
+                        <img src="{{ player.team.logo.url }}" alt="Logo {{ player.team.name }}" class="w-30 h-20 mx-auto object-cover">
+                    {% else %}
+                        <img src="{% static 'images/none.png' %}" alt="Brak loga" class="w-30 h-20 mx-auto object-cover">
+                    {% endif %}
                     <p class="text-sm text-gray-600">{{ player.team.name }}</p>
                 </div>
             </div>
