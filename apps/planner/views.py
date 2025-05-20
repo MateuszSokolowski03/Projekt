@@ -486,4 +486,11 @@ def match_players(request, match_id):
     return JsonResponse(data)
 
 
+def get_teams_by_league(request, league_id):
+    league = League.objects.get(pk=league_id)
+    teams = league.teams.all()
+    data = {'teams': [{'id': t.pk, 'name': t.name} for t in teams]}
+    return JsonResponse(data)
+
+
 # Create your views here.

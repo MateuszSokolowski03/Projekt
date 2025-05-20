@@ -51,7 +51,8 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='password_reset_confirm.html'), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='password_reset_complete.html'), name='password_reset_complete'),
     path('api/match_players/<int:match_id>/', views.match_players, name='match_players'),
-    
+    path('get_teams_by_league/<int:league_id>/', views.get_teams_by_league, name='get_teams_by_league')
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

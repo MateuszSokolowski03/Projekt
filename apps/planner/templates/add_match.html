@@ -9,48 +9,67 @@
         <form method="post" class="space-y-6">
             {% csrf_token %}
             <div class="space-y-4">
-                <!-- Ręcznie dodany div z rozwijaną listą dla ligi -->
+                <!-- Liga -->
                 <div class="space-y-2">
                     <label for="league" class="block text-sm font-medium text-gray-700">Liga</label>
                     <select 
                         name="league" 
                         id="league" 
                         class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full bg-white text-gray-700"
+                        required
                     >
-                        <option value="" disabled selected>Wybierz</option>
+                        <option value="" disabled hidden>Wybierz</option>
                         {% for league in leagues %}
-                        <option value="{{ league.id }}">{{ league.name }}</option>
+                        <option value="{{ league.league_id }}">{{ league.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
-                <!-- Renderowanie pozostałych pól formularza -->
-                {% for field in form %}
-                {% if field.name != "league" %} <!-- Pomijamy pole league -->
+                <!-- Drużyna 1 -->
                 <div class="space-y-2">
-                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
-                        {% if field.label == "Team 1" %}Drużyna 1{% elif field.label == "Team 2" %}Drużyna 2{% elif field.label == "Match date" %}Data Meczu{% elif field.label == "Match time" %}Godzina Meczu{% elif field.label == "Score team 1" %}Bramki Drużyny 1{% elif field.label == "Score team 2" %}Bramki Drużyny 2{% else %}{{ field.label }}{% endif %}
-                    </label>
-                    {% if field.widget.input_type == "select" %}
+                    <label for="team_1" class="block text-sm font-medium text-gray-700">Drużyna 1</label>
                     <select 
-                        name="{{ field.name }}" 
-                        id="{{ field.id_for_label }}" 
-                        class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full"
+                        name="team_1" 
+                        id="team_1" 
+                        class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full bg-white text-gray-700"
+                        disabled
+                        required
                     >
-                        {% for choice in field.field.choices %}
-                        <option value="{{ choice.0 }}" {% if choice.0 == field.value %}selected{% endif %}>
-                            {{ choice.1 }}
-                        </option>
-                        {% endfor %}
+                        <option value="" disabled selected>Najpierw wybierz ligę</option>
                     </select>
-                    {% else %}
+                </div>
+                <!-- Drużyna 2 -->
+                <div class="space-y-2">
+                    <label for="team_2" class="block text-sm font-medium text-gray-700">Drużyna 2</label>
+                    <select 
+                        name="team_2" 
+                        id="team_2" 
+                        class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full bg-white text-gray-700"
+                        disabled
+                        required
+                    >
+                        <option value="" disabled selected>Najpierw wybierz ligę</option>
+                    </select>
+                </div>
+                <!-- Pozostałe pola formularza -->
+                {% for field in form %}
+                    {% if field.name != "league" and field.name != "team_1" and field.name != "team_2" and field.name != "score_team_1" and field.name != "score_team_2" %}                <div class="space-y-2">
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                        {% if field.label == "Match date" %}Data Meczu
+                        {% elif field.label == "Match time" %}Godzina Meczu
+                        {% else %}{{ field.label }}{% endif %}
+                    </label>
                     <input 
                         type="{{ field.widget.input_type }}" 
                         name="{{ field.name }}" 
                         id="{{ field.id_for_label }}" 
                         value="{{ field.value|default:'' }}" 
+                        {% if field.label == "Match date" %}
+                            placeholder="RRRR-MM-DD"
+                        {% elif field.label == "Match time" %}
+                            placeholder="GG:MM"
+                        {% endif %}
                         class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full"
                     >
-                    {% endif %}
                     {% if field.errors %}
                     <p class="text-sm text-red-600 mt-1">{{ field.errors }}</p>
                     {% endif %}
@@ -66,4 +85,30 @@
         </form>
     </div>
 </div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById('league').addEventListener('change', function () {
+        const leagueId = this.value;
+        if (!leagueId) return; // <-- ignoruj pusty wybór
+
+        fetch(`/get_teams_by_league/${leagueId}/`)
+            .then(response => response.json())
+            .then(data => {
+                const team1 = document.getElementById('team_1');
+                const team2 = document.getElementById('team_2');
+                team1.innerHTML = '<option value="" disabled selected>Wybierz drużynę</option>';
+                team2.innerHTML = '<option value="" disabled selected>Wybierz drużynę</option>';
+                data.teams.forEach(team => {
+                    team1.innerHTML += `<option value="${team.id}">${team.name}</option>`;
+                    team2.innerHTML += `<option value="${team.id}">${team.name}</option>`;
+                });
+                team1.disabled = false;
+                team2.disabled = false;
+            })
+            .catch(error => console.error("Błąd podczas pobierania drużyn:", error));
+    });
+});
+</script>
 {% endblock %}
