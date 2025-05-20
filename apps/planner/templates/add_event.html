@@ -53,19 +53,30 @@
                 </div>
                 <!-- Pozostałe pola formularza -->
                 {% for field in form %}
-                {% if field.name != "match" and field.name != "event_type" and field.name != "player" %}
+                    {% if field.name != "match" and field.name != "event_type" and field.name != "player" %}
+                    <div class="space-y-2">
+                        <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                            {% if field.name == "minute" %}
+                                Minuta
+                            {% else %}
+                                {{ field.label }}
+                            {% endif %}
+                        </label>
 
-                <div class="space-y-2">
-                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
-                        {{ field.label }}
-                    </label>
-                    {{ field }}
+                    {% if field.name == "minute" %}
+                    <div class="border border-blue-500 rounded-md p-2 w-56">
+                        {{ field }}
+                    </div>
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+
                     {% if field.errors %}
-                    <p class="text-sm text-red-600 mt-1">{{ field.errors }}</p>
+                        <p class="text-sm text-red-600 mt-1">{{ field.errors }}</p>
                     {% endif %}
                 </div>
                 {% endif %}
-                {% endfor %}
+            {% endfor %}
             </div>
             <div class="flex justify-end">
                 <button type="submit" class="bg-primary text-white px-6 py-2 rounded-md shadow hover:bg-primary/90">

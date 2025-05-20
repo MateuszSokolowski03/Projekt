@@ -1,6 +1,7 @@
 from django.db import models
 import locale
 from django.shortcuts import render
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Team(models.Model):
     team_id = models.AutoField(primary_key=True)  # Klucz główny
@@ -62,7 +63,7 @@ class Match(models.Model):
 class MatchEvent(models.Model):
     event_id = models.AutoField(primary_key=True)  # Klucz główny
     match = models.ForeignKey('Match', on_delete=models.CASCADE, related_name='events')
-    minute = models.IntegerField()
+    minute = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(90)])
     EVENT_TYPES = [
         ('goal', 'Goal'),
         ('yellow_card', 'Yellow Card'),
