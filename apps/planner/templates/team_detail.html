@@ -11,7 +11,11 @@
         </div>
         <div>
             <!-- Miejsce na logo drużyny -->
-            <img src="{{ team.logo.url }}" alt="Logo {{ team.name }}" class="w-30 h-20 object-cover">
+            {% if team.logo %}
+                <img src="{{ team.logo.url }}" alt="Logo {{ team.name }}" class="w-30 h-20 mx-auto object-cover">
+            {% else %}
+                <img src="{% static 'images/none.png' %}" alt="Brak loga" class="w-30 h-20 mx-auto object-cover">
+            {% endif %}
         </div>
     </div>
     <h2 class="text-xl font-semibold text-center mt-4 mb-4">Skład:</h2>
