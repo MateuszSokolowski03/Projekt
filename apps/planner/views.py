@@ -13,6 +13,7 @@ from django.db.models import Count, Sum, Q
 import logging
 from django.http import JsonResponse
 from django.views.decorators.cache import cache_page
+from django.core.paginator import Paginator
 
 
 def index(request):
@@ -37,33 +38,32 @@ def player_list(request):
     if direction == 'desc':
         sort_by = f'-{sort_by}'
 
-    # Pobierz wybrane pozycje i drużyny
     selected_positions = request.GET.getlist('position', [])
     selected_teams = request.GET.getlist('team', [])
 
-    # Bazowe zapytanie
     players = Player.objects.all()
-
-    # Filtrowanie
     if selected_positions:
         players = players.filter(position__in=selected_positions)
     if selected_teams:
         players = players.filter(team__in=selected_teams)
-
     players = players.order_by(sort_by)
 
-    # Pobierz wszystkie dostępne pozycje i drużyny
     all_positions = Player.objects.values_list('position', flat=True).distinct()
     all_teams = Team.objects.all()
 
+    paginator = Paginator(players, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'player_list.html', {
-        'players': players,
+        'players': page_obj,
         'sort_by': sort_by.lstrip('-'),
         'direction': direction,
         'all_positions': all_positions,
         'selected_positions': selected_positions,
         'all_teams': all_teams,
-        'selected_teams': selected_teams
+        'selected_teams': selected_teams,
+        'page_obj': page_obj,
     })
 
 def player_detail(request, player_id):

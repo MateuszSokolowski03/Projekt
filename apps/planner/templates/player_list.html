@@ -69,5 +69,82 @@
             {% endif %}
         </div>
     </div>
+
+    <div class="flex justify-center mt-6">
+        <nav class="inline-flex -space-x-px">
+            {% if page_obj.has_previous %}
+                <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}" class="px-3 py-2 rounded-l border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">Poprzednia</a>
+            {% else %}
+                <span class="px-3 py-2 rounded-l border border-gray-300 bg-gray-100 text-gray-400">Poprzednia</span>
+            {% endif %}
+
+            {% with total=page_obj.paginator.num_pages current=page_obj.number %}
+                {# Jeśli stron jest mało, pokaż wszystkie #}
+                {% if total <= 7 %}
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if current == num %}
+                            <span class="px-3 py-2 border border-gray-300 bg-primary text-white">{{ num }}</span>
+                        {% else %}
+                            <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ num }}" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {# Początek #}
+                    {% if current > 3 %}
+                        <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page=1" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">1</a>
+                        {% if current > 4 %}
+                            <span class="px-3 py-2 border border-gray-300 bg-white text-gray-700">...</span>
+                        {% endif %}
+                    {% endif %}
+
+                    {# Środek - aktualna i dwie sąsiednie #}
+                    {% for num in current|add:"-1"|default_if_none:1|make_list %}
+                        {% if num|add:"0" > 1 and num|add:"0" < total %}
+                            {% if num|add:"0" == current %}
+                                <span class="px-3 py-2 border border-gray-300 bg-primary text-white">{{ num|add:"0" }}</span>
+                            {% else %}
+                                <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ num|add:"0" }}" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">{{ num|add:"0" }}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% for num in current|add:"0"|make_list %}
+                        {% if num|add:"0" > 1 and num|add:"0" < total %}
+                            {% if num|add:"0" == current %}
+                                <span class="px-3 py-2 border border-gray-300 bg-primary text-white">{{ num|add:"0" }}</span>
+                            {% else %}
+                                <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ num|add:"0" }}" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">{{ num|add:"0" }}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% for num in current|add:"1"|make_list %}
+                        {% if num|add:"0" > 1 and num|add:"0" < total %}
+                            {% if num|add:"0" == current %}
+                                <span class="px-3 py-2 border border-gray-300 bg-primary text-white">{{ num|add:"0" }}</span>
+                            {% else %}
+                                <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ num|add:"0" }}" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">{{ num|add:"0" }}</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {# Koniec #}
+                    {% if current|add:"2" < total %}
+                        {% if current|add:"3" < total %}
+                            <span class="px-3 py-2 border border-gray-300 bg-white text-gray-700">...</span>
+                        {% endif %}
+                        <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ total|add:"-1" }}" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">{{ total|add:"-1" }}</a>
+                        <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ total }}" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">{{ total }}</a>
+                    {% elif current|add:"2" == total %}
+                        <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ total }}" class="px-3 py-2 border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">{{ total }}</a>
+                    {% endif %}
+                {% endif %}
+            {% endwith %}
+
+            {% if page_obj.has_next %}
+                <a href="?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}" class="px-3 py-2 rounded-r border border-gray-300 bg-white text-gray-700 hover:bg-gray-100">Następna</a>
+            {% else %}
+                <span class="px-3 py-2 rounded-r border border-gray-300 bg-gray-100 text-gray-400">Następna</span>
+            {% endif %}
+        </nav>
+    </div>
 {% endblock %}
 </div>
