@@ -29,7 +29,7 @@
         </form>
     </div>
     <div class="space-y-4">
-        {% for match in matches %}
+        {% for match in page_obj %}
         <div class="bg-white shadow-md w-9/12 text-center border-2 border-solid border-primary/25 rounded-lg p-4 hover:bg-gray-100 cursor-pointer mr-5"
              onclick="window.location='{% url 'match_detail' match.match_id %}'">
             <p class="text-sm text-gray-600">{{ match.league.name }}</p>
@@ -57,6 +57,22 @@
             <p class="text-sm text-gray-600">{{ match.match_date|date:"d M Y" }} | {{ match.match_time|time:"H:i" }}</p>
         </div>
         {% endfor %}
+    </div>
+    <!-- PAGINACJA -->
+    <div class="flex justify-center mt-6">
+        <nav class="inline-flex">
+            {% if page_obj.has_previous %}
+                <a href="?{% if selected_teams %}{% for t in selected_teams %}team={{ t }}&{% endfor %}{% endif %}{% if match_date %}match_date={{ match_date }}&{% endif %}page={{ page_obj.previous_page_number }}" class="px-3 py-1 bg-gray-200 rounded-l hover:bg-gray-300">Poprzednia</a>
+            {% else %}
+                <span class="px-3 py-1 bg-gray-100 rounded-l text-gray-400 cursor-not-allowed">Poprzednia</span>
+            {% endif %}
+            <span class="px-3 py-1 bg-primary text-white">{{ page_obj.number }}</span>
+            {% if page_obj.has_next %}
+                <a href="?{% if selected_teams %}{% for t in selected_teams %}team={{ t }}&{% endfor %}{% endif %}{% if match_date %}match_date={{ match_date }}&{% endif %}page={{ page_obj.next_page_number }}" class="px-3 py-1 bg-gray-200 rounded-r hover:bg-gray-300">Następna</a>
+            {% else %}
+                <span class="px-3 py-1 bg-gray-100 rounded-r text-gray-400 cursor-not-allowed">Następna</span>
+            {% endif %}
+        </nav>
     </div>
 </div>
 <div class="flex justify-end mt-6 pt-4 border-t border-gray-200 px-4">

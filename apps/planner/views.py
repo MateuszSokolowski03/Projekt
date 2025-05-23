@@ -77,19 +77,24 @@ def league_list(request):
     return render(request, 'league_list.html', {'leagues': leagues})
 
 def round_list(request):
-    selected_league_id = request.GET.get('league')
+    selected_league_ids = request.GET.getlist('league')  # Lista ID lig (wielokrotny wybór)
     leagues = League.objects.all()
 
-    if selected_league_id:
-        rounds = Round.objects.filter(league_id=selected_league_id)
+    if selected_league_ids:
+        rounds = Round.objects.filter(league_id__in=selected_league_ids)
     else:
         rounds = Round.objects.all()
 
+    paginator = Paginator(rounds, 5)  # np. 5 kolejek na stronę
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'round_list.html', {
-        'rounds': rounds,
+        'rounds': page_obj,
         'leagues': leagues,
-        'selected_league_id': selected_league_id,
+        'selected_league_ids': selected_league_ids,
     })
+    
 
 def match_list(request):
     sort_by = request.GET.get('sort', 'match_date')
@@ -100,7 +105,7 @@ def match_list(request):
     # Pobierz wybrane drużyny
     selected_teams = request.GET.getlist('team', [])
 
-    #Pobierz wybraną datę
+    # Pobierz wybraną datę
     match_date = request.GET.get('match_date')
 
     # Bazowe zapytanie
@@ -114,11 +119,17 @@ def match_list(request):
 
     matches = matches.order_by(sort_by)
 
+    # PAGINACJA
+    paginator = Paginator(matches, 4)  # 4 mecze na stronę
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     # Pobierz wszystkie drużyny
     all_teams = Team.objects.all()
 
     return render(request, 'match_list.html', {
-        'matches': matches,
+        'matches': page_obj,  # <- przekazujemy page_obj zamiast matches
+        'page_obj': page_obj,
         'sort_by': sort_by.lstrip('-'),
         'direction': direction,
         'all_teams': all_teams,
@@ -202,14 +213,20 @@ def player_statistics_list(request):
         statistics = list(statistics)
         statistics.sort(key=lambda s: s.player.player_id != best_scorer_id)
 
+    # PAGINACJA
+    paginator = Paginator(statistics, 8)  # 8 statystyk na stronę
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     return render(request, 'player_statistics_list.html', {
-        'leagues': leagues,
-        'statistics': statistics,
-        'selected_league': selected_league,
-        'sort_by': sort_by.lstrip('-'),
-        'direction': direction,
-        'best_scorer_id': best_scorer_id,
-    })
+    'leagues': leagues,
+    'statistics': page_obj,  # zamienione!
+    'page_obj': page_obj,
+    'selected_league': selected_league,
+    'sort_by': sort_by.lstrip('-'),
+    'direction': direction,
+    'best_scorer_id': best_scorer_id,
+})
 def team_ranking_list(request):
     leagues = League.objects.all()
     selected_league_id = request.GET.get('league')
