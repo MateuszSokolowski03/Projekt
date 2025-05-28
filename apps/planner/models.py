@@ -2,11 +2,13 @@ from django.db import models
 import locale
 from django.shortcuts import render
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import User
 
 class Team(models.Model):
     team_id = models.AutoField(primary_key=True)  # Klucz główny
     name = models.CharField(max_length=255, unique=True)
     logo = models.ImageField(upload_to='team_logos/', null=True, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='teams', null=True, blank=True) 
 
     def __str__(self):
         return self.name
@@ -23,6 +25,7 @@ class Player(models.Model):
     ]
     position = models.CharField(max_length=3, choices=POSITION_CHOICES)
     team = models.ForeignKey('Team', on_delete=models.CASCADE, related_name='players')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='players', null=True, blank=True) 
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.get_position_display()})"
@@ -48,6 +51,8 @@ class Match(models.Model):
     match_time = models.TimeField()  # Godzina meczu
     score_team_1 = models.IntegerField(default=0)
     score_team_2 = models.IntegerField(default=0)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='matches', null=True, blank=True)
+    is_finished = models.BooleanField(default=False) 
 
     def __str__(self):
         # Mapowanie nazw miesięcy na 3-literowe skróty po polsku
@@ -71,6 +76,7 @@ class MatchEvent(models.Model):
     ]
     event_type = models.CharField(max_length=20, choices=EVENT_TYPES)
     player = models.ForeignKey('Player', on_delete=models.CASCADE, null=True, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_events', null=True, blank=True) 
 
     def __str__(self):
         return f"{self.event_type} at {self.minute} min in {self.match}"
@@ -89,18 +95,19 @@ class League(models.Model):
     league_id = models.AutoField(primary_key=True)  # Klucz główny
     name = models.CharField(max_length=255, unique=True)
     teams = models.ManyToManyField('Team', related_name='leagues')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='leagues', null=True, blank=True)
 
     def __str__(self):
         return self.name
 
 class Round(models.Model):
     round_id = models.AutoField(primary_key=True)  # Klucz główny
-    name = models.CharField(max_length=255)
+    number = models.IntegerField(null=True, blank=True)    
     league = models.ForeignKey('League', on_delete=models.CASCADE, related_name='rounds')
     matches = models.ManyToManyField('Match', related_name='rounds')
-
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rounds', null=True, blank=True)
     def __str__(self):
-        return f"{self.name} ({self.league.name})"
+        return f"{self.number} ({self.league.name})"
 
 def index(request):
     return render(request, 'index.html')

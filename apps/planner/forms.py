@@ -1,10 +1,15 @@
 from django import forms
 from .models import Team, Player, League, Round, Match, MatchEvent,TeamRanking
 
+
 class TeamForm(forms.ModelForm):
     class Meta:
         model = Team
         fields = ['team_id', 'name']
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super(TeamForm, self).__init__(*args, **kwargs)
+
 
 class PlayerForm(forms.ModelForm):
     class Meta:
@@ -22,7 +27,7 @@ class LeagueForm(forms.ModelForm):
         model = League
         fields = ['league_id', 'name', 'teams']
 
-from .models import Round, Match
+
 
 class RoundForm(forms.ModelForm):
     matches = forms.ModelMultipleChoiceField(
@@ -32,7 +37,7 @@ class RoundForm(forms.ModelForm):
 
     class Meta:
         model = Round
-        fields = ['round_id', 'name', 'league', 'matches']
+        fields = ['round_id', 'number', 'league', 'matches']
 
 class MatchForm(forms.ModelForm):
     class Meta:

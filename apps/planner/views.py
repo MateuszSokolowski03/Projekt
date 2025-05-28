@@ -14,7 +14,7 @@ import logging
 from django.http import JsonResponse
 from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator
-
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     return render(request, 'base.html')
@@ -24,9 +24,19 @@ def team_list(request):
     direction = request.GET.get('direction', 'asc')
     if direction == 'desc':
         sort_by = f'-{sort_by}'
-    teams = Team.objects.all().order_by(sort_by)
-    return render(request, 'team_list.html', {'teams': teams, 'sort_by': sort_by.lstrip('-'), 'direction': direction})
 
+    if request.user.is_authenticated:
+        # Pokazuj tylko drużyny należące do zalogowanego użytkownika
+        teams = Team.objects.filter(owner=request.user).order_by(sort_by)
+    else:
+        # Pokazuj tylko drużyny stworzone przez organizatorów (czyli mają właściciela)
+        teams = Team.objects.filter(owner__isnull=False).order_by(sort_by)
+
+    return render(request, 'team_list.html', {
+        'teams': teams,
+        'sort_by': sort_by.lstrip('-'),
+        'direction': direction,
+    })
 def team_detail(request, team_id):
     team = Team.objects.get(pk=team_id)
     players = team.players.all()  # Pobranie składu drużyny
@@ -41,7 +51,13 @@ def player_list(request):
     selected_positions = request.GET.getlist('position', [])
     selected_teams = request.GET.getlist('team', [])
 
-    players = Player.objects.all()
+    if request.user.is_authenticated:
+        players = Player.objects.filter(owner=request.user)
+        all_teams = Team.objects.filter(owner=request.user)
+    else: 
+        players = Player.objects.filter(owner__isnull=False)
+        all_teams = Team.objects.filter(owner__isnull=False)  
+
     if selected_positions:
         players = players.filter(position__in=selected_positions)
     if selected_teams:
@@ -49,7 +65,6 @@ def player_list(request):
     players = players.order_by(sort_by)
 
     all_positions = Player.objects.values_list('position', flat=True).distinct()
-    all_teams = Team.objects.all()
 
     paginator = Paginator(players, 10)
     page_number = request.GET.get('page')
@@ -66,6 +81,8 @@ def player_list(request):
         'page_obj': page_obj,
     })
 
+
+
 def player_detail(request, player_id):
     player = get_object_or_404(Player, pk=player_id)
     generate_statistics_for_player(player)  # Generowanie statystyk
@@ -73,19 +90,28 @@ def player_detail(request, player_id):
     return render(request, 'player_detail.html', {'player': player, 'statistics': statistics})
 
 def league_list(request):
-    leagues = League.objects.all()
+    if request.user.is_authenticated:
+        leagues = League.objects.filter(owner=request.user)
+    else:
+        leagues = League.objects.filter(owner__isnull=False)
     return render(request, 'league_list.html', {'leagues': leagues})
 
 def round_list(request):
-    selected_league_ids = request.GET.getlist('league')  # Lista ID lig (wielokrotny wybór)
-    leagues = League.objects.all()
-
-    if selected_league_ids:
-        rounds = Round.objects.filter(league_id__in=selected_league_ids)
+    selected_league_ids = request.GET.getlist('league')
+    if request.user.is_authenticated:
+        leagues = League.objects.filter(owner=request.user)
+        if selected_league_ids:
+            rounds = Round.objects.filter(owner=request.user, league_id__in=selected_league_ids)
+        else:
+            rounds = Round.objects.filter(owner=request.user)
     else:
-        rounds = Round.objects.all()
+        leagues = League.objects.filter(owner__isnull=False)
+        if selected_league_ids:
+            rounds = Round.objects.filter(owner__isnull=False, league_id__in=selected_league_ids)
+        else:
+            rounds = Round.objects.filter(owner__isnull=False)   
 
-    paginator = Paginator(rounds, 5)  # np. 5 kolejek na stronę
+    paginator = Paginator(rounds, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -94,7 +120,6 @@ def round_list(request):
         'leagues': leagues,
         'selected_league_ids': selected_league_ids,
     })
-    
 
 def match_list(request):
     sort_by = request.GET.get('sort', 'match_date')
@@ -102,16 +127,16 @@ def match_list(request):
     if direction == 'desc':
         sort_by = f'-{sort_by}'
 
-    # Pobierz wybrane drużyny
     selected_teams = request.GET.getlist('team', [])
-
-    # Pobierz wybraną datę
     match_date = request.GET.get('match_date')
 
-    # Bazowe zapytanie
-    matches = Match.objects.all()
+    if request.user.is_authenticated:
+        matches = Match.objects.filter(owner=request.user)
+        all_teams = Team.objects.filter(owner=request.user)
+    else:
+        matches = Match.objects.filter(owner__isnull=False)
+        all_teams = Team.objects.filter(owner__isnull=False)
 
-    # Filtrowanie
     if selected_teams:
         matches = matches.filter(Q(team_1__in=selected_teams) | Q(team_2__in=selected_teams))
     if match_date:
@@ -119,16 +144,12 @@ def match_list(request):
 
     matches = matches.order_by(sort_by)
 
-    # PAGINACJA
-    paginator = Paginator(matches, 4)  # 4 mecze na stronę
+    paginator = Paginator(matches, 4)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    # Pobierz wszystkie drużyny
-    all_teams = Team.objects.all()
-
     return render(request, 'match_list.html', {
-        'matches': page_obj,  # <- przekazujemy page_obj zamiast matches
+        'matches': page_obj,
         'page_obj': page_obj,
         'sort_by': sort_by.lstrip('-'),
         'direction': direction,
@@ -255,19 +276,23 @@ def event_list(request):
 
 def add_team(request):
     if request.method == 'POST':
-        form = TeamForm(request.POST)
+        form = TeamForm(request.POST, user=request.user)
         if form.is_valid():
-            form.save()
+            team = form.save(commit=False)
+            team.owner = request.user
+            team.save()
             return redirect('team_list')
     else:
-        form = TeamForm()
+        form = TeamForm(user=request.user)
     return render(request, 'add_team.html', {'form': form})
 
 def add_player(request):
     if request.method == 'POST':
         form = PlayerForm(request.POST)
         if form.is_valid():
-            form.save()
+            player = form.save(commit=False)
+            player.owner = request.user
+            player.save()
             return redirect('player_list')
     else:
         form = PlayerForm()
@@ -278,9 +303,10 @@ def add_league(request):
         form = LeagueForm(request.POST)
         if form.is_valid():
             league = form.save(commit=False)
+            league.owner = request.user
             league.save()
             form.save_m2m()  # Zapisz relacje ManyToMany (drużyny)
-            return redirect('league_list')  # Zmień na odpowiednią nazwę widoku
+            return redirect('league_list')
     else:
         form = LeagueForm()
     return render(request, 'add_league.html', {'form': form})
@@ -290,6 +316,7 @@ def add_round(request):
         form = RoundForm(request.POST)
         if form.is_valid():
             round_instance = form.save(commit=False)
+            round_instance.owner = request.user
             round_instance.save()
             form.save_m2m()
             return redirect('round_list')
@@ -302,7 +329,6 @@ def add_round(request):
         available_matches = Match.objects.filter(league_id=league_id).exclude(pk__in=used_matches)
         form.fields['matches'].queryset = available_matches
     else:
-        # PUSTY queryset jeśli liga nie wybrana
         form.fields['matches'].queryset = Match.objects.none()
 
     return render(request, 'add_round.html', {'form': form})
@@ -311,28 +337,30 @@ def add_match(request):
     if request.method == 'POST':
         form = MatchForm(request.POST)
         if form.is_valid():
-            form.save()
+            match = form.save(commit=False)
+            match.owner = request.user
+            match.save()
             return redirect('match_list')
     else:
         form = MatchForm()
 
-    leagues = League.objects.all()  # Pobranie listy lig
-    teams = Team.objects.all()  # Pobranie listy drużyn
+    leagues = League.objects.all()
+    teams = Team.objects.all()
     return render(request, 'add_match.html', {'form': form, 'leagues': leagues, 'teams': teams})
 
 def add_event(request):
     if request.method == 'POST':
         form = MatchEventForm(request.POST)
         if form.is_valid():
-            form.save()
+            event = form.save(commit=False)
+            event.owner = request.user
+            event.save()
             return redirect('event_list')
     else:
         form = MatchEventForm()
 
     matches = Match.objects.all()
     event_types = MatchEvent.EVENT_TYPES
-    print("Matches:", matches)  # Debugowanie
-    print("Event Types:", event_types)  # Debugowanie
     return render(request, 'add_event.html', {'form': form, 'matches': matches, 'event_types': event_types})
 
 def register_view(request):
