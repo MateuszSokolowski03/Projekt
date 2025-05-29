@@ -178,7 +178,10 @@ def match_detail(request, match_id):
     })
 
 def player_statistics_list(request):
-    leagues = League.objects.all()
+    if request.user.is_authenticated:
+        leagues = League.objects.filter(owner=request.user)
+    else:
+        leagues = League.objects.filter(owner__isnull=False)
     selected_league_id = request.GET.get('league')
     sort_by = request.GET.get('sort', 'player__last_name')
     direction = request.GET.get('direction', 'desc' if sort_by == 'goals' else 'asc')  # domyślnie gole malejąco
@@ -249,7 +252,11 @@ def player_statistics_list(request):
     'best_scorer_id': best_scorer_id,
 })
 def team_ranking_list(request):
-    leagues = League.objects.all()
+    if request.user.is_authenticated:
+        leagues = League.objects.filter(owner=request.user)
+    else:
+        leagues = League.objects.filter(owner__isnull=False)
+        
     selected_league_id = request.GET.get('league')
 
     if selected_league_id:
@@ -296,6 +303,8 @@ def add_player(request):
             return redirect('player_list')
     else:
         form = PlayerForm()
+        form.fields['team'].queryset = Team.objects.filter(owner=request.user)
+
     return render(request, 'add_player.html', {'form': form})
 
 def add_league(request):
@@ -305,10 +314,11 @@ def add_league(request):
             league = form.save(commit=False)
             league.owner = request.user
             league.save()
-            form.save_m2m()  # Zapisz relacje ManyToMany (drużyny)
+            form.save_m2m()
             return redirect('league_list')
     else:
         form = LeagueForm()
+        form.fields['teams'].queryset = Team.objects.filter(owner=request.user)
     return render(request, 'add_league.html', {'form': form})
 
 def add_round(request):
@@ -322,15 +332,8 @@ def add_round(request):
             return redirect('round_list')
     else:
         form = RoundForm()
-
-    league_id = request.GET.get('league')
-    if league_id:
-        used_matches = Round.objects.filter(league_id=league_id).values_list('matches', flat=True)
-        available_matches = Match.objects.filter(league_id=league_id).exclude(pk__in=used_matches)
-        form.fields['matches'].queryset = available_matches
-    else:
-        form.fields['matches'].queryset = Match.objects.none()
-
+        form.fields['league'].queryset = League.objects.filter(owner=request.user)
+        form.fields['matches'].queryset = Match.objects.filter(owner=request.user)
     return render(request, 'add_round.html', {'form': form})
 
 def add_match(request):
@@ -343,10 +346,12 @@ def add_match(request):
             return redirect('match_list')
     else:
         form = MatchForm()
-
-    leagues = League.objects.all()
-    teams = Team.objects.all()
-    return render(request, 'add_match.html', {'form': form, 'leagues': leagues, 'teams': teams})
+        # Ogranicz ligi do tych, których owner to aktualny użytkownik
+        form.fields['team_1'].queryset = Team.objects.filter(owner=request.user)
+        form.fields['team_2'].queryset = Team.objects.filter(owner=request.user)
+        form.fields['league'].queryset = League.objects.filter(owner=request.user)
+    leagues = League.objects.filter(owner=request.user)  # <-- dodaj to!
+    return render(request, 'add_match.html', {'form': form, 'leagues': leagues})
 
 def add_event(request):
     if request.method == 'POST':
@@ -358,10 +363,13 @@ def add_event(request):
             return redirect('event_list')
     else:
         form = MatchEventForm()
+        # Ogranicz dostępne mecze do tych, które należą do użytkownika
+        form.fields['match'].queryset = Match.objects.filter(owner=request.user)
 
-    matches = Match.objects.all()
+    matches = Match.objects.filter(owner=request.user)
     event_types = MatchEvent.EVENT_TYPES
     return render(request, 'add_event.html', {'form': form, 'matches': matches, 'event_types': event_types})
+
 
 def register_view(request):
     if request.method == 'POST':

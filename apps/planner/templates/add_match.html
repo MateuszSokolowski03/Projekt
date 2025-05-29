@@ -32,7 +32,7 @@
                         class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full bg-white text-gray-700"
                         required
                     >
-                        <option value="" disabled hidden>Wybierz</option>
+                        <option value="" disabled selected hidden>Wybierz ligę</option>
                         {% for league in leagues %}
                         <option value="{{ league.league_id }}">{{ league.name }}</option>
                         {% endfor %}
@@ -121,6 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => console.error("Błąd podczas pobierania drużyn:", error));
     });
+
 });
 </script>
 {% endblock %}
