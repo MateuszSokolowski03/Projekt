@@ -15,6 +15,7 @@ from django.http import JsonResponse
 from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
+from datetime import date, datetime
 
 def index(request):
     return render(request, 'base.html')
@@ -156,6 +157,8 @@ def match_list(request):
         'all_teams': all_teams,
         'selected_teams': selected_teams,
         'match_date': match_date,
+        'today': date.today(),
+        'now': datetime.now().time(),        
     })
 
 def match_detail(request, match_id):
@@ -256,7 +259,7 @@ def team_ranking_list(request):
         leagues = League.objects.filter(owner=request.user)
     else:
         leagues = League.objects.filter(owner__isnull=False)
-        
+
     selected_league_id = request.GET.get('league')
 
     if selected_league_id:
@@ -417,7 +420,6 @@ def league_ranking_list(request):
         'rankings': rankings,
         'selected_league': selected_league,
     })
-
 def generate_rankings(league):
     try:
         teams = league.teams.all()
@@ -426,7 +428,8 @@ def generate_rankings(league):
             return
 
         team_points = {team.team_id: 0 for team in teams}
-        matches = Match.objects.filter(league=league)
+        # Bierzemy tylko zakończone mecze!
+        matches = Match.objects.filter(league=league, is_finished=True)
 
         for match in matches:
             if match.team_1 and match.team_2:
@@ -458,9 +461,9 @@ def generate_rankings(league):
 
 @receiver(post_save, sender=Match)
 def update_rankings_after_match(sender, instance, **kwargs):
-    league = instance.league
-    generate_rankings(league)
-
+    if instance.is_finished:
+        league = instance.league
+        generate_rankings(league)
 def generate_statistics(league):
     try:
         teams = league.teams.all()
@@ -471,10 +474,11 @@ def generate_statistics(league):
         players = Player.objects.filter(team__in=teams)
 
         for player in players:
-            # Liczba meczów rozegranych przez drużynę piłkarza
+            # Liczba meczów rozegranych przez drużynę piłkarza (tylko zakończone mecze)
             matches_played = Match.objects.filter(
-                Q(team_1=player.team) | Q(team_2=player.team),
-                league=league
+                (Q(team_1=player.team) | Q(team_2=player.team)),
+                league=league,
+                is_finished=True
             ).count()
 
             # Domyślne wartości statystyk
@@ -482,11 +486,16 @@ def generate_statistics(league):
             yellow_cards = 0
             red_cards = 0
 
-            # Aktualizacja statystyk tylko jeśli istnieją wydarzenia
-            if MatchEvent.objects.filter(player=player).exists():
-                goals = MatchEvent.objects.filter(player=player, event_type='goal').count()
-                yellow_cards = MatchEvent.objects.filter(player=player, event_type='yellow_card').count()
-                red_cards = MatchEvent.objects.filter(player=player, event_type='red_card').count()
+            # Aktualizacja statystyk tylko jeśli istnieją wydarzenia w zakończonych meczach
+            events = MatchEvent.objects.filter(
+                player=player,
+                match__league=league,
+                match__is_finished=True
+            )
+            if events.exists():
+                goals = events.filter(event_type='goal').count()
+                yellow_cards = events.filter(event_type='yellow_card').count()
+                red_cards = events.filter(event_type='red_card').count()
 
             # Tworzenie lub aktualizacja statystyk
             PlayerStatistics.objects.update_or_create(
@@ -507,10 +516,11 @@ def generate_statistics_for_player(player):
         leagues = League.objects.filter(teams__players=player).distinct()
 
         for league in leagues:
-            # Liczba meczów rozegranych przez drużynę piłkarza w danej lidze
+            # Liczba meczów rozegranych przez drużynę piłkarza w danej lidze (tylko zakończone mecze)
             matches_played = Match.objects.filter(
-                Q(team_1=player.team) | Q(team_2=player.team),
-                league=league
+                (Q(team_1=player.team) | Q(team_2=player.team)),
+                league=league,
+                is_finished=True
             ).count()
 
             # Domyślne wartości statystyk
@@ -518,11 +528,16 @@ def generate_statistics_for_player(player):
             yellow_cards = 0
             red_cards = 0
 
-            # Aktualizacja statystyk tylko jeśli istnieją wydarzenia
-            if MatchEvent.objects.filter(player=player).exists():
-                goals = MatchEvent.objects.filter(player=player, event_type='goal').count()
-                yellow_cards = MatchEvent.objects.filter(player=player, event_type='yellow_card').count()
-                red_cards = MatchEvent.objects.filter(player=player, event_type='red_card').count()
+            # Aktualizacja statystyk tylko jeśli istnieją wydarzenia w zakończonych meczach
+            events = MatchEvent.objects.filter(
+                player=player,
+                match__league=league,
+                match__is_finished=True
+            )
+            if events.exists():
+                goals = events.filter(event_type='goal').count()
+                yellow_cards = events.filter(event_type='yellow_card').count()
+                red_cards = events.filter(event_type='red_card').count()
 
             # Tworzenie lub aktualizacja statystyk
             PlayerStatistics.objects.update_or_create(
@@ -569,6 +584,19 @@ def get_matches_by_league(request, league_id):
     return JsonResponse({'matches': data})
 
 
+@login_required
+def finish_match(request, match_id):
+    match = get_object_or_404(Match, pk=match_id)
+    # Sprawdź czy można zakończyć mecz (czy już się rozpoczął)
+    match_datetime = datetime.combine(match.match_date, match.match_time)
+    if datetime.now() < match_datetime:
+        messages.error(request, "Nie można zakończyć meczu przed jego rozpoczęciem!")
+        return redirect('match_detail', match_id=match_id)
+    if request.method == "POST":
+        match.is_finished = True
+        match.save()
+    return redirect('match_detail', match_id=match_id)
+
 @receiver(post_save, sender=MatchEvent)
 def update_match_score(sender, instance, **kwargs):
     match = instance.match
@@ -577,4 +605,4 @@ def update_match_score(sender, instance, **kwargs):
     match.score_team_1 = goals_team_1
     match.score_team_2 = goals_team_2
     match.save()
-# Create your views here.
+

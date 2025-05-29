@@ -30,33 +30,46 @@
     </div>
     <div class="space-y-4">
         {% for match in page_obj %}
-        <div class="bg-white shadow-md w-9/12 text-center border-2 border-solid border-primary/25 rounded-lg p-4 hover:bg-gray-100 cursor-pointer mr-5"
-             onclick="window.location='{% url 'match_detail' match.match_id %}'">
-            <p class="text-sm text-gray-600">{{ match.league.name }}</p>
-            <div class="flex justify-between items-center text-center">
-                <div class="flex flex-col items-center w-1/4">
-                    {% if match.team_1.logo %}
-                        <img src="{{ match.team_1.logo.url }}" alt="Logo {{ match.team_1.name }}" class="w-30 h-20 object-cover mx-auto mb-1">
-                    {% else %}
-                        <img src="{% static 'images/none.png' %}" alt="Brak loga" class="w-20 h-14 object-cover mx-auto mb-1">
-                    {% endif %}
-                    <p class="text-lg font-semibold text-gray-800">{{ match.team_1.name }}</p>
-                </div>
-                <div class="w-1/6">
-                    <p class="text-3xl font-bold text-gray-600">vs.</p>
-                </div>
-                <div class="flex flex-col items-center w-1/4">
-                    {% if match.team_2.logo %}
-                        <img src="{{ match.team_2.logo.url }}" alt="Logo {{ match.team_2.name }}" class="w-30 h-20 object-cover mx-auto mb-1">
-                    {% else %}
-                        <img src="{% static 'images/none.png' %}" alt="Brak loga" class="w-20 h-14 object-cover mx-auto mb-1">
-                    {% endif %}
-                    <p class="text-lg font-semibold text-gray-800">{{ match.team_2.name }}</p>
-                </div>
-            </div>
-            <p class="text-sm text-gray-600">{{ match.match_date|date:"d M Y" }} | {{ match.match_time|time:"H:i" }}</p>
+<div class="bg-white shadow-md w-9/12 text-center border-2 border-solid border-primary/25 rounded-lg p-4 hover:bg-gray-100 cursor-pointer mr-5"
+     onclick="window.location='{% url 'match_detail' match.match_id %}'">
+    <p class="text-sm text-gray-600">{{ match.league.name }}</p>
+    <div class="flex justify-between items-center text-center">
+        <div class="flex flex-col items-center w-1/4">
+            {% if match.team_1.logo %}
+                <img src="{{ match.team_1.logo.url }}" alt="Logo {{ match.team_1.name }}" class="w-30 h-20 object-cover mx-auto mb-1">
+            {% else %}
+                <img src="{% static 'images/none.png' %}" alt="Brak loga" class="w-20 h-14 object-cover mx-auto mb-1">
+            {% endif %}
+            <p class="text-lg font-semibold text-gray-800">{{ match.team_1.name }}</p>
         </div>
-        {% endfor %}
+        <div class="w-1/6 flex flex-col items-center">
+            <p class="text-3xl font-bold text-gray-600">
+                {{ match.score_team_1 }} : {{ match.score_team_2 }}
+            </p>
+            <p class="text-xs mt-1">
+                {% if match.is_finished %}
+                    <span class="text-green-700 font-semibold">Zakończony</span>
+                {% elif match.match_date > today %}
+                    <span class="text-blue-700 font-semibold">Zaplanowany</span>
+                {% elif match.match_date == today and match.match_time > now %}
+                    <span class="text-blue-700 font-semibold">Zaplanowany</span>
+                {% else %}
+                    <span class="text-yellow-600 font-semibold">W trakcie</span>
+                {% endif %}
+            </p>
+        </div>
+        <div class="flex flex-col items-center w-1/4">
+            {% if match.team_2.logo %}
+                <img src="{{ match.team_2.logo.url }}" alt="Logo {{ match.team_2.name }}" class="w-30 h-20 object-cover mx-auto mb-1">
+            {% else %}
+                <img src="{% static 'images/none.png' %}" alt="Brak loga" class="w-20 h-14 object-cover mx-auto mb-1">
+            {% endif %}
+            <p class="text-lg font-semibold text-gray-800">{{ match.team_2.name }}</p>
+        </div>
+    </div>
+    <p class="text-sm text-gray-600">{{ match.match_date|date:"d M Y" }} | {{ match.match_time|time:"H:i" }}</p>
+</div>
+{% endfor %}
     </div>
     <!-- PAGINACJA -->
     <div class="flex justify-center mt-6">

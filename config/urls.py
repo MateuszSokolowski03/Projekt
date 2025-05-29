@@ -53,6 +53,7 @@ urlpatterns = [
     path('api/match_players/<int:match_id>/', views.match_players, name='match_players'),
     path('get_teams_by_league/<int:league_id>/', views.get_teams_by_league, name='get_teams_by_league'),
     path('get_matches_by_league/<int:league_id>/', views.get_matches_by_league, name='get_matches_by_league'),
+    path('finish_match/<int:match_id>/', views.finish_match, name='finish_match'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
