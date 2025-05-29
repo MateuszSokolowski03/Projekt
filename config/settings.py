@@ -27,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECURITY WARNING: don't run with debug turned on in production!
 SECRET_KEY = os.environ.get('SECRET_KEY', 'default-secret-key')
-DEBUG = 'True'
+DEBUG = True
 
 ALLOWED_HOSTS = ['.railway.app', '127.0.0.1']
 
@@ -141,5 +141,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://planer-zespolow.up.railway.app'
+    'https://planer-zespolow.up.railway.app',
+]
+
+ALLOWED_HOSTS = [
+    'planer-zespolow.up.railway.app',
+    'localhost',
+    '127.0.0.1',
 ]
