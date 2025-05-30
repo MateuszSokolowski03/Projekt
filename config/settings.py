@@ -149,3 +149,12 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.wp.pl'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
+EMAIL_USE_TLS = False
+EMAIL_HOST_USER = 'planer.zawodow@wp.pl'
+EMAIL_HOST_PASSWORD = 'PlaneR_zawod0w!'
+DEFAULT_FROM_EMAIL = 'Planer Zawodów <planer.zawodow@wp.pl>'

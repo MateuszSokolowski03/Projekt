@@ -16,6 +16,9 @@ from django.views.decorators.cache import cache_page
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from datetime import date, datetime
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+import random
 
 def index(request):
     return render(request, 'base.html')
@@ -605,4 +608,57 @@ def update_match_score(sender, instance, **kwargs):
     match.score_team_1 = goals_team_1
     match.score_team_2 = goals_team_2
     match.save()
+
+def two_step_login_view(request):
+    step = request.session.get('login_step', 1)
+    email = request.session.get('login_email')
+    error = None
+
+    if request.method == 'POST':
+        if step == 1:
+            email = request.POST.get('email')
+            try:
+                user = User.objects.get(email=email)
+                code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+                request.session['login_code'] = code
+                request.session['login_email'] = email
+                request.session['login_step'] = 2
+                # Wyślij kod na email
+                send_mail(
+                    'Twój kod logowania',
+                    f'Twój kod logowania: {code}',
+                    'planer.zawodow@wp.pl',  
+                    [email],
+                    fail_silently=False,
+                )
+                step = 2
+            except User.DoesNotExist:
+                error = "Nie znaleziono użytkownika z tym adresem email."
+        elif step == 2:
+            code = ''.join([request.POST.get(f'code_{i}', '') for i in range(6)])
+            password = request.POST.get('password')
+            session_code = request.session.get('login_code')
+            email = request.session.get('login_email')
+            try:
+                user = User.objects.get(email=email)
+                if code == session_code and user.check_password(password):
+                    login(request, user)
+                    # Wyczyść sesję
+                    request.session.pop('login_code', None)
+                    request.session.pop('login_email', None)
+                    request.session.pop('login_step', None)
+                    return redirect('team_list')
+                else:
+                    error = "Nieprawidłowy kod lub hasło."
+            except User.DoesNotExist:
+                error = "Coś poszło nie tak. Spróbuj ponownie."
+    else:
+        request.session['login_step'] = 1
+        step = 1
+
+    return render(request, 'two_step_login.html', {
+        'step': step,
+        'email': email,
+        'error': error,
+    })
 

@@ -44,7 +44,7 @@ urlpatterns = [
     path('events/', views.event_list, name='event_list'),
     path('events/add/', views.add_event, name='add_event'),
     path('register/', register_view, name='register'),
-    path('login/', login_view, name='login'),
+    path('login/', views.two_step_login_view, name='login'), #two step login
     path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
     path('password-reset/', auth_views.PasswordResetView.as_view(template_name='password_reset.html'), name='password_reset'),
     path('password-reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'), name='password_reset_done'),

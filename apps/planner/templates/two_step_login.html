@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Logowanie dwuetapowe{% endblock %}
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-50">
+    <div class="w-full max-w-md bg-white rounded-lg shadow-md p-6">
+        <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Logowanie</h1>
+        <form method="post" class="space-y-4" autocomplete="off">
+            {% csrf_token %}
+            {% if step == 1 %}
+                <div class="space-y-2">
+                    <label for="id_email" class="block text-sm font-medium text-gray-700">Email:</label>
+                    <input type="email" name="email" id="id_email" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <button type="submit" class="w-full bg-primary text-white py-2 rounded-md shadow hover:bg-primary/90 transition-colors">
+                    Wyślij kod
+                </button>
+            {% elif step == 2 %}
+                <div class="space-y-2">
+                    <label class="block text-sm font-medium text-gray-700">Kod z emaila:</label>
+                    <div class="flex space-x-2 justify-center">
+                        {% for i in "012345" %}
+                        <input type="text" name="code_{{ forloop.counter0 }}" maxlength="1" pattern="[0-9]" required
+                            class="w-10 h-12 text-center border border-gray-300 rounded-md text-xl focus:outline-none focus:ring-primary focus:border-primary">
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label for="id_password" class="block text-sm font-medium text-gray-700">Hasło:</label>
+                    <input type="password" name="password" id="id_password" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <button type="submit" class="w-full bg-primary text-white py-2 rounded-md shadow hover:bg-primary/90 transition-colors">
+                    Zaloguj się
+                </button>
+            {% endif %}
+            {% if error %}
+            <div class="p-3 mt-4 text-sm text-red-700 bg-red-100 rounded-lg">
+                {{ error }}
+            </div>
+            {% endif %}
+        </form>
+        <p class="text-sm text-center text-gray-500 mt-4">
+            Nie masz konta?
+            <a href="{% url 'register' %}" class="text-primary hover:underline">Zarejestruj się</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
