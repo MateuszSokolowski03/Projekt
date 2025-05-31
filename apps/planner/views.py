@@ -19,6 +19,7 @@ from datetime import date, datetime
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 import random
+from django.db import connection
 
 def index(request):
     return render(request, 'base.html')
@@ -423,44 +424,10 @@ def league_ranking_list(request):
         'rankings': rankings,
         'selected_league': selected_league,
     })
+
 def generate_rankings(league):
-    try:
-        teams = league.teams.all()
-        if not teams.exists():
-            print("Brak drużyn w lidze:", league.name)
-            return
-
-        team_points = {team.team_id: 0 for team in teams}
-        # Bierzemy tylko zakończone mecze!
-        matches = Match.objects.filter(league=league, is_finished=True)
-
-        for match in matches:
-            if match.team_1 and match.team_2:
-                if match.score_team_1 > match.score_team_2:
-                    team_points[match.team_1.team_id] += 3
-                elif match.score_team_1 < match.score_team_2:
-                    team_points[match.team_2.team_id] += 3
-                else:
-                    team_points[match.team_1.team_id] += 1
-                    team_points[match.team_2.team_id] += 1
-
-        # Tworzymy lub aktualizujemy ranking nawet jeśli punkty = 0
-        for team_id, points in team_points.items():
-            team = Team.objects.get(team_id=team_id)
-            TeamRanking.objects.update_or_create(
-                team=team,
-                league=league,
-                defaults={'points': points}
-            )
-
-        # Nadaj pozycje (po sortowaniu punktów malejąco)
-        rankings = TeamRanking.objects.filter(league=league).order_by('-points', 'team__name')
-        for position, ranking in enumerate(rankings, start=1):
-            ranking.position = position
-            ranking.save()
-
-    except Exception as e:
-        print("Błąd podczas generowania rankingów:", str(e))
+    with connection.cursor() as cursor:
+        cursor.execute("SELECT update_team_rankings(%s);", [league.pk])
 
 @receiver(post_save, sender=Match)
 def update_rankings_after_match(sender, instance, **kwargs):
