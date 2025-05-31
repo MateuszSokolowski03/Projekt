@@ -88,6 +88,11 @@ class TeamRanking(models.Model):
     points = models.IntegerField(default=0)
     position = models.IntegerField(default=0)
 
+    class Meta:
+        constraints = [
+             models.UniqueConstraint(fields=['team', 'league'], name='unique_team_league')
+        ]
+
     def __str__(self):
         return f"{self.team.name} - {self.points} points, position {self.position} in {self.league.name}"
 

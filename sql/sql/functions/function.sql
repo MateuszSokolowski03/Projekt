@@ -4,8 +4,8 @@ DECLARE
     team_rec RECORD;
     match_rec RECORD;
     team_points JSONB := '{}';
-    team_id INT;
-    points INT;
+    v_team_id INT;
+    v_points INT;
     pos INT := 1;
 BEGIN
     -- Pobierz drużyny w lidze
@@ -24,26 +24,26 @@ BEGIN
         WHERE league_id = p_league_id AND is_finished = TRUE
     LOOP
         IF match_rec.score_team_1 > match_rec.score_team_2 THEN
-            team_points := jsonb_set(team_points, ('{' || match_rec.team_1 || '}')::TEXT[], 
-                to_jsonb((team_points->>match_rec.team_1::TEXT)::INT + 3));
+            team_points := jsonb_set(team_points, ('{' || match_rec.team_1_id || '}')::TEXT[], 
+                to_jsonb((team_points->>match_rec.team_1_id::TEXT)::INT + 3));
         ELSIF match_rec.score_team_1 < match_rec.score_team_2 THEN
-            team_points := jsonb_set(team_points, ('{' || match_rec.team_2 || '}')::TEXT[], 
-                to_jsonb((team_points->>match_rec.team_2::TEXT)::INT + 3));
+            team_points := jsonb_set(team_points, ('{' || match_rec.team_2_id || '}')::TEXT[], 
+                to_jsonb((team_points->>match_rec.team_2_id::TEXT)::INT + 3));
         ELSE
-            team_points := jsonb_set(team_points, ('{' || match_rec.team_1 || '}')::TEXT[], 
-                to_jsonb((team_points->>match_rec.team_1::TEXT)::INT + 1));
-            team_points := jsonb_set(team_points, ('{' || match_rec.team_2 || '}')::TEXT[], 
-                to_jsonb((team_points->>match_rec.team_2::TEXT)::INT + 1));
+            team_points := jsonb_set(team_points, ('{' || match_rec.team_1_id || '}')::TEXT[], 
+                to_jsonb((team_points->>match_rec.team_1_id::TEXT)::INT + 1));
+            team_points := jsonb_set(team_points, ('{' || match_rec.team_2_id || '}')::TEXT[], 
+                to_jsonb((team_points->>match_rec.team_2_id::TEXT)::INT + 1));
         END IF;
     END LOOP;
 
     -- Zapisanie punktów
-    FOR team_id, points IN
+    FOR v_team_id, v_points IN
         SELECT key::INT, value::INT FROM jsonb_each(team_points)
     LOOP
         INSERT INTO planner_teamranking (team_id, league_id, points, position)
-        VALUES (team_id, p_league_id, points, 0)
-        ON CONFLICT (team_id, league_id)
+        VALUES (v_team_id, p_league_id, v_points, 0)
+        ON CONFLICT ("team_id", "league_id")
         DO UPDATE SET points = EXCLUDED.points;
     END LOOP;
 
