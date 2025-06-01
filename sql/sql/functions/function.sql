@@ -89,3 +89,15 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+CREATE OR REPLACE FUNCTION trigger_update_rankings()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- Tylko jeśli mecz został zakończony
+    IF NEW.is_finished = TRUE AND (OLD.is_finished IS DISTINCT FROM NEW.is_finished) THEN
+        PERFORM update_team_rankings(NEW.league_id);
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+

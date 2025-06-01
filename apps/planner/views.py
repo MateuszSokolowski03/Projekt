@@ -429,11 +429,13 @@ def generate_rankings(league):
     with connection.cursor() as cursor:
         cursor.execute("SELECT update_team_rankings(%s);", [league.pk])
 
-@receiver(post_save, sender=Match)
-def update_rankings_after_match(sender, instance, **kwargs):
-    if instance.is_finished:
-        league = instance.league
-        generate_rankings(league)
+#@receiver(post_save, sender=Match)
+#def update_rankings_after_match(sender, instance, **kwargs):
+#    if instance.is_finished:
+#        league = instance.league
+#        generate_rankings(league)
+
+
 def generate_statistics(league):
     try:
         teams = league.teams.all()
