@@ -567,14 +567,14 @@ def finish_match(request, match_id):
         match.save()
     return redirect('match_detail', match_id=match_id)
 
-@receiver(post_save, sender=MatchEvent)
-def update_match_score(sender, instance, **kwargs):
-    match = instance.match
-    goals_team_1 = MatchEvent.objects.filter(match=match, event_type='goal', player__team=match.team_1).count()
-    goals_team_2 = MatchEvent.objects.filter(match=match, event_type='goal', player__team=match.team_2).count()
-    match.score_team_1 = goals_team_1
-    match.score_team_2 = goals_team_2
-    match.save()
+#@receiver(post_save, sender=MatchEvent)
+#def update_match_score(sender, instance, **kwargs):
+#    match = instance.match
+#    goals_team_1 = MatchEvent.objects.filter(match=match, event_type='goal', player__team=match.team_1).count()
+#    goals_team_2 = MatchEvent.objects.filter(match=match, event_type='goal', player__team=match.team_2).count()
+#    match.score_team_1 = goals_team_1
+#    match.score_team_2 = goals_team_2
+#    match.save()
 
 def two_step_login_view(request):
     step = request.session.get('login_step', 1)

@@ -60,3 +60,38 @@ BEGIN
     END LOOP;
 END;
 $$ LANGUAGE plpgsql;
+
+
+-- Funkcja aktualizująca wynik meczu
+CREATE OR REPLACE FUNCTION update_match_score()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE planner_match
+    SET
+        score_team_1 = (
+            SELECT COUNT(*)
+            FROM planner_matchevent e
+            JOIN planner_player p ON e.player_id = p.player_id
+            WHERE e.match_id = NEW.match_id
+              AND e.event_type = 'goal'
+              AND p.team_id = planner_match.team_1_id
+        ),
+        score_team_2 = (
+            SELECT COUNT(*)
+            FROM planner_matchevent e
+            JOIN planner_player p ON e.player_id = p.player_id
+            WHERE e.match_id = NEW.match_id
+              AND e.event_type = 'goal'
+              AND p.team_id = planner_match.team_2_id
+        )
+    WHERE match_id = NEW.match_id;
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger wywołujący funkcję po INSERT/UPDATE/DELETE na planner_matchevent
+DROP TRIGGER IF EXISTS trg_update_match_score ON planner_matchevent;
+CREATE TRIGGER trg_update_match_score
+AFTER INSERT OR UPDATE OR DELETE ON planner_matchevent
+FOR EACH ROW
+EXECUTE FUNCTION update_match_score();
