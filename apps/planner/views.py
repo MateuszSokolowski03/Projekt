@@ -20,6 +20,9 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 import random
 from django.db import connection
+import logging
+
+logger = logging.getLogger(__name__)
 
 def index(request):
     return render(request, 'base.html')
@@ -295,7 +298,10 @@ def add_team(request):
             team = form.save(commit=False)
             team.owner = request.user
             team.save()
+            logger.info(f'Utworzono drużynę: {team.name} przez użytkownika: {request.user.username}')
             return redirect('team_list')
+        else:
+            logger.warning(f'Błąd podczas tworzenia drużyny przez {request.user.username}: {form.errors}')
     else:
         form = TeamForm(user=request.user)
     return render(request, 'add_team.html', {'form': form})
@@ -307,7 +313,10 @@ def add_player(request):
             player = form.save(commit=False)
             player.owner = request.user
             player.save()
+            logger.info(f'Utworzono piłkarza: {player.first_name} {player.last_name} w drużynie: {player.team.name} przez użytkownika: {request.user.username}')
             return redirect('player_list')
+        else:
+            logger.warning(f'Błąd podczas tworzenia piłkarza przez {request.user.username}: {form.errors}')
     else:
         form = PlayerForm()
         form.fields['team'].queryset = Team.objects.filter(owner=request.user)
@@ -322,7 +331,10 @@ def add_league(request):
             league.owner = request.user
             league.save()
             form.save_m2m()
+            logger.info(f'Utworzono ligę: {league.name} przez użytkownika: {request.user.username}')
             return redirect('league_list')
+        else:
+            logger.warning(f'Błąd podczas tworzenia ligi przez {request.user.username}: {form.errors}')
     else:
         form = LeagueForm()
         form.fields['teams'].queryset = Team.objects.filter(owner=request.user)
@@ -336,7 +348,10 @@ def add_round(request):
             round_instance.owner = request.user
             round_instance.save()
             form.save_m2m()
+            logger.info(f'Utworzono rundę: {round_instance.number} w lidze: {round_instance.league.name} przez użytkownika: {request.user.username}')
             return redirect('round_list')
+        else:
+            logger.warning(f'Błąd podczas tworzenia rundy przez {request.user.username}: {form.errors}')
     else:
         form = RoundForm()
         form.fields['league'].queryset = League.objects.filter(owner=request.user)
@@ -350,7 +365,10 @@ def add_match(request):
             match = form.save(commit=False)
             match.owner = request.user
             match.save()
+            logger.info(f'Utworzono mecz: {match.team_1.name} vs {match.team_2.name} w lidze: {match.league.name} przez użytkownika: {request.user.username}')
             return redirect('match_list')
+        else:
+            logger.warning(f'Błąd podczas tworzenia meczu przez {request.user.username}: {form.errors}')
     else:
         form = MatchForm()
         # Ogranicz ligi do tych, których owner to aktualny użytkownik
@@ -367,7 +385,10 @@ def add_event(request):
             event = form.save(commit=False)
             event.owner = request.user
             event.save()
+            logger.info(f'Utworzono wydarzenie: {event.event_type} w meczu: {event.match.team_1.name} vs {event.match.team_2.name} przez użytkownika: {request.user.username}')
             return redirect('event_list')
+        else:
+            logger.warning(f'Błąd podczas tworzenia wydarzenia przez {request.user.username}: {form.errors}')
     else:
         form = MatchEventForm()
         # Ogranicz dostępne mecze do tych, które należą do użytkownika
@@ -385,7 +406,10 @@ def register_view(request):
             user = form.save()
             login(request, user)
             messages.success(request, 'Konto zostało pomyślnie utworzone!')
+            logger.info(f"Zarejestrowano konto dla użytkownika: {user.username} ({user.email})")
             return redirect('team_list')
+        else:
+            logger.warning(f"Błąd podczas rejestracji użytkownika: {form.errors}")
     else:
         form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
@@ -396,7 +420,10 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
+            logger.info(f"Użytkownik {user.username} zalogowany pomyślnie.")
             return redirect('team_list')
+        else:
+            logger.warning(f"Błąd logowania: {form.errors}")
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
@@ -440,7 +467,7 @@ def generate_statistics(league):
     try:
         teams = league.teams.all()
         if not teams.exists():
-            print(f"Brak drużyn w lidze: {league.name}")
+            logger.info(f"Brak drużyn w lidze {league.name}")
             return
 
         players = Player.objects.filter(team__in=teams)
@@ -480,8 +507,9 @@ def generate_statistics(league):
                     'red_cards': red_cards,
                 }
             )
+        logger.info(f"Statystyki dla ligi {league.name} zostały wygenerowane.")
     except Exception as e:
-        print(f"Błąd podczas generowania statystyk: {str(e)}")
+        logger.error(f"Błąd podczas generowania statystyk: {str(e)}")
 
 def generate_statistics_for_player(player):
     try:
@@ -600,9 +628,11 @@ def two_step_login_view(request):
                     [email],
                     fail_silently=False,
                 )
+                logger.info(f"Wysłano kod logowania na email: {email}")
                 step = 2
             except User.DoesNotExist:
                 error = "Nie znaleziono użytkownika z tym adresem email."
+                logger.warning(f"Nieudana próba logowania dwustopniowego: nie znaleziono emaila {email}")
         elif step == 2:
             code = ''.join([request.POST.get(f'code_{i}', '') for i in range(6)])
             password = request.POST.get('password')
@@ -612,6 +642,7 @@ def two_step_login_view(request):
                 user = User.objects.get(email=email)
                 if code == session_code and user.check_password(password):
                     login(request, user)
+                    logger.info(f"Użytkownik {user.username} zalogowany dwustopniowo pomyślnie.")
                     # Wyczyść sesję
                     request.session.pop('login_code', None)
                     request.session.pop('login_email', None)
@@ -619,8 +650,10 @@ def two_step_login_view(request):
                     return redirect('team_list')
                 else:
                     error = "Nieprawidłowy kod lub hasło."
+                    logger.warning(f"Nieudana próba logowania dwustopniowego: nieprawidłowy kod lub hasło dla emaila {email}")
             except User.DoesNotExist:
                 error = "Coś poszło nie tak. Spróbuj ponownie."
+                logger.error(f"Błąd podczas logowania dwustopniowego: nie znaleziono emaila {email}")
     else:
         request.session['login_step'] = 1
         step = 1

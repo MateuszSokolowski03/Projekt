@@ -3,6 +3,9 @@ import locale
 from django.shortcuts import render
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.models import User
+import logging
+
+logger = logging.getLogger(__name__)
 
 class Team(models.Model):
     team_id = models.AutoField(primary_key=True)  # Klucz główny
@@ -12,6 +15,17 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            logger.info(f"Aktualizowano drużynę: {self.name} (ID: {self.pk})")
+        else:
+            logger.info(f"Utworzono drużynę: {self.name}")
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        logger.warning(f"Usunięto drużynę: {self.name} (ID: {self.pk})")
+        super().delete(*args, **kwargs)
 
 class Player(models.Model):
     player_id = models.AutoField(primary_key=True)  # Klucz główny
@@ -30,6 +44,17 @@ class Player(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.get_position_display()})"
 
+    def save(self, *args, **kwargs):
+        if self.pk:
+            logger.info(f"Aktualizowano piłkarza: {self.first_name} {self.last_name} (ID: {self.pk})")
+        else:
+            logger.info(f"Utworzono piłkarza: {self.first_name} {self.last_name}")
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        logger.warning(f"Usunięto piłkarza: {self.first_name} {self.last_name} (ID: {self.pk})")
+        super().delete(*args, **kwargs)
+
 class PlayerStatistics(models.Model):
     statistics_id = models.AutoField(primary_key=True)  # Klucz główny
     league = models.ForeignKey('League', on_delete=models.CASCADE, related_name='player_statistics')
@@ -41,6 +66,10 @@ class PlayerStatistics(models.Model):
 
     def __str__(self):
         return f"Statystyki dla {self.player.first_name} {self.player.last_name}"
+
+    def save(self, *args, **kwargs):
+        logger.info(f"Zapisano statystyki dla gracza: {self.player} w lidze: {self.league}")
+        super().save(*args, **kwargs)
 
 class Match(models.Model):
     match_id = models.AutoField(primary_key=True)  # Klucz główny
@@ -64,7 +93,14 @@ class Match(models.Model):
         month = months[self.match_date.month]
         year = self.match_date.year
         return f"{self.team_1.name} vs {self.team_2.name} - {day} {month} {year} {self.match_time}"
-    
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            logger.info(f"Aktualizowano mecz: {self}")
+        else:
+            logger.info(f"Utworzono mecz: {self}")
+        super().save(*args, **kwargs)
+
 class MatchEvent(models.Model):
     event_id = models.AutoField(primary_key=True)  # Klucz główny
     match = models.ForeignKey('Match', on_delete=models.CASCADE, related_name='events')
@@ -81,6 +117,10 @@ class MatchEvent(models.Model):
     def __str__(self):
         return f"{self.event_type} at {self.minute} min in {self.match}"
 
+    def save(self, *args, **kwargs):
+        logger.info(f"Zapisano wydarzenie: {self.event_type} ({self.minute} min) w meczu: {self.match}")
+        super().save(*args, **kwargs)
+
 class TeamRanking(models.Model):
     ranking_id = models.AutoField(primary_key=True)  # Klucz główny
     team = models.ForeignKey('Team', on_delete=models.CASCADE, related_name='rankings')  # Zmieniono na ForeignKey
@@ -96,6 +136,10 @@ class TeamRanking(models.Model):
     def __str__(self):
         return f"{self.team.name} - {self.points} points, position {self.position} in {self.league.name}"
 
+    def save(self, *args, **kwargs):
+        logger.info(f"Zapisano ranking: {self}")
+        super().save(*args, **kwargs)
+
 class League(models.Model):
     league_id = models.AutoField(primary_key=True)  # Klucz główny
     name = models.CharField(max_length=255, unique=True)
@@ -105,6 +149,13 @@ class League(models.Model):
     def __str__(self):
         return self.name
 
+    def save(self, *args, **kwargs):
+        if self.pk:
+            logger.info(f"Aktualizowano ligę: {self.name} (ID: {self.pk})")
+        else:
+            logger.info(f"Utworzono ligę: {self.name}")
+        super().save(*args, **kwargs)
+
 class Round(models.Model):
     round_id = models.AutoField(primary_key=True)  # Klucz główny
     number = models.IntegerField(null=True, blank=True)    
@@ -113,6 +164,10 @@ class Round(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rounds', null=True, blank=True)
     def __str__(self):
         return f"{self.number} ({self.league.name})"
+
+    def save(self, *args, **kwargs):
+        logger.info(f"Zapisano rundę: {self.number} w lidze: {self.league.name}")
+        super().save(*args, **kwargs)
 
 def index(request):
     return render(request, 'index.html')

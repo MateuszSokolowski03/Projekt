@@ -1,0 +1,100 @@
+INFO 2025-06-02 17:00:46,772 autoreload Watching for file changes with StatReloader
+INFO 2025-06-02 17:01:38,354 autoreload D:\Projekt\apps\planner\views.py changed, reloading.
+INFO 2025-06-02 17:01:38,882 autoreload Watching for file changes with StatReloader
+INFO 2025-06-02 17:09:24,687 autoreload D:\Projekt\apps\planner\views.py changed, reloading.
+INFO 2025-06-02 17:09:25,213 autoreload Watching for file changes with StatReloader
+INFO 2025-06-02 17:10:08,553 autoreload D:\Projekt\apps\planner\views.py changed, reloading.
+INFO 2025-06-02 17:10:09,052 autoreload Watching for file changes with StatReloader
+INFO 2025-06-02 17:11:24,429 autoreload D:\Projekt\apps\planner\models.py changed, reloading.
+INFO 2025-06-02 17:11:24,962 autoreload Watching for file changes with StatReloader
+INFO 2025-06-02 17:11:47,882 autoreload D:\Projekt\apps\planner\models.py changed, reloading.
+INFO 2025-06-02 17:11:48,417 autoreload Watching for file changes with StatReloader
+INFO 2025-06-02 17:12:04,115 autoreload D:\Projekt\apps\planner\models.py changed, reloading.
+INFO 2025-06-02 17:12:04,679 autoreload Watching for file changes with StatReloader
+INFO 2025-06-02 17:12:25,515 autoreload D:\Projekt\apps\planner\models.py changed, reloading.
+INFO 2025-06-02 17:12:26,007 autoreload Watching for file changes with StatReloader
+INFO 2025-06-02 17:12:40,691 autoreload D:\Projekt\apps\planner\models.py changed, reloading.
+INFO 2025-06-02 17:12:41,209 autoreload Watching for file changes with StatReloader
+INFO 2025-06-02 17:12:59,990 autoreload D:\Projekt\apps\planner\models.py changed, reloading.
+INFO 2025-06-02 17:13:00,508 autoreload Watching for file changes with StatReloader
+INFO 2025-06-02 17:13:13,113 autoreload D:\Projekt\apps\planner\models.py changed, reloading.
+INFO 2025-06-02 17:13:13,671 autoreload Watching for file changes with StatReloader
+INFO 2025-06-02 17:13:29,377 autoreload D:\Projekt\apps\planner\models.py changed, reloading.
+INFO 2025-06-02 17:13:29,905 autoreload Watching for file changes with StatReloader
+INFO 2025-06-02 17:13:31,554 basehttp "GET / HTTP/1.1" 200 12278
+INFO 2025-06-02 17:13:34,581 basehttp "GET /teams/ HTTP/1.1" 200 12574
+INFO 2025-06-02 17:13:39,924 basehttp "GET /teams/add/ HTTP/1.1" 200 13157
+INFO 2025-06-02 17:13:56,126 models Utworzono dru¿ynê: Piast Gliwice
+INFO 2025-06-02 17:13:56,175 views Utworzono dru¿ynê: Piast Gliwice przez u¿ytkownika: janek
+INFO 2025-06-02 17:13:56,176 basehttp "POST /teams/add/ HTTP/1.1" 302 0
+INFO 2025-06-02 17:13:56,583 basehttp "GET /teams/ HTTP/1.1" 200 13234
+INFO 2025-06-02 17:14:04,114 basehttp "GET /teams/14/ HTTP/1.1" 200 13897
+INFO 2025-06-02 17:14:15,435 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-06-02 17:14:15,801 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-06-02 17:14:16,298 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 3690
+INFO 2025-06-02 17:14:16,590 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1653
+INFO 2025-06-02 17:14:16,591 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+INFO 2025-06-02 17:14:16,593 basehttp "GET /static/admin/css/login.css HTTP/1.1" 200 951
+INFO 2025-06-02 17:14:16,614 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 16565
+INFO 2025-06-02 17:14:16,629 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 22120
+INFO 2025-06-02 17:14:16,631 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2808
+INFO 2025-06-02 17:14:16,646 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-06-02 17:14:20,970 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-06-02 17:14:21,383 basehttp "GET /admin/ HTTP/1.1" 200 15078
+INFO 2025-06-02 17:14:21,415 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-06-02 17:14:21,448 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-06-02 17:14:21,455 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-06-02 17:14:24,173 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-06-02 17:14:24,585 basehttp "GET /admin/ HTTP/1.1" 200 15078
+INFO 2025-06-02 17:14:27,195 basehttp "GET /admin/ HTTP/1.1" 200 15078
+INFO 2025-06-02 17:14:29,567 basehttp "GET /admin/ HTTP/1.1" 200 15078
+INFO 2025-06-02 17:14:31,253 basehttp "POST /admin/logout/ HTTP/1.1" 200 3571
+INFO 2025-06-02 17:14:32,740 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-06-02 17:14:32,744 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4176
+INFO 2025-06-02 17:14:35,739 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4344
+INFO 2025-06-02 17:14:44,115 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-06-02 17:14:44,539 basehttp "GET /admin/ HTTP/1.1" 200 15078
+INFO 2025-06-02 17:14:46,234 basehttp "GET /admin/planner/team/ HTTP/1.1" 200 13167
+INFO 2025-06-02 17:14:46,260 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 200 6878
+INFO 2025-06-02 17:14:46,263 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 200 8076
+INFO 2025-06-02 17:14:46,266 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2025-06-02 17:14:46,273 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-06-02 17:14:46,277 basehttp "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+INFO 2025-06-02 17:14:46,280 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9777
+INFO 2025-06-02 17:14:46,281 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2025-06-02 17:14:46,307 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+INFO 2025-06-02 17:14:46,352 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+INFO 2025-06-02 17:14:46,370 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+INFO 2025-06-02 17:14:46,661 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-06-02 17:14:46,682 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-06-02 17:14:49,602 basehttp "GET /admin/planner/team/14/change/ HTTP/1.1" 200 14819
+INFO 2025-06-02 17:14:49,627 basehttp "GET /static/admin/css/forms.css HTTP/1.1" 200 8525
+INFO 2025-06-02 17:14:49,630 basehttp "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+INFO 2025-06-02 17:14:49,662 basehttp "GET /static/admin/css/widgets.css HTTP/1.1" 200 11991
+INFO 2025-06-02 17:14:49,670 basehttp "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+INFO 2025-06-02 17:14:49,673 basehttp "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+INFO 2025-06-02 17:14:49,970 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-06-02 17:14:53,337 basehttp "GET /admin/planner/team/14/delete/ HTTP/1.1" 200 11280
+INFO 2025-06-02 17:14:53,376 basehttp "GET /static/admin/js/cancel.js HTTP/1.1" 200 884
+WARNING 2025-06-02 17:14:55,489 models Usuniêto dru¿ynê: Piast Gliwice (ID: 14)
+INFO 2025-06-02 17:14:55,732 basehttp "POST /admin/planner/team/14/delete/ HTTP/1.1" 302 0
+INFO 2025-06-02 17:14:56,204 basehttp "GET /admin/planner/team/ HTTP/1.1" 200 13051
+INFO 2025-06-02 17:14:56,588 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+INFO 2025-06-02 17:15:37,703 basehttp "GET /admin/planner/team/14/delete/ HTTP/1.1" 302 0
+INFO 2025-06-02 17:15:38,126 basehttp "GET /admin/ HTTP/1.1" 200 15189
+INFO 2025-06-02 17:15:38,351 basehttp "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+INFO 2025-06-02 17:15:38,351 basehttp "GET /static/admin/img/icon-alert.svg HTTP/1.1" 200 504
+INFO 2025-06-02 17:15:39,283 basehttp "GET /admin/planner/team/14/change/ HTTP/1.1" 302 0
+INFO 2025-06-02 17:15:39,684 basehttp "GET /admin/ HTTP/1.1" 200 15189
+INFO 2025-06-02 17:15:41,767 basehttp "GET /admin/planner/team/ HTTP/1.1" 200 12891
+INFO 2025-06-02 17:15:43,759 basehttp "GET /admin/ HTTP/1.1" 200 15021
+INFO 2025-06-02 17:15:46,486 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-06-02 17:15:46,903 basehttp "GET /admin/ HTTP/1.1" 200 15021
+INFO 2025-06-02 17:15:48,613 basehttp "GET / HTTP/1.1" 200 12296
+INFO 2025-06-02 17:15:50,347 basehttp "GET /teams/ HTTP/1.1" 200 12592
+INFO 2025-06-02 17:15:54,962 basehttp "GET /teams/add/ HTTP/1.1" 200 13175
+WARNING 2025-06-02 17:16:11,743 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-06-02 17:16:11,743 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 7913
+INFO 2025-06-02 17:17:10,670 basehttp "GET /teams/add/ HTTP/1.1" 200 13215
+WARNING 2025-06-02 17:17:10,692 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-06-02 17:17:10,693 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 7913
