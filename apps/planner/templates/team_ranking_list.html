@@ -26,35 +26,45 @@
         </form>
     </div>
 
-    <!-- Lista rankingów jako divy -->
-    <div class="space-y-4">
-        {% for ranking in rankings %}
-        <div class="bg-white shadow-md w-9/12 rounded-lg p-4 border-2 border-solid hover:bg-gray-100 cursor-pointer mr-5
-                    {% if ranking.position == 1 %}border-4 border-yellow-500{% elif ranking.position == 2 %}border-4 border-gray-400{% elif ranking.position == 3 %}border-4 border-orange-400{% else %}border-primary/25{% endif %}"
-                    onclick="window.location='{% url 'team_detail' ranking.team.team_id %}'">
-            <div class="flex justify-between items-center text-center">
-                <div>
-                    <p class="text-7xl font-bold text-gray-600">#{{ ranking.position }}</p>
-                </div>
-                <div>
-                    <div>
+    <!-- Tabela rankingowa -->
+    <div class="w-9/12">
+        <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+            <thead>
+                <tr class="bg-primary/10 text-gray-700 text-center">
+                    <th class="py-3 px-2">#</th>
+                    <th class="py-3 px-2">Drużyna</th>
+                    <th class="py-3 px-2">M</th>
+                    <th class="py-3 px-2">W</th>
+                    <th class="py-3 px-2">R</th>
+                    <th class="py-3 px-2">P</th>
+                    <th class="py-3 px-2">Bramki</th>
+                    <th class="py-3 px-2">Pkt</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ranking in rankings %}
+                <tr class="text-center hover:bg-gray-100 cursor-pointer"
+                    onclick="window.location='{% url 'team_detail' ranking.team.team_id %}'"
+                    {% if ranking.position == 1 %}style="border-left: 4px solid #FFD700;"{% elif ranking.position == 2 %}style="border-left: 4px solid #A0A0A0;"{% elif ranking.position == 3 %}style="border-left: 4px solid #FFA500;"{% endif %}>
+                    <td class="py-2 px-2 font-bold text-lg text-gray-600">#{{ ranking.position }}</td>
+                    <td class="py-2 px-2 flex items-center gap-2 justify-center">
                         {% if ranking.team.logo %}
-                            <img src="{{ ranking.team.logo.url }}" alt="Logo {{ ranking.team.name }}" class="w-30 h-20 object-cover mx-auto mb-1">
+                            <img src="{{ ranking.team.logo.url }}" alt="Logo {{ ranking.team.name }}" class="w-10 h-8 object-cover rounded">
                         {% else %}
-                            <img src="{% static 'images/none.png' %}" alt="Brak loga" class="w-30 h-20 object-cover mx-auto mb-1">
+                            <img src="{% static 'images/none.png' %}" alt="Brak loga" class="w-10 h-8 object-cover rounded">
                         {% endif %}
-                    </div>
-                    <div>
-                        <p class="text-lg font-semibold text-gray-800 w-[200px]">{{ ranking.team.name }}</p>
-                        <p class="text-sm text-gray-600">{{ ranking.league.name }}</p>
-                    </div>
-                </div>
-                <div>
-                    <p class="text-4xl text-gray-600">{{ ranking.points }} pkt</p>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+                        <span class="font-semibold text-gray-800">{{ ranking.team.name }}</span>
+                    </td>
+                    <td class="py-2 px-2">{{ ranking.matches_played }}</td>
+                    <td class="py-2 px-2">{{ ranking.wins }}</td>
+                    <td class="py-2 px-2">{{ ranking.draws }}</td>
+                    <td class="py-2 px-2">{{ ranking.losses }}</td>
+                    <td class="py-2 px-2">{{ ranking.goals_for }}-{{ ranking.goals_against }}</td>
+                    <td class="py-2 px-2 font-bold text-xl text-gray-700">{{ ranking.points }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 {% endblock %}
