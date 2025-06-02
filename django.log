@@ -104,3 +104,7 @@ INFO 2025-06-02 20:51:05,595 views Utworzono dru¿ynê: asddfgh przez u¿ytkownika:
 INFO 2025-06-02 20:51:31,949 models Utworzono ligê: ligatest
 INFO 2025-06-02 20:51:32,126 views Utworzono ligê: ligatest przez u¿ytkownika: kacperdebowski
 WARNING 2025-06-02 20:53:10,291 models Usuniêto dru¿ynê: asddfgh (ID: 15)
+INFO 2025-06-02 21:30:51,075 models Utworzono dru¿ynê: testteam
+INFO 2025-06-02 21:30:51,113 views Utworzono dru¿ynê: testteam przez u¿ytkownika: kacperdebowski
+INFO 2025-06-02 21:32:20,536 models Utworzono dru¿ynê: asfdas
+INFO 2025-06-02 21:32:20,575 views Utworzono dru¿ynê: asfdas przez u¿ytkownika: kacperdebowski
