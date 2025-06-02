@@ -20,8 +20,9 @@
                     <label class="block text-sm font-medium text-gray-700">Kod z emaila:</label>
                     <div class="flex space-x-2 justify-center">
                         {% for i in "012345" %}
-                        <input type="text" name="code_{{ forloop.counter0 }}" maxlength="1" pattern="[0-9]" required
-                            class="w-10 h-12 text-center border border-gray-300 rounded-md text-xl focus:outline-none focus:ring-primary focus:border-primary">
+                        <input type="text" name="code_{{ forloop.counter0 }}" maxlength="1" pattern="[0-9]" inputmode="numeric" required
+                            class="w-10 h-12 text-center border border-gray-300 rounded-md text-xl focus:outline-none focus:ring-primary focus:border-primary"
+                            autocomplite="one-time-code" id="id_code_{{ forloop.counter0 }}">
                         {% endfor %}
                     </div>
                 </div>
@@ -46,4 +47,30 @@
         </p>
     </div>
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = Array.from(document.querySelectorAll('input[name^="code_"]'));
+    // Automatyczne przechodzenie do następnego pola
+    inputs.forEach((input, idx) => {
+        input.addEventListener('input', function() {
+            if (this.value.length === 1 && idx < inputs.length - 1) {
+                inputs[idx + 1].focus();
+            }
+        });
+    });
+    // Obsługa wklejania całego kodu naraz
+    inputs[0].addEventListener('paste', function(e) {
+        const paste = (e.clipboardData || window.clipboardData).getData('text');
+        if (/^\d{6}$/.test(paste)) {
+            e.preventDefault();
+            paste.split('').forEach((char, idx) => {
+                if (inputs[idx]) {
+                    inputs[idx].value = char;
+                }
+            });
+            inputs[5].focus();
+        }
+    });
+});
+</script>
 {% endblock %}
