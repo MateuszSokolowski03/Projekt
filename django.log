@@ -98,3 +98,9 @@ WARNING 2025-06-02 17:16:11,743 basehttp "GET /.well-known/appspecific/com.chrom
 INFO 2025-06-02 17:17:10,670 basehttp "GET /teams/add/ HTTP/1.1" 200 13215
 WARNING 2025-06-02 17:17:10,692 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
 WARNING 2025-06-02 17:17:10,693 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 7913
+INFO 2025-06-02 20:50:52,504 autoreload D:\Projekt\config\settings.py changed, reloading.
+INFO 2025-06-02 20:51:05,558 models Utworzono dru¿ynê: asddfgh
+INFO 2025-06-02 20:51:05,595 views Utworzono dru¿ynê: asddfgh przez u¿ytkownika: kacperdebowski
+INFO 2025-06-02 20:51:31,949 models Utworzono ligê: ligatest
+INFO 2025-06-02 20:51:32,126 views Utworzono ligê: ligatest przez u¿ytkownika: kacperdebowski
+WARNING 2025-06-02 20:53:10,291 models Usuniêto dru¿ynê: asddfgh (ID: 15)
