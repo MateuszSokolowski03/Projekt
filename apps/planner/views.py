@@ -293,7 +293,7 @@ def event_list(request):
 
 def add_team(request):
     if request.method == 'POST':
-        form = TeamForm(request.POST, user=request.user)
+        form = TeamForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
             team = form.save(commit=False)
             team.owner = request.user
