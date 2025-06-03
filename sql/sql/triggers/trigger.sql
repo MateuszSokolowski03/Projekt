@@ -10,3 +10,7 @@ CREATE TRIGGER trg_update_rankings_after_match
 AFTER UPDATE ON planner_match
 FOR EACH ROW
 EXECUTE FUNCTION trigger_update_rankings();
+
+CREATE TRIGGER users_audit_trigger
+AFTER INSERT OR UPDATE OR DELETE ON users
+FOR EACH ROW EXECUTE FUNCTION log_audit_event();

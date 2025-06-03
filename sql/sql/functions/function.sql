@@ -101,3 +101,25 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+
+CREATE OR REPLACE FUNCTION log_audit_event()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO audit_log (
+        username,
+        action,
+        table_name,
+        old_data,
+        new_data,
+        record_id
+    ) VALUES (
+        current_user,
+        TG_OP,
+        TG_TABLE_NAME,
+        CASE WHEN TG_OP IN ('UPDATE', 'DELETE') THEN to_jsonb(OLD) ELSE NULL END,
+        CASE WHEN TG_OP IN ('INSERT', 'UPDATE') THEN to_jsonb(NEW) ELSE NULL END,
+        COALESCE(NEW.id, OLD.id)
+    );
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
