@@ -21,6 +21,8 @@ from django.core.mail import send_mail
 import random
 from django.db import connection
 import logging
+from django.db import DatabaseError
+from psycopg2 import Error as Psycopg2Error
 
 logger = logging.getLogger(__name__)
 
@@ -261,6 +263,7 @@ def player_statistics_list(request):
     'direction': direction,
     'best_scorer_id': best_scorer_id,
 })
+
 def team_ranking_list(request):
     if request.user.is_authenticated:
         leagues = League.objects.filter(owner=request.user)
@@ -310,11 +313,18 @@ def add_player(request):
     if request.method == 'POST':
         form = PlayerForm(request.POST)
         if form.is_valid():
-            player = form.save(commit=False)
-            player.owner = request.user
-            player.save()
-            logger.info(f'Utworzono piłkarza: {player.first_name} {player.last_name} w drużynie: {player.team.name} przez użytkownika: {request.user.username}')
-            return redirect('player_list')
+            try:
+                player = form.save(commit=False)
+                player.owner = request.user
+                player.save()
+                logger.info(f'Utworzono piłkarza: {player.first_name} {player.last_name} w drużynie: {player.team.name} przez użytkownika: {request.user.username}')
+                return redirect('player_list')
+            except Exception as e:
+                logger.error(f'Błąd podczas tworzenia piłkarza przez {request.user.username}: {e}')
+                error_msg = str(e)
+                if hasattr(e, 'args') and e.args:
+                    error_msg = e.args[0]
+                messages.error(request, error_msg)
         else:
             logger.warning(f'Błąd podczas tworzenia piłkarza przez {request.user.username}: {form.errors}')
     else:
@@ -362,11 +372,20 @@ def add_match(request):
     if request.method == 'POST':
         form = MatchForm(request.POST)
         if form.is_valid():
-            match = form.save(commit=False)
-            match.owner = request.user
-            match.save()
-            logger.info(f'Utworzono mecz: {match.team_1.name} vs {match.team_2.name} w lidze: {match.league.name} przez użytkownika: {request.user.username}')
-            return redirect('match_list')
+            try:
+                match = form.save(commit=False)
+                match.owner = request.user
+                match.save()
+                logger.info(f'Utworzono mecz: {match.team_1.name} vs {match.team_2.name} w lidze: {match.league.name} przez użytkownika: {request.user.username}')
+                return redirect('match_list')
+            except Exception as e:
+                # Obsługa błędów z bazy danych (np. trigger z PostgreSQL)
+                logger.error(f'Błąd podczas tworzenia meczu przez {request.user.username}: {e}')
+                error_msg = str(e)
+                # Wyciągnij czytelny komunikat z wyjątku (jeśli to błąd z triggera)
+                if hasattr(e, 'args') and e.args:
+                    error_msg = e.args[0]
+                messages.error(request, error_msg)
         else:
             logger.warning(f'Błąd podczas tworzenia meczu przez {request.user.username}: {form.errors}')
     else:
@@ -375,7 +394,7 @@ def add_match(request):
         form.fields['team_1'].queryset = Team.objects.filter(owner=request.user)
         form.fields['team_2'].queryset = Team.objects.filter(owner=request.user)
         form.fields['league'].queryset = League.objects.filter(owner=request.user)
-    leagues = League.objects.filter(owner=request.user)  # <-- dodaj to!
+    leagues = League.objects.filter(owner=request.user)
     return render(request, 'add_match.html', {'form': form, 'leagues': leagues})
 
 def add_event(request):
