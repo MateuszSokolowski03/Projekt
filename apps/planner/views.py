@@ -322,8 +322,8 @@ def add_player(request):
             except Exception as e:
                 logger.error(f'Błąd podczas tworzenia piłkarza przez {request.user.username}: {e}')
                 error_msg = str(e)
-                if hasattr(e, 'args') and e.args:
-                    error_msg = e.args[0]
+                if "więcej niż 11 zawodników" in error_msg:
+                    error_msg = "Nie można dodać więcej niż 11 zawodników do jednej drużyny."
                 messages.error(request, error_msg)
         else:
             logger.warning(f'Błąd podczas tworzenia piłkarza przez {request.user.username}: {form.errors}')
@@ -379,12 +379,10 @@ def add_match(request):
                 logger.info(f'Utworzono mecz: {match.team_1.name} vs {match.team_2.name} w lidze: {match.league.name} przez użytkownika: {request.user.username}')
                 return redirect('match_list')
             except Exception as e:
-                # Obsługa błędów z bazy danych (np. trigger z PostgreSQL)
                 logger.error(f'Błąd podczas tworzenia meczu przez {request.user.username}: {e}')
                 error_msg = str(e)
-                # Wyciągnij czytelny komunikat z wyjątku (jeśli to błąd z triggera)
-                if hasattr(e, 'args') and e.args:
-                    error_msg = e.args[0]
+                if "co najmniej 7 zawodników" in error_msg:
+                    error_msg = "Nie można utworzyć meczu: obie drużyny muszą mieć co najmniej 7 zawodników. Uzupełnij składy przed dodaniem meczu."
                 messages.error(request, error_msg)
         else:
             logger.warning(f'Błąd podczas tworzenia meczu przez {request.user.username}: {form.errors}')

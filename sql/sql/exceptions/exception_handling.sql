@@ -22,10 +22,8 @@ BEGIN
     SELECT COUNT(*) INTO team1_count FROM planner_player WHERE team_id = NEW.team_1_id;
     SELECT COUNT(*) INTO team2_count FROM planner_player WHERE team_id = NEW.team_2_id;
 
-    IF team1_count < 7 THEN
-        RAISE EXCEPTION 'Drużyna 1 (ID: %) ma mniej niż 7 zawodników!', NEW.team_1_id;
-    ELSIF team2_count < 7 THEN
-        RAISE EXCEPTION 'Drużyna 2 (ID: %) ma mniej niż 7 zawodników!', NEW.team_2_id;
+    IF team1_count < 7 OR team2_count < 7 THEN
+        RAISE EXCEPTION 'Obie drużyny muszą mieć co najmniej 7 zawodników, aby utworzyć mecz.';
     END IF;
 
     RETURN NEW;
