@@ -1,6 +1,7 @@
 from django import forms
 from .models import Team, Player, League, Round, Match, MatchEvent,TeamRanking
-
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class TeamForm(forms.ModelForm):
     class Meta:
@@ -62,3 +63,10 @@ class TeamRankingForm(forms.ModelForm):
             'points': forms.NumberInput(attrs={'class': 'form-control'}),
             'position': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+
+class CustomUserCreationForm(UserCreationForm):
+    email = forms.EmailField(required=True, label="Email")
+
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")

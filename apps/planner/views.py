@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse
 from .models import Team, Player, League, Round, Match, PlayerStatistics, TeamRanking, MatchEvent
-from .forms import TeamForm, PlayerForm, LeagueForm, RoundForm, MatchForm, MatchEventForm
+from .forms import TeamForm, PlayerForm, LeagueForm, RoundForm, MatchForm, MatchEventForm,CustomUserCreationForm,TeamRankingForm
 from django.contrib.auth import login, authenticate
-from .forms import TeamRankingForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -25,6 +24,7 @@ from django.db import DatabaseError
 from psycopg2 import Error as Psycopg2Error
 from django.views.decorators.http import require_http_methods
 from datetime import timedelta
+
 
 logger = logging.getLogger(__name__)
 
@@ -417,12 +417,15 @@ def add_event(request):
     event_types = MatchEvent.EVENT_TYPES
     return render(request, 'add_event.html', {'form': form, 'matches': matches, 'event_types': event_types})
 
+from .forms import CustomUserCreationForm
 
 def register_view(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save()
+            user = form.save(commit=False)
+            user.email = form.cleaned_data['email']
+            user.save()
             login(request, user)
             messages.success(request, 'Konto zostało pomyślnie utworzone!')
             logger.info(f"Zarejestrowano konto dla użytkownika: {user.username} ({user.email})")
@@ -430,7 +433,7 @@ def register_view(request):
         else:
             logger.warning(f"Błąd podczas rejestracji użytkownika: {form.errors}")
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'register.html', {'form': form})
 
 def login_view(request):
