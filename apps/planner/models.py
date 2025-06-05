@@ -103,11 +103,11 @@ class Match(models.Model):
 
     @property
     def dynamic_score_team_1(self):
-        return self.matchevent_set.filter(team=self.team_1, event_type='goal').count()
+        return self.events.filter(team=self.team_1, event_type='goal').count()
 
     @property
     def dynamic_score_team_2(self):
-        return self.matchevent_set.filter(team=self.team_2, event_type='goal').count()    
+        return self.events.filter(team=self.team_2, event_type='goal').count()
 
 class MatchEvent(models.Model):
     event_id = models.AutoField(primary_key=True)  # Klucz główny
