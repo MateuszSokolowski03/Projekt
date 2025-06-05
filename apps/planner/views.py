@@ -748,7 +748,10 @@ def generate_matches(request):
         except League.DoesNotExist:
             messages.error(request, "Wybrana liga nie istnieje lub nie masz do niej dostępu.")
         except Exception as e:
-            logger.error(f"Błąd podczas generowania meczów: {e}")
-            messages.error(request, "Wystąpił błąd podczas generowania meczów.")
+            logger.error(f'Błąd podczas generowania meczów przez {request.user.username}: {e}')
+            error_msg = str(e)
+            if "co najmniej 7 zawodników" in error_msg or "powyżej 7 zawodnik" in error_msg:
+                error_msg = "Nie można utworzyć meczu: obie drużyny muszą mieć powyżej 7 zawodników. Uzupełnij składy przed generowaniem meczów."
+            messages.error(request, error_msg)
 
     return render(request, 'generate_matches.html', {'leagues': leagues})
