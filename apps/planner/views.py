@@ -24,7 +24,7 @@ from django.db import DatabaseError
 from psycopg2 import Error as Psycopg2Error
 from django.views.decorators.http import require_http_methods
 from datetime import timedelta
-
+from collections import defaultdict
 
 logger = logging.getLogger(__name__)
 
@@ -523,54 +523,53 @@ def generate_rankings(league):
 #        league = instance.league
 #        generate_rankings(league)
 
-
 def generate_statistics(league):
     try:
         teams = league.teams.all()
-        if not teams.exists():
-            logger.info(f"Brak drużyn w lidze {league.name}")
-            return
-
         players = Player.objects.filter(team__in=teams)
 
+        # Pobierz wszystkie eventy jednym zapytaniem
+        events = MatchEvent.objects.filter(
+            match__league=league,
+            match__is_finished=True,
+            player__in=players
+        ).select_related('player')
+
+        # Zlicz statystyki per player_id
+        stats_map = defaultdict(lambda: {'goals': 0, 'yellow': 0, 'red': 0})
+
+        for event in events:
+            pid = event.player_id
+            if event.event_type == 'goal':
+                stats_map[pid]['goals'] += 1
+            elif event.event_type == 'yellow_card':
+                stats_map[pid]['yellow'] += 1
+            elif event.event_type == 'red_card':
+                stats_map[pid]['red'] += 1
+
         for player in players:
-            # Liczba meczów rozegranych przez drużynę piłkarza (tylko zakończone mecze)
             matches_played = Match.objects.filter(
-                (Q(team_1=player.team) | Q(team_2=player.team)),
+                Q(team_1=player.team) | Q(team_2=player.team),
                 league=league,
                 is_finished=True
             ).count()
 
-            # Domyślne wartości statystyk
-            goals = 0
-            yellow_cards = 0
-            red_cards = 0
-
-            # Aktualizacja statystyk tylko jeśli istnieją wydarzenia w zakończonych meczach
-            events = MatchEvent.objects.filter(
-                player=player,
-                match__league=league,
-                match__is_finished=True
-            )
-            if events.exists():
-                goals = events.filter(event_type='goal').count()
-                yellow_cards = events.filter(event_type='yellow_card').count()
-                red_cards = events.filter(event_type='red_card').count()
-
-            # Tworzenie lub aktualizacja statystyk
+            s = stats_map[player.pk]
             PlayerStatistics.objects.update_or_create(
                 player=player,
                 league=league,
                 defaults={
                     'matches_played': matches_played,
-                    'goals': goals,
-                    'yellow_cards': yellow_cards,
-                    'red_cards': red_cards,
+                    'goals': s['goals'],
+                    'yellow_cards': s['yellow'],
+                    'red_cards': s['red'],
                 }
             )
-        logger.info(f"Statystyki dla ligi {league.name} zostały wygenerowane.")
+        logger.info(f"Zoptymalizowano statystyki dla ligi {league.name}.")
     except Exception as e:
-        logger.error(f"Błąd podczas generowania statystyk: {str(e)}")
+        logger.error(f"Optymalizacja statystyk nie powiodła się: {str(e)}")
+
+
 
 def generate_statistics_for_player(player):
     try:
@@ -782,7 +781,6 @@ def generate_matches(request):
                 )
 
             Match.objects.bulk_create(matches_to_create)
-            messages.success(request, "Mecze zostały wygenerowane!")
             return redirect('match_list')
         except League.DoesNotExist:
             messages.error(request, "Wybrana liga nie istnieje lub nie masz do niej dostępu.")

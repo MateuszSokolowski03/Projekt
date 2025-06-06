@@ -112,3 +112,404 @@ INFO 2025-06-06 11:50:40,727 views Wysłano kod logowania na email: eusmateusz@g
 INFO 2025-06-06 11:50:58,143 views Użytkownik Mat_eusz zalogowany dwustopniowo pomyślnie.
 INFO 2025-06-06 11:51:51,069 models Zapisano rundę: 1 w lidze: La Liga
 INFO 2025-06-06 11:51:51,315 views Utworzono rundę: 1 w lidze: La Liga przez użytkownika: Mat_eusz
+INFO 2025-06-06 12:18:35,764 models Zapisano wydarzenie: goal (15 min) w meczu: Real Madryt vs FC Barcelona - 3 cze 2025 12:00:00
+INFO 2025-06-06 12:18:35,818 views Utworzono wydarzenie: goal w meczu: Real Madryt vs FC Barcelona przez użytkownika: Mat_eusz
+INFO 2025-06-06 12:18:54,530 models Aktualizowano mecz: Real Madryt vs FC Barcelona - 3 cze 2025 12:00:00
+INFO 2025-06-06 12:19:27,687 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:19:28,117 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:19:28,572 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 12:19:29,002 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 12:19:29,578 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:19:30,007 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:19:30,438 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 12:19:30,867 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:19:31,306 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 12:19:31,736 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 12:19:32,170 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 12:19:32,601 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:19:33,035 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 12:19:33,465 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 12:19:33,561 views Statystyki dla ligi La Liga zostały wygenerowane.
+INFO 2025-06-06 12:20:31,313 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:20:31,746 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:20:32,180 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 12:20:32,618 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 12:20:33,203 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:20:33,635 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:20:34,068 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 12:20:34,501 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:20:34,933 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 12:20:35,367 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 12:20:35,803 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 12:20:36,239 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:20:36,678 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 12:20:37,116 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 12:20:37,214 views Statystyki dla ligi La Liga zostały wygenerowane.
+ERROR 2025-06-06 12:24:13,298 views Optymalizacja statystyk nie powiodła się: name 'defaultdict' is not defined
+ERROR 2025-06-06 12:24:33,739 views Optymalizacja statystyk nie powiodła się: name 'defaultdict' is not defined
+ERROR 2025-06-06 12:24:59,380 views Optymalizacja statystyk nie powiodła się: name 'defaultdict' is not defined
+INFO 2025-06-06 12:25:15,907 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:25:16,341 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:25:16,772 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 12:25:17,203 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 12:25:17,779 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:25:18,220 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:25:18,650 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 12:25:19,083 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:25:19,517 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 12:25:19,949 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 12:25:20,380 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 12:25:20,814 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:25:21,248 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 12:25:21,683 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 12:25:21,780 views Statystyki dla ligi La Liga zostały wygenerowane.
+INFO 2025-06-06 12:33:19,213 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:33:19,595 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:33:19,977 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 12:33:20,359 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 12:33:20,742 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:33:21,127 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:33:21,509 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 12:33:21,901 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:33:22,284 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 12:33:22,671 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 12:33:23,057 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 12:33:23,439 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:33:23,821 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 12:33:24,208 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 12:33:24,304 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 12:34:33,058 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:34:33,444 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:33,833 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:34,219 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:34,607 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:35,006 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:34:35,394 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 12:34:35,786 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:34:36,176 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:36,562 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:36,950 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:37,337 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:34:37,724 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 12:34:38,111 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 12:34:38,223 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 12:34:45,586 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:34:45,961 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:46,337 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:46,715 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:47,090 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:47,467 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:34:47,840 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 12:34:48,214 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:34:48,590 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:48,963 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:49,338 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 12:34:49,721 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:34:50,097 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 12:34:50,476 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 12:34:50,570 views Zoptymalizowano statystyki dla ligi La Liga.
+ERROR 2025-06-06 12:35:23,043 views Optymalizacja statystyk nie powiodła się: name 'defaultdict' is not defined
+ERROR 2025-06-06 12:35:33,132 views Optymalizacja statystyk nie powiodła się: name 'defaultdict' is not defined
+INFO 2025-06-06 12:35:51,613 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:35:51,995 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:35:52,376 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 12:35:52,757 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 12:35:53,139 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:35:53,518 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:35:53,897 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 12:35:54,281 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:35:54,661 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 12:35:55,042 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 12:35:55,424 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 12:35:55,805 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:35:56,185 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 12:35:56,584 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 12:35:56,691 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 12:37:24,535 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:37:26,990 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:28,085 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:28,466 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:28,845 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:29,756 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:37:30,138 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 12:37:30,520 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:37:30,903 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:31,285 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:31,669 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:32,051 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:37:32,430 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 12:37:32,810 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 12:37:32,905 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 12:37:41,769 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:37:42,148 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:42,521 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:42,895 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:43,270 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:43,643 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:37:44,035 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 12:37:44,413 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:37:44,789 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:45,174 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:45,548 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 12:37:45,922 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:37:46,297 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 12:37:46,673 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 12:37:46,768 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 12:42:38,176 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:42:38,561 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:42:38,945 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 12:42:39,328 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 12:42:40,444 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:42:40,827 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:42:41,213 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 12:42:41,599 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:42:41,982 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 12:42:42,366 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 12:42:42,750 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 12:42:43,135 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:42:43,536 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 12:42:43,922 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 12:42:44,019 views Zoptymalizowano statystyki dla ligi La Liga.
+ERROR 2025-06-06 12:43:03,532 views Optymalizacja statystyk nie powiodła się: name 'defaultdict' is not defined
+ERROR 2025-06-06 12:43:18,133 views Optymalizacja statystyk nie powiodła się: name 'defaultdict' is not defined
+INFO 2025-06-06 12:43:44,527 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:43:44,920 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:43:45,311 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 12:43:45,701 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 12:43:46,090 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 12:43:46,804 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:43:48,852 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 12:43:49,376 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 12:43:49,769 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 12:43:50,161 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 12:43:50,552 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 12:43:51,311 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 12:43:51,706 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 12:43:52,097 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 12:43:52,195 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 12:55:01,216 views Zoptymalizowano statystyki przyrostowo dla ligi Liga.
+ERROR 2025-06-06 12:56:06,981 views Błąd podczas przyrostowego generowania statystyk: 'Player' object has no attribute 'id'
+INFO 2025-06-06 12:56:26,138 views Wysłano kod logowania na email: eusmateusz@gmail.com
+INFO 2025-06-06 12:56:44,969 views Użytkownik Mat_eusz zalogowany dwustopniowo pomyślnie.
+ERROR 2025-06-06 12:56:55,394 views Błąd podczas przyrostowego generowania statystyk: 'Player' object has no attribute 'id'
+INFO 2025-06-06 12:57:15,962 models Aktualizowano mecz: FC Barcelona vs Real Madryt - 3 lut 2025 12:00:00
+ERROR 2025-06-06 12:57:23,053 views Błąd podczas przyrostowego generowania statystyk: 'Player' object has no attribute 'id'
+ERROR 2025-06-06 12:57:32,597 views Błąd podczas przyrostowego generowania statystyk: 'Player' object has no attribute 'id'
+ERROR 2025-06-06 13:00:18,942 views Błąd podczas przyrostowego generowania statystyk: 'Player' object has no attribute 'id'
+ERROR 2025-06-06 13:00:23,321 views Błąd podczas przyrostowego generowania statystyk: 'Player' object has no attribute 'id'
+ERROR 2025-06-06 13:05:42,120 views Błąd podczas generowania statystyk: 'Player' object has no attribute 'id'
+INFO 2025-06-06 13:05:51,435 models Aktualizowano mecz: FC Barcelona vs Real Madryt - 1 sty 2025 12:00:00
+ERROR 2025-06-06 13:06:00,643 views Błąd podczas generowania statystyk: 'Player' object has no attribute 'id'
+ERROR 2025-06-06 13:06:04,538 views Błąd podczas generowania statystyk: 'Player' object has no attribute 'id'
+INFO 2025-06-06 13:07:58,250 models Aktualizowano mecz: FC Barcelona vs Real Madryt - 25 maj 2025 12:00:00
+ERROR 2025-06-06 13:08:06,264 views Błąd podczas generowania statystyk: 'Player' object has no attribute 'id'
+INFO 2025-06-06 13:11:08,780 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:11:09,165 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:11:09,552 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 13:11:09,938 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 13:11:10,326 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:11:10,711 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:11:11,096 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 13:11:11,480 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:11:11,865 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 13:11:12,251 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 13:11:12,636 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 13:11:13,021 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:11:13,407 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 13:11:13,793 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 13:11:13,892 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 13:14:12,636 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:14:13,017 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:13,397 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:13,780 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:14,164 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:14,546 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:14:14,929 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 13:14:15,311 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:14:15,694 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:16,078 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:16,464 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:16,844 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:14:17,228 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 13:14:17,610 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 13:14:17,706 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 13:14:25,358 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:14:25,746 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:26,134 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:26,576 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:26,968 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:27,367 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:14:27,754 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 13:14:28,141 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:14:28,527 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:28,915 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:29,303 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 13:14:29,688 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:14:30,074 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 13:14:30,461 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 13:14:30,558 views Zoptymalizowano statystyki dla ligi La Liga.
+ERROR 2025-06-06 13:14:45,019 views Optymalizacja statystyk nie powiodła się: name 'defaultdict' is not defined
+ERROR 2025-06-06 13:14:56,277 views Optymalizacja statystyk nie powiodła się: name 'defaultdict' is not defined
+INFO 2025-06-06 13:15:09,266 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:15:09,651 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:15:10,034 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 13:15:10,420 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 13:15:10,810 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:15:11,195 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:15:11,580 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 13:15:11,964 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:15:12,348 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 13:15:12,731 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 13:15:13,121 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 13:15:13,506 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:15:13,889 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 13:15:14,283 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 13:15:14,380 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 13:19:03,918 models Aktualizowano mecz: Real Madryt vs FC Barcelona - 1 cze 2025 12:00:00
+ERROR 2025-06-06 13:19:10,619 views Optymalizacja statystyk nie powiodła się: name 'defaultdict' is not defined
+INFO 2025-06-06 13:19:54,710 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:19:55,092 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:19:55,471 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 13:19:55,851 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 13:19:56,231 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:19:56,613 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:19:56,997 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 13:19:57,378 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:19:57,759 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 13:19:58,142 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 13:19:58,524 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 13:19:58,904 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:19:59,287 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 13:19:59,667 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 13:19:59,764 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 13:27:35,565 views Zaktualizowano statystyki na podstawie nowych meczów w lidze La Liga.
+INFO 2025-06-06 13:28:12,708 views Brak nowych meczów do przeliczenia statystyk w lidze La Liga.
+INFO 2025-06-06 13:32:06,999 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:32:07,382 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:32:07,763 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 13:32:08,145 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 13:32:08,527 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:32:08,907 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:32:09,288 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 13:32:09,673 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:32:10,054 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 13:32:10,438 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 13:32:10,822 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 13:32:11,205 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:32:11,586 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 13:32:11,968 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 13:32:12,066 views Zoptymalizowano statystyki dla ligi La Liga.
+ERROR 2025-06-06 13:38:22,762 views Błąd podczas aktualizacji statystyk: 'Team' object has no attribute 'id'
+ERROR 2025-06-06 13:38:32,701 views Błąd podczas aktualizacji statystyk: 'Team' object has no attribute 'id'
+ERROR 2025-06-06 13:38:37,287 views Błąd podczas aktualizacji statystyk: 'Team' object has no attribute 'id'
+ERROR 2025-06-06 13:39:29,604 views Błąd podczas generowania meczów przez Mat_eusz: column "statistics_updated" of relation "planner_match" does not exist
+LINE 1: ...am_1", "score_team_2", "owner_id", "is_finished", "statistic...
+                                                             ^
+
+INFO 2025-06-06 13:40:48,724 models Aktualizowano mecz: FC Barcelona vs Real Madryt - 25 maj 2025 12:00:00
+ERROR 2025-06-06 13:41:00,468 views Błąd podczas aktualizacji statystyk: 'Team' object has no attribute 'id'
+ERROR 2025-06-06 13:42:51,742 views Błąd podczas aktualizacji statystyk: 'Team' object has no attribute 'id'
+INFO 2025-06-06 13:46:44,044 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:46:44,477 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:46:44,863 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 13:46:45,250 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 13:46:45,644 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:46:46,031 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:46:46,417 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 13:46:46,804 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:46:47,193 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 13:46:47,582 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 13:46:47,988 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 13:46:48,376 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:46:48,763 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 13:46:49,152 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 13:46:49,249 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 13:47:13,713 models Utworzono ligę: Towarzyski
+INFO 2025-06-06 13:47:14,280 views Utworzono ligę: Towarzyski przez użytkownika: Mat_eusz
+INFO 2025-06-06 13:47:31,085 models Utworzono mecz: FC Barcelona vs Real Madryt - 3 lut 2025 12:00:00
+INFO 2025-06-06 13:47:31,138 views Utworzono mecz: FC Barcelona vs Real Madryt w lidze: Towarzyski przez użytkownika: Mat_eusz
+INFO 2025-06-06 13:47:39,876 models Aktualizowano mecz: FC Barcelona vs Real Madryt - 3 lut 2025 12:00:00
+INFO 2025-06-06 13:47:48,672 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: Towarzyski
+ERROR 2025-06-06 13:47:48,913 views Optymalizacja statystyk nie powiodła się: duplicate key value violates unique constraint "planner_playerstatistics_player_id_key"
+DETAIL:  Key (player_id)=(87) already exists.
+
+INFO 2025-06-06 13:48:05,720 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: Towarzyski
+ERROR 2025-06-06 13:48:05,964 views Optymalizacja statystyk nie powiodła się: duplicate key value violates unique constraint "planner_playerstatistics_player_id_key"
+DETAIL:  Key (player_id)=(87) already exists.
+
+INFO 2025-06-06 13:48:20,102 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:48:20,492 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:48:20,878 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 13:48:21,265 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 13:48:21,653 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:48:22,043 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:48:22,430 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 13:48:22,836 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:48:23,227 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 13:48:23,625 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 13:48:24,036 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 13:48:24,425 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:48:24,811 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 13:48:25,242 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 13:48:25,661 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 13:48:32,097 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: Towarzyski
+ERROR 2025-06-06 13:48:32,336 views Optymalizacja statystyk nie powiodła się: duplicate key value violates unique constraint "planner_playerstatistics_player_id_key"
+DETAIL:  Key (player_id)=(87) already exists.
+
+INFO 2025-06-06 13:48:37,931 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: Towarzyski
+ERROR 2025-06-06 13:48:38,166 views Optymalizacja statystyk nie powiodła się: duplicate key value violates unique constraint "planner_playerstatistics_player_id_key"
+DETAIL:  Key (player_id)=(87) already exists.
+
+INFO 2025-06-06 13:48:57,466 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:48:58,106 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:48:58,495 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 13:48:58,884 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 13:48:59,379 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:48:59,766 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:49:00,154 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 13:49:00,575 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:49:00,963 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 13:49:01,353 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 13:49:01,741 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 13:49:02,130 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:49:02,517 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 13:49:02,904 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 13:49:03,001 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 13:49:08,874 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: Towarzyski
+ERROR 2025-06-06 13:49:09,118 views Optymalizacja statystyk nie powiodła się: duplicate key value violates unique constraint "planner_playerstatistics_player_id_key"
+DETAIL:  Key (player_id)=(87) already exists.
+
+INFO 2025-06-06 13:49:12,084 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: Towarzyski
+ERROR 2025-06-06 13:49:12,328 views Optymalizacja statystyk nie powiodła się: duplicate key value violates unique constraint "planner_playerstatistics_player_id_key"
+DETAIL:  Key (player_id)=(87) already exists.
+
+INFO 2025-06-06 13:52:14,624 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:52:15,010 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:52:15,397 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-06 13:52:15,783 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-06 13:52:16,170 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-06 13:52:16,556 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:52:16,941 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: La Liga
+INFO 2025-06-06 13:52:17,328 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: La Liga
+INFO 2025-06-06 13:52:17,717 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-06 13:52:18,105 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: La Liga
+INFO 2025-06-06 13:52:18,491 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: La Liga
+INFO 2025-06-06 13:52:18,877 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-06 13:52:19,271 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: La Liga
+INFO 2025-06-06 13:52:19,658 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-06 13:52:19,756 views Zoptymalizowano statystyki dla ligi La Liga.
+INFO 2025-06-06 13:52:24,755 models Zapisano statystyki dla gracza: Wojciech Szczęsny (Goalkeeper) w lidze: Towarzyski
+INFO 2025-06-06 13:52:25,145 models Zapisano statystyki dla gracza: Jules Kounde (Defender) w lidze: Towarzyski
+INFO 2025-06-06 13:52:25,535 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: Towarzyski
+INFO 2025-06-06 13:52:25,924 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: Towarzyski
+INFO 2025-06-06 13:52:26,313 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: Towarzyski
+INFO 2025-06-06 13:52:26,701 models Zapisano statystyki dla gracza: Pedri Gonzalez (Midfielder) w lidze: Towarzyski
+INFO 2025-06-06 13:52:27,090 models Zapisano statystyki dla gracza: Lamine Yamal (Forward) w lidze: Towarzyski
+INFO 2025-06-06 13:52:27,479 models Zapisano statystyki dla gracza: Thibaut Courtois (Goalkeeper) w lidze: Towarzyski
+INFO 2025-06-06 13:52:27,868 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: Towarzyski
+INFO 2025-06-06 13:52:28,258 models Zapisano statystyki dla gracza: Antonio Rudiger (Defender) w lidze: Towarzyski
+INFO 2025-06-06 13:52:28,645 models Zapisano statystyki dla gracza: Fran Garcia (Defender) w lidze: Towarzyski
+INFO 2025-06-06 13:52:29,033 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: Towarzyski
+INFO 2025-06-06 13:52:29,418 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: Towarzyski
+INFO 2025-06-06 13:52:29,802 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: Towarzyski
+INFO 2025-06-06 13:52:29,947 views Zoptymalizowano statystyki dla ligi Towarzyski.

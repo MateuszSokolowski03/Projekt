@@ -58,7 +58,7 @@ class Player(models.Model):
 class PlayerStatistics(models.Model):
     statistics_id = models.AutoField(primary_key=True)  # Klucz główny
     league = models.ForeignKey('League', on_delete=models.CASCADE, related_name='player_statistics')
-    player = models.OneToOneField('Player', on_delete=models.CASCADE, related_name='statistics')
+    player = models.ForeignKey('Player', on_delete=models.CASCADE, related_name='statistics') 
     matches_played = models.IntegerField(default=0)
     goals = models.IntegerField(default=0)
     yellow_cards = models.IntegerField(default=0)
@@ -82,7 +82,7 @@ class Match(models.Model):
     score_team_2 = models.IntegerField(default=0)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='matches', null=True, blank=True)
     is_finished = models.BooleanField(default=False) 
-
+    
     def __str__(self):
         # Mapowanie nazw miesięcy na 3-literowe skróty po polsku
         months = {
