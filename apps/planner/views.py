@@ -525,50 +525,11 @@ def generate_rankings(league):
 
 def generate_statistics(league):
     try:
-        teams = league.teams.all()
-        players = Player.objects.filter(team__in=teams)
-
-        # Pobierz wszystkie eventy jednym zapytaniem
-        events = MatchEvent.objects.filter(
-            match__league=league,
-            match__is_finished=True,
-            player__in=players
-        ).select_related('player')
-
-        # Zlicz statystyki per player_id
-        stats_map = defaultdict(lambda: {'goals': 0, 'yellow': 0, 'red': 0})
-
-        for event in events:
-            pid = event.player_id
-            if event.event_type == 'goal':
-                stats_map[pid]['goals'] += 1
-            elif event.event_type == 'yellow_card':
-                stats_map[pid]['yellow'] += 1
-            elif event.event_type == 'red_card':
-                stats_map[pid]['red'] += 1
-
-        for player in players:
-            matches_played = Match.objects.filter(
-                Q(team_1=player.team) | Q(team_2=player.team),
-                league=league,
-                is_finished=True
-            ).count()
-
-            s = stats_map[player.pk]
-            PlayerStatistics.objects.update_or_create(
-                player=player,
-                league=league,
-                defaults={
-                    'matches_played': matches_played,
-                    'goals': s['goals'],
-                    'yellow_cards': s['yellow'],
-                    'red_cards': s['red'],
-                }
-            )
-        logger.info(f"Zoptymalizowano statystyki dla ligi {league.name}.")
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT update_player_statistics(%s);", [league.pk])
+        logger.info(f"Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi {league.name}.")
     except Exception as e:
         logger.error(f"Optymalizacja statystyk nie powiodła się: {str(e)}")
-
 
 
 def generate_statistics_for_player(player):

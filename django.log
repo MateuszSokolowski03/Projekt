@@ -513,3 +513,16 @@ INFO 2025-06-06 13:52:29,033 models Zapisano statystyki dla gracza: Jude Bellign
 INFO 2025-06-06 13:52:29,418 models Zapisano statystyki dla gracza: Kylian Mbappe (Forward) w lidze: Towarzyski
 INFO 2025-06-06 13:52:29,802 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: Towarzyski
 INFO 2025-06-06 13:52:29,947 views Zoptymalizowano statystyki dla ligi Towarzyski.
+INFO 2025-06-06 14:14:18,771 models Aktualizowano mecz: Real Madryt vs FC Barcelona - 1 cze 2025 12:00:00
+INFO 2025-06-06 14:14:26,333 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.
+INFO 2025-06-06 14:19:48,485 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.
+INFO 2025-06-06 14:21:24,349 models Utworzono mecz: FC Barcelona vs Real Madryt - 29 maj 2025 18:56:00
+INFO 2025-06-06 14:21:24,409 views Utworzono mecz: FC Barcelona vs Real Madryt w lidze: La Liga przez użytkownika: Mat_eusz
+INFO 2025-06-06 14:21:46,172 models Zapisano wydarzenie: goal (26 min) w meczu: FC Barcelona vs Real Madryt - 29 maj 2025 18:56:00
+INFO 2025-06-06 14:21:46,228 views Utworzono wydarzenie: goal w meczu: FC Barcelona vs Real Madryt przez użytkownika: Mat_eusz
+INFO 2025-06-06 14:22:00,714 models Zapisano wydarzenie: red_card (16 min) w meczu: FC Barcelona vs Real Madryt - 29 maj 2025 18:56:00
+INFO 2025-06-06 14:22:00,774 views Utworzono wydarzenie: red_card w meczu: FC Barcelona vs Real Madryt przez użytkownika: Mat_eusz
+INFO 2025-06-06 14:22:20,985 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.
+INFO 2025-06-06 14:22:39,405 models Aktualizowano mecz: FC Barcelona vs Real Madryt - 29 maj 2025 18:56:00
+INFO 2025-06-06 14:22:46,909 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.
+INFO 2025-06-06 14:26:36,767 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.

@@ -130,3 +130,91 @@ BEGIN
     RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
+
+
+
+
+DROP FUNCTION IF EXISTS trigger_update_player_statistics();
+CREATE OR REPLACE FUNCTION trigger_update_player_statistics()
+RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM update_player_statistics(NEW.league_id);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+CREATE OR REPLACE FUNCTION update_player_statistics(p_league_id INTEGER)
+RETURNS VOID AS $$
+BEGIN
+    -- Usuwamy stare statystyki dla ligi (opcjonalnie, jeśli chcesz mieć zawsze aktualne)
+    DELETE FROM planner_playerstatistics WHERE league_id = p_league_id;
+
+    -- Wstawiamy nowe statystyki
+    INSERT INTO planner_playerstatistics (player_id, league_id, matches_played, goals, yellow_cards, red_cards)
+    SELECT
+        p.player_id,
+        l.league_id,
+        (
+            SELECT COUNT(DISTINCT m.match_id)
+            FROM planner_match m
+            WHERE (m.team_1_id = p.team_id OR m.team_2_id = p.team_id)
+              AND m.league_id = l.league_id
+              AND m.is_finished = TRUE
+        ) AS matches_played,
+        COALESCE(SUM(CASE WHEN e.event_type = 'goal' THEN 1 ELSE 0 END), 0) AS goals,
+        COALESCE(SUM(CASE WHEN e.event_type = 'yellow_card' THEN 1 ELSE 0 END), 0) AS yellow_cards,
+        COALESCE(SUM(CASE WHEN e.event_type = 'red_card' THEN 1 ELSE 0 END), 0) AS red_cards
+    FROM planner_player p
+    JOIN planner_team t ON p.team_id = t.team_id
+    JOIN planner_league_teams lt ON t.team_id = lt.team_id
+    JOIN planner_league l ON lt.league_id = l.league_id
+    LEFT JOIN planner_matchevent e ON e.player_id = p.player_id
+        AND e.match_id IN (
+            SELECT match_id FROM planner_match WHERE league_id = l.league_id AND is_finished = TRUE
+        )
+    WHERE l.league_id = p_league_id
+    GROUP BY p.player_id, l.league_id;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- EDYCJA WYDARZEN
+DROP FUNCTION IF EXISTS trigger_update_player_statistics_event();
+CREATE OR REPLACE FUNCTION trigger_update_player_statistics_event()
+RETURNS TRIGGER AS $$
+DECLARE
+    v_league_id INTEGER;
+BEGIN
+    IF TG_OP = 'DELETE' THEN
+        SELECT league_id INTO v_league_id FROM planner_match WHERE match_id = OLD.match_id;
+    ELSE
+        SELECT league_id INTO v_league_id FROM planner_match WHERE match_id = NEW.match_id;
+    END IF;
+    PERFORM update_player_statistics(v_league_id);
+    RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS trg_update_player_statistics_event ON planner_matchevent;
+CREATE TRIGGER trg_update_player_statistics_event
+AFTER INSERT OR UPDATE OR DELETE ON planner_matchevent
+FOR EACH ROW
+EXECUTE FUNCTION trigger_update_player_statistics_event();
+
+
+-- EDYCJA MECZU
+DROP FUNCTION IF EXISTS trigger_update_player_statistics_match_delete();
+CREATE OR REPLACE FUNCTION trigger_update_player_statistics_match_delete()
+RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM update_player_statistics(OLD.league_id);
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS trg_update_player_statistics_match_delete ON planner_match;
+CREATE TRIGGER trg_update_player_statistics_match_delete
+AFTER DELETE ON planner_match
+FOR EACH ROW
+EXECUTE FUNCTION trigger_update_player_statistics_match_delete();

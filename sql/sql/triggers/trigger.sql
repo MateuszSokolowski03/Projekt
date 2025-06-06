@@ -34,3 +34,12 @@ CREATE TRIGGER trg_min_players_for_match
 BEFORE INSERT ON planner_match
 FOR EACH ROW
 EXECUTE FUNCTION check_min_players_for_match();
+
+
+
+DROP TRIGGER IF EXISTS trg_update_player_statistics_after_match ON planner_match;
+CREATE TRIGGER trg_update_player_statistics_after_match
+AFTER UPDATE ON planner_match
+FOR EACH ROW
+WHEN (NEW.is_finished = TRUE AND (OLD.is_finished IS DISTINCT FROM NEW.is_finished))
+EXECUTE FUNCTION trigger_update_player_statistics();
