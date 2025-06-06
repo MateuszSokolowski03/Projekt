@@ -59,7 +59,13 @@
                     <td class="py-2 px-2">{{ ranking.wins }}</td>
                     <td class="py-2 px-2">{{ ranking.draws }}</td>
                     <td class="py-2 px-2">{{ ranking.losses }}</td>
-                    <td class="py-2 px-2">{{ ranking.goals_for }}-{{ ranking.goals_against }}</td>
+                    <td class="py-2 px-2">
+                        {% if ranking.goals_for is not None and ranking.goals_against is not None %}
+                            {{ ranking.goals_for }}-{{ ranking.goals_against }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
                     <td class="py-2 px-2 font-bold text-xl text-gray-700">{{ ranking.points }}</td>
                 </tr>
                 {% endfor %}

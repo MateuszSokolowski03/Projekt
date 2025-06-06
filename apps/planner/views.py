@@ -449,29 +449,69 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
-def league_ranking_list(request):
-    # Pobierz wszystkie ligi
-    leagues = League.objects.all()
+def team_ranking_list(request):
+    if request.user.is_authenticated:
+        leagues = League.objects.filter(owner=request.user)
+    else:
+        leagues = League.objects.filter(owner__isnull=False)
 
-    # Pobierz wybraną ligę z parametrów GET
     selected_league_id = request.GET.get('league')
 
     if selected_league_id:
-        # Pobierz wybraną ligę lub zwróć 404, jeśli nie istnieje
         selected_league = get_object_or_404(League, pk=selected_league_id)
-        # Pobierz rankingi dla wybranej ligi
-        rankings = TeamRanking.objects.filter(league=selected_league).order_by('position')
+        generate_rankings(selected_league)
+        rankings_qs = TeamRanking.objects.filter(league=selected_league).order_by('position')
+
+        # dynamiczne dane
+        matches = Match.objects.filter(league=selected_league, is_finished=True)
+        enriched_rankings = []
+        for ranking in rankings_qs:
+            team = ranking.team
+            team_matches = matches.filter(Q(team_1=team) | Q(team_2=team))
+            matches_played = team_matches.count()
+            wins = draws = losses = goals_for = goals_against = 0
+
+            for match in team_matches:
+                goals_team_1 = match.events.filter(player__team=match.team_1, event_type='goal').count()
+                goals_team_2 = match.events.filter(player__team=match.team_2, event_type='goal').count()
+
+                if match.team_1 == team:
+                    gf, ga = goals_team_1, goals_team_2
+                else:
+                    gf, ga = goals_team_2, goals_team_1
+
+                goals_for += gf
+                goals_against += ga
+
+                if gf > ga:
+                    wins += 1
+                elif gf == ga:
+                    draws += 1
+                else:
+                    losses += 1
+
+            enriched_rankings.append({
+                'team': team,
+                'position': ranking.position,
+                'points': ranking.points,
+                'matches_played': matches_played,
+                'wins': wins,
+                'draws': draws,
+                'losses': losses,
+                'goals_for': goals_for,
+                'goals_against': goals_against,
+            })
     else:
-        # Jeśli liga nie została wybrana, nie pokazuj rankingów
-        rankings = TeamRanking.objects.none()
+        enriched_rankings = []
         selected_league = None
 
-    # Przekaż dane do szablonu
     return render(request, 'team_ranking_list.html', {
         'leagues': leagues,
-        'rankings': rankings,
         'selected_league': selected_league,
+        'rankings': enriched_rankings,  # ← teraz lista słowników z pełnymi danymi
     })
+
+
 
 def generate_rankings(league):
     with connection.cursor() as cursor:
