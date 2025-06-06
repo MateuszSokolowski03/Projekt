@@ -411,9 +411,8 @@ def add_event(request):
     else:
         form = MatchEventForm()
         # Ogranicz dostępne mecze do tych, które należą do użytkownika
-        form.fields['match'].queryset = Match.objects.filter(owner=request.user)
-
-    matches = Match.objects.filter(owner=request.user)
+        form.fields['match'].queryset = Match.objects.filter(owner=request.user, is_finished=False)
+    matches = Match.objects.filter(owner=request.user, is_finished=False)
     event_types = MatchEvent.EVENT_TYPES
     return render(request, 'add_event.html', {'form': form, 'matches': matches, 'event_types': event_types})
 

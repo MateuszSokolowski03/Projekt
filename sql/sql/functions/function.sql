@@ -62,17 +62,24 @@ END;
 $$ LANGUAGE plpgsql;
 
 
--- Funkcja aktualizująca wynik meczu
 CREATE OR REPLACE FUNCTION update_match_score()
 RETURNS TRIGGER AS $$
+DECLARE
+    v_match_id INTEGER;
 BEGIN
+    IF TG_OP = 'DELETE' THEN
+        v_match_id := OLD.match_id;
+    ELSE
+        v_match_id := NEW.match_id;
+    END IF;
+
     UPDATE planner_match
     SET
         score_team_1 = (
             SELECT COUNT(*)
             FROM planner_matchevent e
             JOIN planner_player p ON e.player_id = p.player_id
-            WHERE e.match_id = NEW.match_id
+            WHERE e.match_id = v_match_id
               AND e.event_type = 'goal'
               AND p.team_id = planner_match.team_1_id
         ),
@@ -80,11 +87,11 @@ BEGIN
             SELECT COUNT(*)
             FROM planner_matchevent e
             JOIN planner_player p ON e.player_id = p.player_id
-            WHERE e.match_id = NEW.match_id
+            WHERE e.match_id = v_match_id
               AND e.event_type = 'goal'
               AND p.team_id = planner_match.team_2_id
         )
-    WHERE match_id = NEW.match_id;
+    WHERE match_id = v_match_id;
     RETURN NULL;
 END;
 $$ LANGUAGE plpgsql;
