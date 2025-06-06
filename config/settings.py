@@ -185,8 +185,13 @@ CSRF_TRUSTED_ORIGINS = [
     'https://planer-zespolow.up.railway.app',
 ]
 
+#ALLOWED_HOSTS = [
+#    'planer-zespolow.up.railway.app',
+#    'localhost',
+#    '127.0.0.1',
+#]
 ALLOWED_HOSTS = [
-    'planer-zespolow.up.railway.app',
+    '.railway.app', 
     'localhost',
     '127.0.0.1',
 ]
