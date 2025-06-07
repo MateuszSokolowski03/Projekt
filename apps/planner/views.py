@@ -694,33 +694,35 @@ def two_step_login_view(request):
     if request.method == 'POST':
         if step == 1:
             email = request.POST.get('email')
+            password = request.POST.get('password')
             try:
                 user = User.objects.get(email=email)
-                code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
-                request.session['login_code'] = code
-                request.session['login_email'] = email
-                request.session['login_step'] = 2
-                # Wyślij kod na email
-                send_mail(
-                    'Twój kod logowania',
-                    f'Twój kod logowania: {code}',
-                    'planer.zawodow@wp.pl',  
-                    [email],
-                    fail_silently=False,
-                )
-                logger.info(f"Wysłano kod logowania na email: {email}")
-                step = 2
+                if user.check_password(password):
+                    code = ''.join([str(random.randint(0, 9)) for _ in range(6)])
+                    request.session['login_code'] = code
+                    request.session['login_email'] = email
+                    request.session['login_step'] = 2
+                    # Wyślij kod na email
+                    send_mail(
+                        'Twój kod logowania',
+                        f'Twój kod logowania: {code}',
+                        'planer.zawodow@wp.pl',
+                        [email],
+                        fail_silently=False,
+                    )
+                    logger.info(f"Wysłano kod logowania na email: {email}")
+                    step = 2
+                else:
+                    error = "Nieprawidłowy email lub hasło."
             except User.DoesNotExist:
-                error = "Nie znaleziono użytkownika z tym adresem email."
-                logger.warning(f"Nieudana próba logowania dwustopniowego: nie znaleziono emaila {email}")
+                error = "Nieprawidłowy email lub hasło."
         elif step == 2:
             code = ''.join([request.POST.get(f'code_{i}', '') for i in range(6)])
-            password = request.POST.get('password')
             session_code = request.session.get('login_code')
             email = request.session.get('login_email')
             try:
                 user = User.objects.get(email=email)
-                if code == session_code and user.check_password(password):
+                if code == session_code:
                     login(request, user)
                     logger.info(f"Użytkownik {user.username} zalogowany dwustopniowo pomyślnie.")
                     # Wyczyść sesję
@@ -729,11 +731,9 @@ def two_step_login_view(request):
                     request.session.pop('login_step', None)
                     return redirect('team_list')
                 else:
-                    error = "Nieprawidłowy kod lub hasło."
-                    logger.warning(f"Nieudana próba logowania dwustopniowego: nieprawidłowy kod lub hasło dla emaila {email}")
+                    error = "Nieprawidłowy kod."
             except User.DoesNotExist:
                 error = "Coś poszło nie tak. Spróbuj ponownie."
-                logger.error(f"Błąd podczas logowania dwustopniowego: nie znaleziono emaila {email}")
     else:
         request.session['login_step'] = 1
         step = 1

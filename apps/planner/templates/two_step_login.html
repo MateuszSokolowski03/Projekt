@@ -10,10 +10,17 @@
                 <div class="space-y-2">
                     <label for="id_email" class="block text-sm font-medium text-gray-700">Email:</label>
                     <input type="email" name="email" id="id_email" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
+                        value="{{ email|default:'' }}">
+                </div>
+                <div class="space-y-2">
+                    <label for="id_password" class="block text-sm font-medium text-gray-700">Hasło:</label>
+                    <input type="password" name="password" id="id_password" required
                         class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
+                    <a href="{% url 'password_reset' %}" class="text-xs text-primary hover:underline">Zapomniałeś hasła?</a>
                 </div>
                 <button type="submit" class="w-full bg-primary text-white py-2 rounded-md shadow hover:bg-primary/90 transition-colors">
-                    Wyślij kod
+                    Dalej
                 </button>
             {% elif step == 2 %}
                 <div class="space-y-2">
@@ -22,14 +29,9 @@
                         {% for i in "012345" %}
                         <input type="text" name="code_{{ forloop.counter0 }}" maxlength="1" pattern="[0-9]" inputmode="numeric" required
                             class="w-10 h-12 text-center border border-gray-300 rounded-md text-xl focus:outline-none focus:ring-primary focus:border-primary"
-                            autocomplite="one-time-code" id="id_code_{{ forloop.counter0 }}">
+                            autocomplete="one-time-code" id="id_code_{{ forloop.counter0 }}">
                         {% endfor %}
                     </div>
-                </div>
-                <div class="space-y-2">
-                    <label for="id_password" class="block text-sm font-medium text-gray-700">Hasło:</label>
-                    <input type="password" name="password" id="id_password" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary">
                 </div>
                 <button type="submit" class="w-full bg-primary text-white py-2 rounded-md shadow hover:bg-primary/90 transition-colors">
                     Zaloguj się
@@ -59,18 +61,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     // Obsługa wklejania całego kodu naraz
-    inputs[0].addEventListener('paste', function(e) {
-        const paste = (e.clipboardData || window.clipboardData).getData('text');
-        if (/^\d{6}$/.test(paste)) {
-            e.preventDefault();
-            paste.split('').forEach((char, idx) => {
-                if (inputs[idx]) {
-                    inputs[idx].value = char;
-                }
-            });
-            inputs[5].focus();
-        }
-    });
+    if (inputs.length) {
+        inputs[0].addEventListener('paste', function(e) {
+            const paste = (e.clipboardData || window.clipboardData).getData('text');
+            if (/^\d{6}$/.test(paste)) {
+                e.preventDefault();
+                paste.split('').forEach((char, idx) => {
+                    if (inputs[idx]) {
+                        inputs[idx].value = char;
+                    }
+                });
+                inputs[5].focus();
+            }
+        });
+    }
 });
 </script>
 {% endblock %}
