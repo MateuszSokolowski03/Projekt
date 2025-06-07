@@ -404,6 +404,7 @@ def add_match(request):
     return render(request, 'add_match.html', {'form': form, 'leagues': leagues})
 
 def add_event(request):
+    match_id = request.GET.get('match_id')
     if request.method == 'POST':
         form = MatchEventForm(request.POST)
         if form.is_valid():
@@ -428,9 +429,10 @@ def add_event(request):
         form.fields['match'].queryset = Match.objects.filter(owner=request.user, is_finished=False)
     matches = Match.objects.filter(owner=request.user, is_finished=False)
     event_types = MatchEvent.EVENT_TYPES
-    return render(request, 'add_event.html', {'form': form, 'matches': matches, 'event_types': event_types})
 
-from .forms import CustomUserCreationForm
+    return render(request, 'add_event.html', {'form': form, 'matches': matches, 'event_types': event_types,'selected_match_id': int(match_id) if match_id else None})
+
+
 
 def register_view(request):
     if request.method == 'POST':

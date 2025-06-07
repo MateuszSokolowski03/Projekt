@@ -542,3 +542,9 @@ WARNING 2025-06-07 12:26:08,161 views Próba dodania wydarzenia do meczu bez kol
 WARNING 2025-06-07 12:27:16,136 views Próba dodania wydarzenia do meczu bez kolejki przez Mat_eusz
 WARNING 2025-06-07 12:27:39,483 views Próba dodania wydarzenia do meczu bez kolejki przez Mat_eusz
 WARNING 2025-06-07 12:29:30,420 views Próba dodania wydarzenia do meczu bez kolejki przez Mat_eusz
+WARNING 2025-06-07 12:46:22,222 views Próba dodania wydarzenia do meczu bez kolejki przez Mat_eusz
+INFO 2025-06-07 12:56:44,236 models Zapisano rundę: 1 w lidze: La Liga
+INFO 2025-06-07 12:56:44,483 views Utworzono rundę: 1 w lidze: La Liga przez użytkownika: Mat_eusz
+INFO 2025-06-07 12:59:22,085 models Aktualizowano mecz: Real Madryt vs FC Barcelona - 1 cze 2025 12:00:00
+INFO 2025-06-07 13:01:12,307 models Utworzono mecz: Real Madryt vs FC Barcelona - 9 wrz 2025 12:00:00
+INFO 2025-06-07 13:01:12,361 views Utworzono mecz: Real Madryt vs FC Barcelona w lidze: Towarzyski przez użytkownika: Mat_eusz

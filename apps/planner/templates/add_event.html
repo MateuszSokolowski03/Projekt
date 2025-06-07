@@ -42,7 +42,9 @@
                     >
                         <option value="" disabled selected>Wybierz mecz</option>
                         {% for match in matches %}
-                        <option value="{{ match.match_id }}">{{ match }}</option>
+                        <option value="{{ match.match_id }}" {% if match.match_id == selected_match_id %}selected{% endif %}> 
+                            {{ match }}
+                        </option>
                         {% endfor %}
                     </select>
                 </div>
