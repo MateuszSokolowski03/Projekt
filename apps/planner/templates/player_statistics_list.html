@@ -39,19 +39,59 @@
                     </div>
                     <div class="flex gap-8 text-center">
                         <div>
-                            <p class="text-xs text-gray-500">Mecze</p>
+                            <a href="?{% if selected_league %}league={{ selected_league.league_id }}&{% endif %}sort=matches_played&direction={% if sort_by == 'matches_played' and direction == 'asc' %}desc{% else %}asc{% endif %}"
+                               class="text-xs text-gray-500 font-semibold hover:underline {% if sort_by == 'matches_played' %}text-primary{% endif %}">
+                                Mecze
+                                {% if sort_by == 'matches_played' %}
+                                    {% if direction == 'asc' %}
+                                        &#9650;
+                                    {% else %}
+                                        &#9660;
+                                    {% endif %}
+                                {% endif %}
+                            </a>
                             <p class="text-lg font-bold text-gray-700">{{ stat.matches_played }}</p>
                         </div>
                         <div>
-                            <p class="text-xs text-gray-500">Gole</p>
+                            <a href="?{% if selected_league %}league={{ selected_league.league_id }}&{% endif %}sort=goals&direction={% if sort_by == 'goals' and direction == 'asc' %}desc{% else %}asc{% endif %}"
+                               class="text-xs text-gray-500 font-semibold hover:underline {% if sort_by == 'goals' %}text-primary{% endif %}">
+                                Gole
+                                {% if sort_by == 'goals' %}
+                                    {% if direction == 'asc' %}
+                                        &#9650;
+                                    {% else %}
+                                        &#9660;
+                                    {% endif %}
+                                {% endif %}
+                            </a>
                             <p class="text-lg font-bold text-green-700">{{ stat.goals }}</p>
                         </div>
                         <div>
-                            <p class="text-xs text-gray-500">Żółte kartki</p>
+                            <a href="?{% if selected_league %}league={{ selected_league.league_id }}&{% endif %}sort=yellow_cards&direction={% if sort_by == 'yellow_cards' and direction == 'asc' %}desc{% else %}asc{% endif %}"
+                               class="text-xs text-gray-500 font-semibold hover:underline {% if sort_by == 'yellow_cards' %}text-primary{% endif %}">
+                                Żółte kartki
+                                {% if sort_by == 'yellow_cards' %}
+                                    {% if direction == 'asc' %}
+                                        &#9650;
+                                    {% else %}
+                                        &#9660;
+                                    {% endif %}
+                                {% endif %}
+                            </a>
                             <p class="text-lg font-bold text-yellow-600">{{ stat.yellow_cards }}</p>
                         </div>
                         <div>
-                            <p class="text-xs text-gray-500">Czerwone kartki</p>
+                            <a href="?{% if selected_league %}league={{ selected_league.league_id }}&{% endif %}sort=red_cards&direction={% if sort_by == 'red_cards' and direction == 'asc' %}desc{% else %}asc{% endif %}"
+                               class="text-xs text-gray-500 font-semibold hover:underline {% if sort_by == 'red_cards' %}text-primary{% endif %}">
+                                Czerwone kartki
+                                {% if sort_by == 'red_cards' %}
+                                    {% if direction == 'asc' %}
+                                        &#9650;
+                                    {% else %}
+                                        &#9660;
+                                    {% endif %}
+                                {% endif %}
+                            </a>
                             <p class="text-lg font-bold text-red-600">{{ stat.red_cards }}</p>
                         </div>
                     </div>
