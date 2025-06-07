@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class TeamForm(forms.ModelForm):
     class Meta:
         model = Team
-        fields = ['team_id', 'name']
+        fields = ['team_id', 'name', 'logo']  # 'logo' jako string, jeśli jest to pole tekstowe lub URL
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
         super(TeamForm, self).__init__(*args, **kwargs)

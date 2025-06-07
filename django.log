@@ -24,8 +24,8 @@ INFO 2025-06-02 17:13:29,905 autoreload Watching for file changes with StatReloa
 INFO 2025-06-02 17:13:31,554 basehttp "GET / HTTP/1.1" 200 12278
 INFO 2025-06-02 17:13:34,581 basehttp "GET /teams/ HTTP/1.1" 200 12574
 INFO 2025-06-02 17:13:39,924 basehttp "GET /teams/add/ HTTP/1.1" 200 13157
-INFO 2025-06-02 17:13:56,126 models Utworzono dru¿ynê: Piast Gliwice
-INFO 2025-06-02 17:13:56,175 views Utworzono dru¿ynê: Piast Gliwice przez u¿ytkownika: janek
+INFO 2025-06-02 17:13:56,126 models Utworzono druï¿½ynï¿½: Piast Gliwice
+INFO 2025-06-02 17:13:56,175 views Utworzono druï¿½ynï¿½: Piast Gliwice przez uï¿½ytkownika: janek
 INFO 2025-06-02 17:13:56,176 basehttp "POST /teams/add/ HTTP/1.1" 302 0
 INFO 2025-06-02 17:13:56,583 basehttp "GET /teams/ HTTP/1.1" 200 13234
 INFO 2025-06-02 17:14:04,114 basehttp "GET /teams/14/ HTTP/1.1" 200 13897
@@ -76,7 +76,7 @@ INFO 2025-06-02 17:14:49,673 basehttp "GET /static/admin/js/change_form.js HTTP/
 INFO 2025-06-02 17:14:49,970 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
 INFO 2025-06-02 17:14:53,337 basehttp "GET /admin/planner/team/14/delete/ HTTP/1.1" 200 11280
 INFO 2025-06-02 17:14:53,376 basehttp "GET /static/admin/js/cancel.js HTTP/1.1" 200 884
-WARNING 2025-06-02 17:14:55,489 models Usuniêto dru¿ynê: Piast Gliwice (ID: 14)
+WARNING 2025-06-02 17:14:55,489 models Usuniï¿½to druï¿½ynï¿½: Piast Gliwice (ID: 14)
 INFO 2025-06-02 17:14:55,732 basehttp "POST /admin/planner/team/14/delete/ HTTP/1.1" 302 0
 INFO 2025-06-02 17:14:56,204 basehttp "GET /admin/planner/team/ HTTP/1.1" 200 13051
 INFO 2025-06-02 17:14:56,588 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3342
@@ -99,15 +99,15 @@ INFO 2025-06-02 17:17:10,670 basehttp "GET /teams/add/ HTTP/1.1" 200 13215
 WARNING 2025-06-02 17:17:10,692 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
 WARNING 2025-06-02 17:17:10,693 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 7913
 INFO 2025-06-02 20:50:52,504 autoreload D:\Projekt\config\settings.py changed, reloading.
-INFO 2025-06-02 20:51:05,558 models Utworzono dru¿ynê: asddfgh
-INFO 2025-06-02 20:51:05,595 views Utworzono dru¿ynê: asddfgh przez u¿ytkownika: kacperdebowski
-INFO 2025-06-02 20:51:31,949 models Utworzono ligê: ligatest
-INFO 2025-06-02 20:51:32,126 views Utworzono ligê: ligatest przez u¿ytkownika: kacperdebowski
-WARNING 2025-06-02 20:53:10,291 models Usuniêto dru¿ynê: asddfgh (ID: 15)
-INFO 2025-06-02 21:30:51,075 models Utworzono dru¿ynê: testteam
-INFO 2025-06-02 21:30:51,113 views Utworzono dru¿ynê: testteam przez u¿ytkownika: kacperdebowski
-INFO 2025-06-02 21:32:20,536 models Utworzono dru¿ynê: asfdas
-INFO 2025-06-02 21:32:20,575 views Utworzono dru¿ynê: asfdas przez u¿ytkownika: kacperdebowski
+INFO 2025-06-02 20:51:05,558 models Utworzono druï¿½ynï¿½: asddfgh
+INFO 2025-06-02 20:51:05,595 views Utworzono druï¿½ynï¿½: asddfgh przez uï¿½ytkownika: kacperdebowski
+INFO 2025-06-02 20:51:31,949 models Utworzono ligï¿½: ligatest
+INFO 2025-06-02 20:51:32,126 views Utworzono ligï¿½: ligatest przez uï¿½ytkownika: kacperdebowski
+WARNING 2025-06-02 20:53:10,291 models Usuniï¿½to druï¿½ynï¿½: asddfgh (ID: 15)
+INFO 2025-06-02 21:30:51,075 models Utworzono druï¿½ynï¿½: testteam
+INFO 2025-06-02 21:30:51,113 views Utworzono druï¿½ynï¿½: testteam przez uï¿½ytkownika: kacperdebowski
+INFO 2025-06-02 21:32:20,536 models Utworzono druï¿½ynï¿½: asfdas
+INFO 2025-06-02 21:32:20,575 views Utworzono druï¿½ynï¿½: asfdas przez uï¿½ytkownika: kacperdebowski
 INFO 2025-06-06 11:50:40,727 views WysÅ‚ano kod logowania na email: eusmateusz@gmail.com
 INFO 2025-06-06 11:50:58,143 views UÅ¼ytkownik Mat_eusz zalogowany dwustopniowo pomyÅ›lnie.
 INFO 2025-06-06 11:51:51,069 models Zapisano rundÄ™: 1 w lidze: La Liga
@@ -612,6 +612,6 @@ INFO 2025-06-07 15:03:24,381 models Zapisano statystyki dla gracza: Jude Bellign
 INFO 2025-06-07 15:03:28,656 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
 INFO 2025-06-07 15:03:34,519 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
 INFO 2025-06-07 15:03:37,912 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
-INFO 2025-06-07 15:06:59,163 models Utworzono dru¿ynê: Juventus
-INFO 2025-06-07 15:06:59,212 views Utworzono dru¿ynê: Juventus przez u¿ytkownika: kacperdebowski
-INFO 2025-06-07 15:28:41,457 models Aktualizowano pi³karza: Jude Bellignham (ID: 98)
+INFO 2025-06-07 15:06:59,163 models Utworzono druï¿½ynï¿½: Juventus
+INFO 2025-06-07 15:06:59,212 views Utworzono druï¿½ynï¿½: Juventus przez uï¿½ytkownika: kacperdebowski
+INFO 2025-06-07 15:28:41,457 models Aktualizowano piï¿½karza: Jude Bellignham (ID: 98)
