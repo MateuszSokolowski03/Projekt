@@ -298,8 +298,22 @@ def team_ranking_list(request):
     })
 
 def event_list(request):
-    events = MatchEvent.objects.all()
+    events_qs = (
+        MatchEvent.objects
+        .select_related(
+            'match',
+            'match__team_1',
+            'match__team_2',
+            'player',
+            'player__team'
+        )
+        .order_by('-match__match_date', '-match__match_time', '-minute')
+    )
+    paginator = Paginator(events_qs, 12)  # 12 wydarzeń na stronę
+    page_number = request.GET.get('page')
+    events = paginator.get_page(page_number)
     return render(request, 'event_list.html', {'events': events})
+    
 
 def add_team(request):
     if request.method == 'POST':
