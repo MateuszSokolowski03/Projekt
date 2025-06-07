@@ -67,7 +67,7 @@
             <p class="text-lg font-semibold text-gray-800">{{ match.team_2.name }}</p>
         </div>
     </div>
-    <p class="text-sm text-gray-600">{{ match.match_date|date:"d M Y" }} | {{ match.match_time|time:"H:i" }}</p>
+    <p class="text-sm text-gray-600">{{ match.match_date.day }} {{ match.get_polish_month_short }} {{ match.match_date.year }} | {{ match.match_time|time:"H:i" }}</p>
 </div>
 {% endfor %}
     </div>
