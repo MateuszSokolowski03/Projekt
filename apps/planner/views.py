@@ -246,26 +246,30 @@ def player_statistics_list(request):
     else:
         statistics = PlayerStatistics.objects.none()
         selected_league = None
-
-    # Krol strzelcow zawsze na gorze listy
-    if best_scorer_id and statistics.exists():
+        
+    if (
+        best_scorer_id
+        and statistics.exists()
+        and (not request.GET.get('sort') or request.GET.get('sort') == 'goals')
+        and (not request.GET.get('direction') or request.GET.get('direction') == 'desc')
+    ):
         statistics = list(statistics)
         statistics.sort(key=lambda s: s.player.player_id != best_scorer_id)
 
     # PAGINACJA
-    paginator = Paginator(statistics, 8)  # 8 statystyk na stronę
+    paginator = Paginator(statistics, 8)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     return render(request, 'player_statistics_list.html', {
-    'leagues': leagues,
-    'statistics': page_obj,  # zamienione!
-    'page_obj': page_obj,
-    'selected_league': selected_league,
-    'sort_by': sort_by.lstrip('-'),
-    'direction': direction,
-    'best_scorer_id': best_scorer_id,
-})
+        'leagues': leagues,
+        'statistics': page_obj,
+        'page_obj': page_obj,
+        'selected_league': selected_league,
+        'sort_by': sort_by.lstrip('-'),
+        'direction': direction,
+        'best_scorer_id': best_scorer_id,
+    })
 
 def team_ranking_list(request):
     if request.user.is_authenticated:
