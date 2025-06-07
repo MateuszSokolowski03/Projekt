@@ -39,7 +39,8 @@ class Player(models.Model):
     ]
     position = models.CharField(max_length=3, choices=POSITION_CHOICES)
     team = models.ForeignKey('Team', on_delete=models.CASCADE, related_name='players')
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='players', null=True, blank=True) 
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='players', null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='player_profiles/', null=True, blank=True)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.get_position_display()})"

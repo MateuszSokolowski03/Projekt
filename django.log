@@ -588,3 +588,29 @@ CONTEXT:  SQL statement "INSERT INTO planner_match (league_id, team_1_id, team_2
                         VALUES (p_league_id, teams[i], teams[j], match_date + (idx * p_interval_days), p_match_time, p_owner_id)"
 PL/pgSQL function generate_matches_for_league(integer,date,time without time zone,integer,text,integer) line 38 at SQL statement
 
+INFO 2025-06-07 14:56:36,813 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 14:56:41,005 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-07 14:56:52,613 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 14:57:18,223 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 14:59:04,804 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 14:59:17,629 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 14:59:25,532 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 15:00:03,237 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 15:00:35,773 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 15:01:10,475 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 15:01:34,724 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 15:01:44,709 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 15:01:50,067 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-07 15:02:32,350 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 15:02:41,230 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 15:02:48,215 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 15:03:00,418 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 15:03:08,124 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 15:03:16,171 models Zapisano statystyki dla gracza: Trent Alexander-Arnold (Defender) w lidze: La Liga
+INFO 2025-06-07 15:03:21,108 models Zapisano statystyki dla gracza: Alejandro Balde (Defender) w lidze: La Liga
+INFO 2025-06-07 15:03:24,381 models Zapisano statystyki dla gracza: Jude Bellignham (Midfielder) w lidze: La Liga
+INFO 2025-06-07 15:03:28,656 models Zapisano statystyki dla gracza: Pau Cubarsi (Defender) w lidze: La Liga
+INFO 2025-06-07 15:03:34,519 models Zapisano statystyki dla gracza: Inigo Martinez (Defender) w lidze: La Liga
+INFO 2025-06-07 15:03:37,912 models Zapisano statystyki dla gracza: Vinicius Junior (Forward) w lidze: La Liga
+INFO 2025-06-07 15:06:59,163 models Utworzono dru¿ynê: Juventus
+INFO 2025-06-07 15:06:59,212 views Utworzono dru¿ynê: Juventus przez u¿ytkownika: kacperdebowski

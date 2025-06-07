@@ -49,6 +49,13 @@
              onclick="window.location='{% url 'player_detail' player.player_id %}'">
             <div class="flex justify-between items-center">
                 <div>
+                    {%  if player.profile_picture %}
+                        <img src="{{ player.profile_picture.url }}" alt="Zdjęcie {{ player.first_name }} {{ player.last_name }}" class="w-20 h-20 rounded-full object-cover">
+                    {% else %}
+                        <img src="{% static 'images/person.png' %}" alt="Brak zdjęcia" class="w-20 h-20 rounded-full object-cover">
+                    {% endif %}
+                </div>
+                <div class="flex-1 text-center">
                     <p class="text-lg font-semibold text-gray-800">{{ player.first_name }} {{ player.last_name }}</p>
                     <p class="text-sm text-gray-600">{{ player.position }}</p>
                 </div>
