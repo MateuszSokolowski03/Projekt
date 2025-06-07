@@ -10,11 +10,17 @@ def create_default_groups(sender, **kwargs):
     organizers_group, _ = Group.objects.get_or_create(name='Organizers')
     guests_group, _ = Group.objects.get_or_create(name='Guests')
 
-    # Uprawnienia dla organizatorów (pełny dostęp do modeli)
-    models = [Team, Player, Match, MatchEvent,Round, League]
+    # Uprawnienia dla organizatorów (tylko dodawanie i przeglądanie)
+    models = [Team, Player, Match, MatchEvent, Round, League]
     for model in models:
         content_type = ContentType.objects.get_for_model(model)
-        permissions = Permission.objects.filter(content_type=content_type)
+        permissions = Permission.objects.filter(
+            content_type=content_type,
+            codename__in=[
+                f'add_{model._meta.model_name}',
+                f'view_{model._meta.model_name}',
+            ]
+        )
         organizers_group.permissions.add(*permissions)
 
     # Uprawnienia dla gości (tylko przeglądanie)
