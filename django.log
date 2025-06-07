@@ -548,3 +548,43 @@ INFO 2025-06-07 12:56:44,483 views Utworzono rundę: 1 w lidze: La Liga przez u�
 INFO 2025-06-07 12:59:22,085 models Aktualizowano mecz: Real Madryt vs FC Barcelona - 1 cze 2025 12:00:00
 INFO 2025-06-07 13:01:12,307 models Utworzono mecz: Real Madryt vs FC Barcelona - 9 wrz 2025 12:00:00
 INFO 2025-06-07 13:01:12,361 views Utworzono mecz: Real Madryt vs FC Barcelona w lidze: Towarzyski przez użytkownika: Mat_eusz
+INFO 2025-06-07 13:34:29,793 models Utworzono drużynę: Atletico Madryt
+INFO 2025-06-07 13:34:29,844 views Utworzono drużynę: Atletico Madryt przez użytkownika: Mat_eusz
+INFO 2025-06-07 13:35:45,440 models Utworzono piłkarza: Jan Oblak
+INFO 2025-06-07 13:35:45,497 views Utworzono piłkarza: Jan Oblak w drużynie: Atletico Madryt przez użytkownika: Mat_eusz
+INFO 2025-06-07 13:36:03,833 models Utworzono piłkarza: Jesus Gimenez
+INFO 2025-06-07 13:36:03,886 views Utworzono piłkarza: Jesus Gimenez w drużynie: Atletico Madryt przez użytkownika: Mat_eusz
+INFO 2025-06-07 13:37:00,661 models Utworzono piłkarza: Clement Lenglet
+INFO 2025-06-07 13:37:00,716 views Utworzono piłkarza: Clement Lenglet w drużynie: Atletico Madryt przez użytkownika: Mat_eusz
+INFO 2025-06-07 13:37:27,673 models Utworzono piłkarza: rodrigo Riquelmne
+INFO 2025-06-07 13:37:28,499 views Utworzono piłkarza: rodrigo Riquelmne w drużynie: Atletico Madryt przez użytkownika: Mat_eusz
+INFO 2025-06-07 13:37:57,031 models Utworzono piłkarza: Antoine Griezmann
+INFO 2025-06-07 13:37:57,086 views Utworzono piłkarza: Antoine Griezmann w drużynie: Atletico Madryt przez użytkownika: Mat_eusz
+INFO 2025-06-07 13:38:58,741 models Utworzono piłkarza: Angel Correa
+INFO 2025-06-07 13:38:58,794 views Utworzono piłkarza: Angel Correa w drużynie: Atletico Madryt przez użytkownika: Mat_eusz
+INFO 2025-06-07 13:39:20,839 models Utworzono piłkarza: Rodrigo de Paul
+INFO 2025-06-07 13:39:20,894 views Utworzono piłkarza: Rodrigo de Paul w drużynie: Atletico Madryt przez użytkownika: Mat_eusz
+INFO 2025-06-07 13:41:12,416 models Utworzono ligę: La Liga
+INFO 2025-06-07 13:41:12,661 views Utworzono ligę: La Liga przez użytkownika: Mat_eusz
+ERROR 2025-06-07 13:41:45,769 views Błąd podczas generowania meczów przez Mat_eusz: generate_matches_for_league(integer, unknown, unknown, integer, unknown, integer) is a procedure
+LINE 1: SELECT * FROM generate_matches_for_league(8,'2024-06-01','12...
+                      ^
+HINT:  To call a procedure, use CALL.
+
+ERROR 2025-06-07 13:44:02,781 views Błąd podczas generowania meczów przez Mat_eusz: generate_matches_for_league(integer, unknown, unknown, integer, unknown, integer) is a procedure
+LINE 1: SELECT * FROM generate_matches_for_league(8,'2024-06-01','12...
+                      ^
+HINT:  To call a procedure, use CALL.
+
+ERROR 2025-06-07 13:48:23,405 views Błąd podczas generowania meczów przez Mat_eusz: null value in column "score_team_1" of relation "planner_match" violates not-null constraint
+DETAIL:  Failing row contains (33, 2024-06-01, 12:00:00, null, null, 8, 19, 20, null, 9).
+CONTEXT:  SQL statement "INSERT INTO planner_match (league_id, team_1_id, team_2_id, match_date, match_time, owner_id)
+                        VALUES (p_league_id, teams[i], teams[j], match_date + (idx * p_interval_days), p_match_time, p_owner_id)"
+PL/pgSQL function generate_matches_for_league(integer,date,time without time zone,integer,text,integer) line 38 at SQL statement
+
+ERROR 2025-06-07 13:48:51,505 views Błąd podczas generowania meczów przez Mat_eusz: null value in column "score_team_1" of relation "planner_match" violates not-null constraint
+DETAIL:  Failing row contains (34, 2024-06-01, 12:00:00, null, null, 8, 19, 20, null, 9).
+CONTEXT:  SQL statement "INSERT INTO planner_match (league_id, team_1_id, team_2_id, match_date, match_time, owner_id)
+                        VALUES (p_league_id, teams[i], teams[j], match_date + (idx * p_interval_days), p_match_time, p_owner_id)"
+PL/pgSQL function generate_matches_for_league(integer,date,time without time zone,integer,text,integer) line 38 at SQL statement
+

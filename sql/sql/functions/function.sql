@@ -1,3 +1,4 @@
+-- Funkcja aktualizuje ranking drużyn w danej lidze na podstawie zakończonych meczów
 CREATE OR REPLACE FUNCTION update_team_rankings(p_league_id INTEGER)
 RETURNS VOID AS $$
 DECLARE
@@ -18,7 +19,7 @@ BEGIN
         team_points := team_points || jsonb_build_object(team_rec.team_id::TEXT, 0);
     END LOOP;
 
-    -- Przetwarzanie zakończonych meczów
+    -- Przetwarzanie zakończonych meczów i naliczanie punktów
     FOR match_rec IN
         SELECT * FROM planner_match
         WHERE league_id = p_league_id AND is_finished = TRUE
@@ -37,7 +38,7 @@ BEGIN
         END IF;
     END LOOP;
 
-    -- Zapisanie punktów
+    -- Zapisanie punktów do tabeli rankingowej
     FOR v_team_id, v_points IN
         SELECT key::INT, value::INT FROM jsonb_each(team_points)
     LOOP
@@ -47,7 +48,7 @@ BEGIN
         DO UPDATE SET points = EXCLUDED.points;
     END LOOP;
 
-    -- Ustawienie pozycji
+    -- Ustawienie pozycji w rankingu
     FOR team_rec IN
         SELECT * FROM planner_teamranking
         WHERE league_id = p_league_id
@@ -62,6 +63,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+-- Funkcja triggerowa: po zmianie wydarzeń meczu aktualizuje wynik meczu
 CREATE OR REPLACE FUNCTION update_match_score()
 RETURNS TRIGGER AS $$
 DECLARE
@@ -97,6 +99,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+-- Funkcja triggerowa: po zakończeniu meczu aktualizuje ranking drużyn w lidze
 CREATE OR REPLACE FUNCTION trigger_update_rankings()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -109,6 +112,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+-- Funkcja triggerowa: loguje operacje na tabeli users do tabeli audit_log
 CREATE OR REPLACE FUNCTION log_audit_event()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -132,8 +136,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
-
-
+-- Funkcja triggerowa: po zakończeniu meczu wywołuje aktualizację statystyk graczy w lidze
 DROP FUNCTION IF EXISTS trigger_update_player_statistics();
 CREATE OR REPLACE FUNCTION trigger_update_player_statistics()
 RETURNS TRIGGER AS $$
@@ -144,10 +147,11 @@ END;
 $$ LANGUAGE plpgsql;
 
 
+-- Funkcja aktualizuje statystyki graczy w danej lidze (mecze, gole, kartki)
 CREATE OR REPLACE FUNCTION update_player_statistics(p_league_id INTEGER)
 RETURNS VOID AS $$
 BEGIN
-    -- Usuwamy stare statystyki dla ligi (opcjonalnie, jeśli chcesz mieć zawsze aktualne)
+    -- Usuwamy stare statystyki dla ligi
     DELETE FROM planner_playerstatistics WHERE league_id = p_league_id;
 
     -- Wstawiamy nowe statystyki
@@ -179,7 +183,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 
--- EDYCJA WYDARZEN
+-- Funkcja triggerowa: po zmianie wydarzenia meczu aktualizuje statystyki graczy w lidze
 DROP FUNCTION IF EXISTS trigger_update_player_statistics_event();
 CREATE OR REPLACE FUNCTION trigger_update_player_statistics_event()
 RETURNS TRIGGER AS $$
@@ -196,14 +200,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-DROP TRIGGER IF EXISTS trg_update_player_statistics_event ON planner_matchevent;
-CREATE TRIGGER trg_update_player_statistics_event
-AFTER INSERT OR UPDATE OR DELETE ON planner_matchevent
-FOR EACH ROW
-EXECUTE FUNCTION trigger_update_player_statistics_event();
 
-
--- EDYCJA MECZU
+-- Funkcja triggerowa: po usunięciu meczu aktualizuje statystyki graczy w lidze
 DROP FUNCTION IF EXISTS trigger_update_player_statistics_match_delete();
 CREATE OR REPLACE FUNCTION trigger_update_player_statistics_match_delete()
 RETURNS TRIGGER AS $$
@@ -212,9 +210,3 @@ BEGIN
     RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;
-
-DROP TRIGGER IF EXISTS trg_update_player_statistics_match_delete ON planner_match;
-CREATE TRIGGER trg_update_player_statistics_match_delete
-AFTER DELETE ON planner_match
-FOR EACH ROW
-EXECUTE FUNCTION trigger_update_player_statistics_match_delete();

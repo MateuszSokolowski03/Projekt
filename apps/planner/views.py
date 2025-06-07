@@ -713,9 +713,10 @@ def two_step_login_view(request):
 @require_http_methods(["GET", "POST"])
 def generate_matches(request):
     leagues = League.objects.filter(owner=request.user)
+
     if request.method == 'POST':
         league_id = request.POST.get('league')
-        match_type = request.POST.get('match_type')
+        match_type = request.POST.get('match_type')  # 'single' lub 'double'
         start_date = request.POST.get('start_date')
         interval_days = request.POST.get('interval_days')
         match_time = request.POST.get('match_time')
@@ -726,51 +727,27 @@ def generate_matches(request):
 
         try:
             league = League.objects.get(pk=league_id, owner=request.user)
-            teams = list(league.teams.all())
-            if len(teams) < 2:
-                messages.error(request, "Liga musi mieć co najmniej 2 drużyny.")
-                return render(request, 'generate_matches.html', {'leagues': leagues})
 
-            # Przygotuj parametry daty i czasu
-            match_date = datetime.strptime(start_date, "%Y-%m-%d").date()
-            match_time_obj = datetime.strptime(match_time, "%H:%M").time()
-            interval_days = int(interval_days)
-            matches_to_create = []
-
-            # Generuj pary drużyn
-            from itertools import combinations, permutations
-
-            if match_type == "single":
-                pairs = list(combinations(teams, 2))
-            else:  # double (mecz + rewanż)
-                pairs = list(permutations(teams, 2))
-
-            for idx, (team1, team2) in enumerate(pairs):
-                # Sprawdź, czy taki mecz już istnieje
-                if Match.objects.filter(
-                    league=league, team_1=team1, team_2=team2
-                ).exists():
-                    continue
-                matches_to_create.append(
-                    Match(
-                        league=league,
-                        team_1=team1,
-                        team_2=team2,
-                        match_date=match_date + timedelta(days=interval_days * idx),
-                        match_time=match_time_obj,
-                        owner=request.user
-                    )
+            with connection.cursor() as cursor:
+                cursor.execute(
+                    "CALL generate_matches_for_league(%s, %s, %s, %s, %s, %s)",
+                    [
+                        int(league_id),
+                        start_date,
+                        match_time,
+                        int(interval_days),
+                        match_type,
+                        request.user.pk
+                    ]
                 )
 
-            Match.objects.bulk_create(matches_to_create)
+            messages.success(request, "Mecze zostały wygenerowane.")
             return redirect('match_list')
+
         except League.DoesNotExist:
             messages.error(request, "Wybrana liga nie istnieje lub nie masz do niej dostępu.")
         except Exception as e:
             logger.error(f'Błąd podczas generowania meczów przez {request.user.username}: {e}')
-            error_msg = str(e)
-            if "co najmniej 7 zawodników" in error_msg or "powyżej 7 zawodnik" in error_msg:
-                error_msg = "Nie można utworzyć meczu: obie drużyny muszą mieć powyżej 7 zawodników. Uzupełnij składy przed generowaniem meczów."
-            messages.error(request, error_msg)
+            messages.error(request, "Wystąpił błąd podczas generowania meczów: " + str(e))
 
     return render(request, 'generate_matches.html', {'leagues': leagues})
