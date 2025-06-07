@@ -83,16 +83,14 @@ class Match(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='matches', null=True, blank=True)
     is_finished = models.BooleanField(default=False) 
     
-    def __str__(self):
+    def polish_month(self):
         # Mapowanie nazw miesięcy na 3-literowe skróty po polsku
         months = {
-            1: "sty", 2: "lut", 3: "mar", 4: "kwi", 5: "maj", 6: "cze",
-            7: "lip", 8: "sie", 9: "wrz", 10: "paź", 11: "lis", 12: "gru"
+            1: "Sty", 2: "Lut", 3: "Mar", 4: "Kwi", 5: "Maj", 6: "Cze",
+            7: "Lip", 8: "Sie", 9: "Wrz", 10: "Paź", 11: "Lis", 12: "Gru"
         }
-        day = self.match_date.day
         month = months[self.match_date.month]
-        year = self.match_date.year
-        return f"{self.team_1.name} vs {self.team_2.name} - {day} {month} {year} {self.match_time}"
+        return f"{month}"
 
     def save(self, *args, **kwargs):
         if self.pk:
