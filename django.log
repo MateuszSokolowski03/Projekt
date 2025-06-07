@@ -526,3 +526,15 @@ INFO 2025-06-06 14:22:20,985 views Statystyki zawodników zaktualizowane przez f
 INFO 2025-06-06 14:22:39,405 models Aktualizowano mecz: FC Barcelona vs Real Madryt - 29 maj 2025 18:56:00
 INFO 2025-06-06 14:22:46,909 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.
 INFO 2025-06-06 14:26:36,767 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.
+INFO 2025-06-07 11:57:28,573 models Zapisano rundę: 1 w lidze: La Liga
+INFO 2025-06-07 11:57:28,821 views Utworzono rundę: 1 w lidze: La Liga przez użytkownika: Mat_eusz
+INFO 2025-06-07 11:57:47,468 models Zapisano rundę: 1 w lidze: La Liga
+INFO 2025-06-07 11:57:47,719 views Utworzono rundę: 1 w lidze: La Liga przez użytkownika: Mat_eusz
+WARNING 2025-06-07 12:00:27,925 views Błąd podczas tworzenia rundy przez Mat_eusz: <ul class="errorlist"><li>__all__<ul class="errorlist nonfield"><li>Numer kolejki musi być unikalny w danej lidze.</li></ul></li></ul>
+WARNING 2025-06-07 12:03:24,435 views Błąd podczas tworzenia rundy przez Mat_eusz: <ul class="errorlist"><li>__all__<ul class="errorlist nonfield"><li>Numer kolejki musi być unikalny w danej lidze.</li></ul></li></ul>
+WARNING 2025-06-07 12:03:36,802 views Błąd podczas tworzenia rundy przez Mat_eusz: <ul class="errorlist"><li>__all__<ul class="errorlist nonfield"><li>Numer kolejki musi być unikalny w danej lidze.</li></ul></li></ul>
+INFO 2025-06-07 12:03:49,313 models Zapisano rundę: 2 w lidze: La Liga
+INFO 2025-06-07 12:03:49,559 views Utworzono rundę: 2 w lidze: La Liga przez użytkownika: Mat_eusz
+WARNING 2025-06-07 12:10:24,313 views Błąd podczas tworzenia rundy przez Mat_eusz: <ul class="errorlist"><li>__all__<ul class="errorlist nonfield"><li>Numer kolejki musi być unikalny w danej lidze.</li></ul></li></ul>
+WARNING 2025-06-07 12:11:34,903 views Błąd podczas tworzenia rundy przez Mat_eusz: <ul class="errorlist"><li>__all__<ul class="errorlist nonfield"><li>Numer kolejki musi być unikalny w danej lidze.</li></ul></li></ul>
+WARNING 2025-06-07 12:14:02,512 views Błąd podczas tworzenia rundy przez Mat_eusz: <ul class="errorlist"><li>__all__<ul class="errorlist nonfield"><li>Numer kolejki musi być unikalny w danej lidze.</li></ul></li></ul>

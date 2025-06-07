@@ -40,6 +40,23 @@ class RoundForm(forms.ModelForm):
         model = Round
         fields = ['round_id', 'number', 'league', 'matches']
 
+    def clean(self):
+        cleaned_data = super().clean()
+        number = cleaned_data.get('number')
+        league = cleaned_data.get('league')
+        if number and league:
+            qs = Round.objects.filter(number=number, league=league)
+            if self.instance.pk:
+                qs = qs.exclude(pk=self.instance.pk)
+            if qs.exists():
+                raise forms.ValidationError("Numer kolejki musi być unikalny w danej lidze.")
+        return cleaned_data
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Pokaż tylko mecze nieprzypisane do żadnej kolejki
+        self.fields['matches'].queryset = Match.objects.filter(rounds=None)
+
 class MatchForm(forms.ModelForm):
     class Meta:
         model = Match

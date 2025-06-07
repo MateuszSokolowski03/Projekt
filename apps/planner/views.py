@@ -356,6 +356,12 @@ def add_round(request):
     if request.method == 'POST':
         form = RoundForm(request.POST)
         if form.is_valid():
+            # Sprawdź, czy wybrano przynajmniej jeden mecz
+            matches = form.cleaned_data.get('matches')
+            if not matches or matches.count() == 0:
+                messages.error(request, "Kolejka musi zawierać przynajmniej jeden mecz.")
+                # Przekaż ponownie formularz z błędem
+                return render(request, 'add_round.html', {'form': form})
             round_instance = form.save(commit=False)
             round_instance.owner = request.user
             round_instance.save()
@@ -369,7 +375,6 @@ def add_round(request):
         form.fields['league'].queryset = League.objects.filter(owner=request.user)
         form.fields['matches'].queryset = Match.objects.filter(owner=request.user)
     return render(request, 'add_round.html', {'form': form})
-
 def add_match(request):
     if request.method == 'POST':
         form = MatchForm(request.POST)
@@ -592,7 +597,8 @@ def get_teams_by_league(request, league_id):
     return JsonResponse(data)
 
 def get_matches_by_league(request, league_id):
-    matches = Match.objects.filter(league_id=league_id)
+    # Pokazuj tylko mecze z tej ligi, które nie są przypisane do żadnej kolejki
+    matches = Match.objects.filter(league_id=league_id, rounds=None)
     data = [
         {
             'id': m.pk,
