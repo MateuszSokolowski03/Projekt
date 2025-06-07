@@ -12,10 +12,6 @@ AFTER UPDATE ON planner_match
 FOR EACH ROW
 EXECUTE FUNCTION trigger_update_rankings();
 
--- Trigger: loguje każdą zmianę w tabeli users do tabeli audit_log
-CREATE TRIGGER users_audit_trigger
-AFTER INSERT OR UPDATE OR DELETE ON users
-FOR EACH ROW EXECUTE FUNCTION log_audit_event();
 
 -- Trigger: przed dodaniem gracza sprawdza limit zawodników w drużynie
 DROP TRIGGER IF EXISTS trg_max_players_per_team ON planner_player;
