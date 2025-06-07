@@ -303,6 +303,7 @@ def add_team(request):
         if form.is_valid():
             team = form.save(commit=False)
             team.owner = request.user
+            team.logo = request.FILES.get('logo')
             team.save()
             logger.info(f'Utworzono drużynę: {team.name} przez użytkownika: {request.user.username}')
             return redirect('team_list')
