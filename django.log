@@ -538,3 +538,7 @@ INFO 2025-06-07 12:03:49,559 views Utworzono rundę: 2 w lidze: La Liga przez u�
 WARNING 2025-06-07 12:10:24,313 views Błąd podczas tworzenia rundy przez Mat_eusz: <ul class="errorlist"><li>__all__<ul class="errorlist nonfield"><li>Numer kolejki musi być unikalny w danej lidze.</li></ul></li></ul>
 WARNING 2025-06-07 12:11:34,903 views Błąd podczas tworzenia rundy przez Mat_eusz: <ul class="errorlist"><li>__all__<ul class="errorlist nonfield"><li>Numer kolejki musi być unikalny w danej lidze.</li></ul></li></ul>
 WARNING 2025-06-07 12:14:02,512 views Błąd podczas tworzenia rundy przez Mat_eusz: <ul class="errorlist"><li>__all__<ul class="errorlist nonfield"><li>Numer kolejki musi być unikalny w danej lidze.</li></ul></li></ul>
+WARNING 2025-06-07 12:26:08,161 views Próba dodania wydarzenia do meczu bez kolejki przez Mat_eusz
+WARNING 2025-06-07 12:27:16,136 views Próba dodania wydarzenia do meczu bez kolejki przez Mat_eusz
+WARNING 2025-06-07 12:27:39,483 views Próba dodania wydarzenia do meczu bez kolejki przez Mat_eusz
+WARNING 2025-06-07 12:29:30,420 views Próba dodania wydarzenia do meczu bez kolejki przez Mat_eusz

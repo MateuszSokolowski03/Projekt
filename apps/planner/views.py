@@ -25,6 +25,7 @@ from psycopg2 import Error as Psycopg2Error
 from django.views.decorators.http import require_http_methods
 from datetime import timedelta
 from collections import defaultdict
+from .forms import CustomUserCreationForm
 
 logger = logging.getLogger(__name__)
 
@@ -407,6 +408,14 @@ def add_event(request):
         form = MatchEventForm(request.POST)
         if form.is_valid():
             event = form.save(commit=False)
+            # Sprawdź, czy mecz jest przypisany do jakiejkolwiek kolejki
+            if not event.match.rounds.exists():
+                messages.error(request, "Nie można dodać wydarzenia do meczu, który nie jest przypisany do żadnej kolejki!")
+                logger.warning(f'Próba dodania wydarzenia do meczu bez kolejki przez {request.user.username}')
+                # Ponownie wyświetl formularz z komunikatem
+                matches = Match.objects.filter(owner=request.user, is_finished=False)
+                event_types = MatchEvent.EVENT_TYPES
+                return render(request, 'add_event.html', {'form': form, 'matches': matches, 'event_types': event_types})
             event.owner = request.user
             event.save()
             logger.info(f'Utworzono wydarzenie: {event.event_type} w meczu: {event.match.team_1.name} vs {event.match.team_2.name} przez użytkownika: {request.user.username}')
@@ -614,6 +623,10 @@ def get_matches_by_league(request, league_id):
 @login_required
 def finish_match(request, match_id):
     match = get_object_or_404(Match, pk=match_id)
+    # Sprawdź czy mecz jest przypisany do kolejki
+    if not match.rounds.exists():
+        messages.error(request, "Nie można zakończyć meczu, który nie jest przypisany do żadnej kolejki!")
+        return redirect('match_detail', match_id=match_id)
     # Sprawdź czy można zakończyć mecz (czy już się rozpoczął)
     match_datetime = datetime.combine(match.match_date, match.match_time)
     if datetime.now() < match_datetime:
