@@ -37,48 +37,42 @@
                 </ul>
             </div>
         {% endif %}
-        
-        <form method="post" class="space-y-6">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="space-y-4">
-                {% for field in form %}
-                <div class="space-y-2">
-                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
-                        {% if field.label == "First name" %}Imię{% elif field.label == "Last name" %}Nazwisko{% elif field.label == "Position" %}Pozycja{% elif field.label == "Team" %}Drużyna{% else %}{{ field.label }}{% endif %}
-                    </label>
-                    {% if field.name == "position" or field.name == "team" %}
-                    <select 
-                        name="{{ field.name }}" 
-                        id="{{ field.id_for_label }}" 
-                        class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full bg-white text-gray-700"
-                    >
-                        <option value="" disabled selected>Wybierz </option>
-                        {% for choice in field.field.choices %}
-                        <option value="{{ choice.0 }}" {% if choice.0 == field.value %}selected{% endif %}>
-                            {{ choice.1 }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                    {% else %}
-                    <input 
-                        type="{{ field.field.widget.input_type|default:'text' }}" 
-                        name="{{ field.name }}" 
-                        id="{{ field.id_for_label }}" 
-                        value="{{ field.value|default:'' }}" 
-                        class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400 hover:bg-gray-100 w-full"
-                    >
-                    {% endif %}
-                    {% if field.errors %}
-                    <p class="text-sm text-red-600 mt-1">{{ field.errors }}</p>
-                    {% endif %}
+            {{ form.non_field_errors }}
+            <div class="mb-4">
+                <label for="id_first_name" class="block text-sm font-medium text-gray-700">Imię:</label>
+                <div class="w-full border-2 border-solid border-gray-300 rounded-md shadow-sm">
+                    {{ form.first_name }}
                 </div>
-                {% endfor %}
             </div>
-            <div class="flex justify-end">
-                <button type="submit" class="w-full bg-primary text-white py-2 rounded-md shadow hover:bg-primary/90 transition-colors">
+            <div class="mb-4">
+                <label for="id_last_name" class="block text-sm font-medium text-gray-700">Nazwisko:</label>
+                <div class="w-full border-2 border-solid border-gray-300 rounded-md shadow-sm">
+                    {{ form.last_name }}
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="id_position" class="block text-sm font-medium text-gray-700">Pozycja:</label>
+                <div class="w-full border-2 border-solid border-gray-300 rounded-md shadow-sm">
+                    {{ form.position }}
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="id_team" class="block text-sm font-medium text-gray-700">Drużyna:</label>
+                <div class="w-full border-2 border-solid border-gray-300 rounded-md shadow-sm">
+                    {{ form.team }}
+                </div>
+            </div>
+            <div class="mb-4">
+                <label for="id_profile_picture" class="block text-sm font-medium text-gray-700">Zdjęcie piłkarza:</label>
+                <div class="w-full border-2 border-solid border-gray-300 rounded-md shadow-sm">
+                    <input type="file" name="profile_picture" id="id_profile_picture" accept="image/*">
+                </div>
+            </div>
+            <button type="submit" class="w-full bg-primary text-white py-2 rounded-md shadow hover:bg-primary/90 transition-colors">
                 Zapisz
-                </button>
-            </div>
+            </button>
         </form>
     </div>
 </div>

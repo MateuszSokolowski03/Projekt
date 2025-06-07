@@ -315,7 +315,7 @@ def add_team(request):
 
 def add_player(request):
     if request.method == 'POST':
-        form = PlayerForm(request.POST)
+        form = PlayerForm(request.POST, request.FILES)
         if form.is_valid():
             try:
                 player = form.save(commit=False)

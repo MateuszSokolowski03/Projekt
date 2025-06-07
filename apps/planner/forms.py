@@ -15,7 +15,7 @@ class TeamForm(forms.ModelForm):
 class PlayerForm(forms.ModelForm):
     class Meta:
         model = Player
-        fields = ['player_id', 'first_name', 'last_name', 'position', 'team']
+        fields = ['player_id', 'first_name', 'last_name', 'position', 'team', 'profile_picture']
 
 class LeagueForm(forms.ModelForm):
     teams = forms.ModelMultipleChoiceField(
