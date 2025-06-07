@@ -24,10 +24,36 @@
             {% endfor %}
         </div>
     </div>
- <div class="flex justify-end mt-6 pt-4 border-t border-gray-200 px-4">
-            {% if user.is_authenticated %}
-            <a href="{% url 'add_team' %}" class="bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90">Dodaj Drużynę</a>
+
+    <!-- Paginacja -->
+    {% if teams.paginator.num_pages > 1 %}
+    <div class="mt-6 flex justify-center">
+        <nav class="inline-flex rounded-md shadow-sm" aria-label="Pagination">
+            {% if teams.has_previous %}
+            <a href="?page=1"
+               class="px-3 py-2 border border-gray-300 bg-white text-sm text-gray-700 hover:bg-gray-50">Pierwsza</a>
+            <a href="?page={{ teams.previous_page_number }}"
+               class="px-3 py-2 border border-gray-300 bg-white text-sm text-gray-700 hover:bg-gray-50">Poprzednia</a>
             {% endif %}
-        </div>
+
+            <span class="px-4 py-2 border border-gray-300 bg-gray-100 text-sm text-gray-700">
+                Strona {{ teams.number }} z {{ teams.paginator.num_pages }}
+            </span>
+
+            {% if teams.has_next %}
+            <a href="?page={{ teams.next_page_number }}"
+               class="px-3 py-2 border border-gray-300 bg-white text-sm text-gray-700 hover:bg-gray-50">Następna</a>
+            <a href="?page={{ teams.paginator.num_pages }}"
+               class="px-3 py-2 border border-gray-300 bg-white text-sm text-gray-700 hover:bg-gray-50">Ostatnia</a>
+            {% endif %}
+        </nav>
+    </div>
+    {% endif %}
+
+    <div class="flex justify-end mt-6 pt-4 border-t border-gray-200 px-4">
+        {% if user.is_authenticated %}
+        <a href="{% url 'add_team' %}" class="bg-primary text-white px-4 py-2 rounded-md shadow hover:bg-primary/90">Dodaj Drużynę</a>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

@@ -40,16 +40,21 @@ def team_list(request):
 
     if request.user.is_authenticated:
         # Pokazuj tylko drużyny należące do zalogowanego użytkownika
-        teams = Team.objects.filter(owner=request.user).order_by(sort_by)
+        teams_qs = Team.objects.filter(owner=request.user).order_by(sort_by)
     else:
         # Pokazuj tylko drużyny stworzone przez organizatorów (czyli mają właściciela)
-        teams = Team.objects.filter(owner__isnull=False).order_by(sort_by)
+        teams_qs = Team.objects.filter(owner__isnull=False).order_by(sort_by)
+
+    paginator = Paginator(teams_qs, 15)  # 15 drużyn na stronę (możesz zmienić liczbę)
+    page_number = request.GET.get('page')
+    teams = paginator.get_page(page_number)
 
     return render(request, 'team_list.html', {
         'teams': teams,
         'sort_by': sort_by.lstrip('-'),
         'direction': direction,
     })
+    
 def team_detail(request, team_id):
     team = Team.objects.get(pk=team_id)
     players = team.players.all()  # Pobranie składu drużyny
@@ -104,9 +109,12 @@ def player_detail(request, player_id):
 
 def league_list(request):
     if request.user.is_authenticated:
-        leagues = League.objects.filter(owner=request.user)
+        leagues_qs = League.objects.filter(owner=request.user)
     else:
-        leagues = League.objects.filter(owner__isnull=False)
+        leagues_qs = League.objects.filter(owner__isnull=False)
+    paginator = Paginator(leagues_qs, 24)  # 24 ligi na stronę
+    page_number = request.GET.get('page')
+    leagues = paginator.get_page(page_number)
     return render(request, 'league_list.html', {'leagues': leagues})
 
 def round_list(request):
@@ -155,7 +163,8 @@ def match_list(request):
     if match_date:
         matches = matches.filter(match_date=match_date)
 
-    matches = matches.order_by(sort_by)
+    # Optymalizacja: pobierz powiązane drużyny i ligę jednym zapytaniem
+    matches = matches.select_related('team_1', 'team_2', 'league').order_by(sort_by)
 
     paginator = Paginator(matches, 4)
     page_number = request.GET.get('page')
