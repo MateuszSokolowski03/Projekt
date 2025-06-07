@@ -119,20 +119,21 @@ def league_list(request):
 
 def round_list(request):
     selected_league_ids = request.GET.getlist('league')
+
+    # Pobierz tylko niepuste ligi
     if request.user.is_authenticated:
         leagues = League.objects.filter(owner=request.user)
-        if selected_league_ids:
-            rounds = Round.objects.filter(owner=request.user, league_id__in=selected_league_ids)
-        else:
-            rounds = Round.objects.filter(owner=request.user)
+        rounds = Round.objects.filter(owner=request.user)
     else:
         leagues = League.objects.filter(owner__isnull=False)
-        if selected_league_ids:
-            rounds = Round.objects.filter(owner__isnull=False, league_id__in=selected_league_ids)
-        else:
-            rounds = Round.objects.filter(owner__isnull=False)   
+        rounds = Round.objects.filter(owner__isnull=False)
 
-    paginator = Paginator(rounds, 5)
+    # Filtrowanie po wybranych ligach
+    if selected_league_ids:
+        rounds = rounds.filter(league_id__in=selected_league_ids)
+
+    # Paginacja
+    paginator = Paginator(rounds.select_related('league').prefetch_related('matches'), 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
@@ -404,6 +405,15 @@ def add_round(request):
         form.fields['league'].queryset = League.objects.filter(owner=request.user)
         form.fields['matches'].queryset = Match.objects.filter(owner=request.user)
     return render(request, 'add_round.html', {'form': form})
+
+def round_detail(request, round_id):
+    round_obj = get_object_or_404(Round, pk=round_id)
+    matches = round_obj.matches.all()
+    return render(request, 'round_detail.html', {
+        'round': round_obj,
+        'matches': matches,
+    })
+
 def add_match(request):
     if request.method == 'POST':
         form = MatchForm(request.POST)

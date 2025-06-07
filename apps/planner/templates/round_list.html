@@ -36,32 +36,25 @@
     <!-- Lista kolejek -->
     <div class="space-y-4 w-9/12">
         {% for round in rounds.object_list %}
-        <div class="bg-white shadow-md rounded-lg p-4 border-2 border-solid border-primary/25 hover:bg-gray-100 cursor-pointer mr-5">
-            <div class="flex justify-between items-center">
-                <div>
-                    <p class="text-lg font-semibold text-gray-800">
-                        Kolejka {{ round.number }}{% if round.name %}: {{ round.name }}{% endif %}
-                    </p>
-                </div>
-                <div>
-                    <ul class="text-sm text-gray-600">
-                        {% for match in round.matches.all %}
-                        <li>
-                            <span class="font-semibold text-gray-800">{{ match.team_1.name }}</span>
-                            <span class="mx-2 text-primary font-bold">
-                                {{ match.score_team_1 }} : {{ match.score_team_2 }}
-                            </span>
-                            <span class="font-semibold text-gray-800">{{ match.team_2.name }}</span>
-                            <span class="ml-2 text-gray-500">({{ match.match_date.day }} {{ match.polish_month }} {{ match.match_date.year }})</span>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div>
-                    <p class="text-sm text-gray-600">{{ round.league }}</p>
+        <a href="{% url 'round_detail' round.round_id %}" class="block">
+            <div class="bg-white shadow-md rounded-lg p-4 border-2 border-solid border-primary/25 hover:bg-gray-100 hover:shadow-lg transition cursor-pointer mr-5">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p class="text-lg font-semibold text-gray-800">
+                            Kolejka {{ round.number }}{% if round.name %}: {{ round.name }}{% endif %}
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600 text-center">
+                            Rozgrywanych meczy: {{ round.matches.count }}
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-600">{{ round.league }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
+        </a>
         {% empty %}
         <p class="text-gray-600 text-center mt-10">Brak kolejek dla wybranych lig.</p>
         {% endfor %}
