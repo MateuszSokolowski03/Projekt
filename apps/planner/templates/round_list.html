@@ -52,7 +52,7 @@
                                 {{ match.score_team_1 }} : {{ match.score_team_2 }}
                             </span>
                             <span class="font-semibold text-gray-800">{{ match.team_2.name }}</span>
-                            <span class="ml-2 text-gray-500">({{ match.match_date.day }} {{ match.get_polish_month_short }} {{ match.match_date.year }})</span>
+                            <span class="ml-2 text-gray-500">({{ match.match_date|date:"d M Y" }})</span>
                         </li>
                         {% endfor %}
                     </ul>

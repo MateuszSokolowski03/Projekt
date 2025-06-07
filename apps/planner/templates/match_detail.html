@@ -19,7 +19,7 @@
     {% endif %}
     <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Szczegóły Meczu</h1>
     <div class="bg-white border-2 border-solid border-primary/25 text-center shadow-md w-full mb-4 ml-5 mx-auto p-4 rounded-lg overflow-hidden">
-        <h2 class="text-sm text-primary/50 font-semibold mb-2">{{ match.match_date.day }} {{ match.get_polish_month_short}} {{ match.match_date.year }} | {{ match.match_time|time:"H:i" }}</h2>
+        <h2 class="text-sm text-primary/50 font-semibold mb-2">{{ match.match_date|date:"d M Y" }} | {{ match.match_time|time:"H:i" }}</h2>
         <div class="flex items-center justify-between text-center mb-4">
             {% if match.team_1.logo %}
                 <img src="{{ match.team_1.logo.url }}" alt="Logo {{ match.team_1.name }}" class="w-30 h-20 object-cover mx-auto mb-1">
