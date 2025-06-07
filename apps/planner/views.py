@@ -198,8 +198,8 @@ def player_statistics_list(request):
     else:
         leagues = League.objects.filter(owner__isnull=False)
     selected_league_id = request.GET.get('league')
-    sort_by = request.GET.get('sort', 'player__last_name')
-    direction = request.GET.get('direction', 'desc' if sort_by == 'goals' else 'asc')  # domyślnie gole malejąco
+    sort_by = request.GET.get('sort', 'goals')  # domyślnie sortuj po golach
+    direction = request.GET.get('direction', 'desc')  # domyślnie malejąco
 
     if direction == 'desc':
         order_by = f'-{sort_by}'

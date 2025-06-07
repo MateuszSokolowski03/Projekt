@@ -42,7 +42,7 @@
                             <a href="?{% if selected_league %}league={{ selected_league.league_id }}&{% endif %}sort=matches_played&direction={% if sort_by == 'matches_played' and direction == 'asc' %}desc{% else %}asc{% endif %}"
                                class="text-xs text-gray-500 font-semibold hover:underline {% if sort_by == 'matches_played' %}text-primary{% endif %}">
                                 Mecze
-                                {% if sort_by == 'matches_played' %}
+                                {% if forloop.first and sort_by == 'matches_played' %}
                                     {% if direction == 'asc' %}
                                         &#9650;
                                     {% else %}
@@ -56,7 +56,7 @@
                             <a href="?{% if selected_league %}league={{ selected_league.league_id }}&{% endif %}sort=goals&direction={% if sort_by == 'goals' and direction == 'asc' %}desc{% else %}asc{% endif %}"
                                class="text-xs text-gray-500 font-semibold hover:underline {% if sort_by == 'goals' %}text-primary{% endif %}">
                                 Gole
-                                {% if sort_by == 'goals' %}
+                                {% if forloop.first and sort_by == 'goals' %}
                                     {% if direction == 'asc' %}
                                         &#9650;
                                     {% else %}
@@ -70,7 +70,7 @@
                             <a href="?{% if selected_league %}league={{ selected_league.league_id }}&{% endif %}sort=yellow_cards&direction={% if sort_by == 'yellow_cards' and direction == 'asc' %}desc{% else %}asc{% endif %}"
                                class="text-xs text-gray-500 font-semibold hover:underline {% if sort_by == 'yellow_cards' %}text-primary{% endif %}">
                                 Żółte kartki
-                                {% if sort_by == 'yellow_cards' %}
+                                {% if forloop.first and sort_by == 'yellow_cards' %}
                                     {% if direction == 'asc' %}
                                         &#9650;
                                     {% else %}
@@ -84,7 +84,7 @@
                             <a href="?{% if selected_league %}league={{ selected_league.league_id }}&{% endif %}sort=red_cards&direction={% if sort_by == 'red_cards' and direction == 'asc' %}desc{% else %}asc{% endif %}"
                                class="text-xs text-gray-500 font-semibold hover:underline {% if sort_by == 'red_cards' %}text-primary{% endif %}">
                                 Czerwone kartki
-                                {% if sort_by == 'red_cards' %}
+                                {% if forloop.first and sort_by == 'red_cards' %}
                                     {% if direction == 'asc' %}
                                         &#9650;
                                     {% else %}
