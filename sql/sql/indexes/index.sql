@@ -16,11 +16,15 @@ CREATE INDEX idx_match_league ON planner_match (league_id);
 
 CREATE INDEX idx_player_team ON planner_player (team_id);
 
+CREATE INDEX idx_playerstatistics_league ON planner_playerstatistics (league_id);
 
+CREATE INDEX idx_round_owner ON planner_round (owner_id);
 
+CREATE INDEX idx_match_is_finished ON planner_match (is_finished);
 
 -- Złożony indeks na MatchEvent dla player_id, event_type i match_id
 CREATE INDEX idx_event_player_type_match ON planner_matchevent (player_id, event_type, match_id);
+CREATE INDEX idx_matchevent_player ON planner_matchevent (player_id);
 
 -- Indeks na Match dla filtrowania po lidze i zakończonych meczach
 CREATE INDEX idx_match_league_finished ON planner_match (league_id, is_finished);
