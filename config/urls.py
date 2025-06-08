@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.views import LogoutView
 from apps.planner import views
-from apps.planner.views import register_view, login_view
+from apps.planner.views import register_view, login_view, PlayerListAPI, TeamListAPI, PlayerListAPI, LeagueListAPI, MatchListAPI
 from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.conf import settings
@@ -27,16 +27,20 @@ urlpatterns = [
     path('admin/', admin.site.urls), # Admin panel URL
     path('', views.index, name='index'), # Home page URL
     path('teams/', views.team_list, name='team_list'), # List of teams URL
+    path('api/teams/', TeamListAPI.as_view(), name='api_teams'),
     path('teams/add/', views.add_team, name='add_team'), # Add new team URL
     path('teams/<int:team_id>/', views.team_detail, name='team_detail'), # Team detail URL
     path('players/', views.player_list, name='player_list'), # List of players URL
+    path('api/players/', PlayerListAPI.as_view(), name='api_players'),
     path('players/add/', views.add_player, name='add_player'), # Add new player URL
     path('players/<int:player_id>/', views.player_detail, name='player_detail'), # Player detail URL
     path('leagues/', views.league_list, name='league_list'), # List of leagues URL
+    path('api/leagues/', LeagueListAPI.as_view(), name='api_leagues'),
     path('leagues/add/', views.add_league, name='add_league'), # Add new league URL
     path('rounds/', views.round_list, name='round_list'), # List of rounds URL
     path('rounds/add/', views.add_round, name='add_round'), # Add new round URL
     path('matches/', views.match_list, name='match_list'), # List of matches URL
+    path('api/matches/', MatchListAPI.as_view(), name='api_matches'),
     path('match/<int:match_id>/', views.match_detail, name='match_detail'), # Match detail URL
     path('matches/add/', views.add_match, name='add_match'), # Add new match URL
     path('player-statistics/', views.player_statistics_list, name='player_statistics_list'), # List of player statistics URL

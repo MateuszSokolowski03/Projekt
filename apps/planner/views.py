@@ -16,6 +16,8 @@ from django.db import connection
 import logging
 from django.views.decorators.http import require_http_methods
 from .forms import CustomUserCreationForm
+from rest_framework import generics
+from .serializers import TeamSerializer, PlayerSerializer, LeagueSerializer, MatchSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -802,3 +804,19 @@ def generate_matches(request):
             messages.error(request, "Wystąpił błąd podczas generowania meczów: " + str(e))
 
     return render(request, 'generate_matches.html', {'leagues': leagues})
+
+class TeamListAPI(generics.ListAPIView):
+    queryset = Team.objects.all()
+    serializer_class = TeamSerializer
+
+class PlayerListAPI(generics.ListAPIView):
+    queryset = Player.objects.all()
+    serializer_class = PlayerSerializer
+
+class LeagueListAPI(generics.ListAPIView):
+    queryset = League.objects.all()
+    serializer_class = LeagueSerializer
+
+class MatchListAPI(generics.ListAPIView):
+    queryset = Match.objects.all()
+    serializer_class = MatchSerializer
