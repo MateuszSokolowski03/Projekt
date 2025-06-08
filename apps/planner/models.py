@@ -11,7 +11,7 @@ class Team(models.Model):
     team_id = models.AutoField(primary_key=True)  # Klucz główny
     name = models.CharField(max_length=255, unique=True)
     logo = models.ImageField(upload_to='team_logos/', null=True, blank=True)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='teams', null=True, blank=True) 
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='teams') 
 
     def __str__(self):
         return self.name
@@ -39,7 +39,7 @@ class Player(models.Model):
     ]
     position = models.CharField(max_length=3, choices=POSITION_CHOICES)
     team = models.ForeignKey('Team', on_delete=models.CASCADE, related_name='players')
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='players', null=True, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='players')
     profile_picture = models.ImageField(upload_to='player_profiles/', null=True, blank=True)
 
     def __str__(self):
@@ -81,7 +81,7 @@ class Match(models.Model):
     match_time = models.TimeField()  # Godzina meczu
     score_team_1 = models.IntegerField(default=0)
     score_team_2 = models.IntegerField(default=0)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='matches', null=True, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='matches')
     is_finished = models.BooleanField(default=False) 
     
     def polish_month(self):
@@ -119,7 +119,7 @@ class MatchEvent(models.Model):
     ]
     event_type = models.CharField(max_length=20, choices=EVENT_TYPES)
     player = models.ForeignKey('Player', on_delete=models.CASCADE, null=True, blank=True)
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_events', null=True, blank=True) 
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='match_events') 
 
     def __str__(self):
         return f"{self.event_type} at {self.minute} min in {self.match}"
@@ -151,7 +151,7 @@ class League(models.Model):
     league_id = models.AutoField(primary_key=True)  # Klucz główny
     name = models.CharField(max_length=255, unique=True)
     teams = models.ManyToManyField('Team', related_name='leagues')
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='leagues', null=True, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='leagues')
 
     def __str__(self):
         return self.name
@@ -168,7 +168,7 @@ class Round(models.Model):
     number = models.IntegerField(null=True, blank=True)    
     league = models.ForeignKey('League', on_delete=models.CASCADE, related_name='rounds')
     matches = models.ManyToManyField('Match', related_name='rounds')
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rounds', null=True, blank=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='rounds')
     def __str__(self):
         return f"{self.number} ({self.league.name})"
 
