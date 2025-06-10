@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = "Generuje testowe drużyny, zawodników, ligi, kolejki, mecze i wydarzenia"
 
     def handle(self, *args, **kwargs):
-        user, _ = User.objects.get_or_create(username="testuser", defaults={"password": "testpass"})
+        user, _ = User.objects.get_or_create(username="testuser", defaults={"password": "testpassword"})
         teams = []
         for i in range(20):
             team, _ = Team.objects.get_or_create(name=f"Drużyna {i}", owner=user)
