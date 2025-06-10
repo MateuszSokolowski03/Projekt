@@ -491,10 +491,9 @@ def register_view(request):
             user = form.save(commit=False) # Utwórz instancję użytkownika, ale nie zapisuj jeszcze do bazy danych
             user.email = form.cleaned_data['email'] # Pobierz email z formularza
             user.save() # Zapisz użytkownika do bazy danych
-            login(request, user) # Zaloguj użytkownika po rejestracji
-            messages.success(request, 'Konto zostało pomyślnie utworzone!')
+            messages.success(request, 'Konto zostało pomyślnie utworzone! Możesz się teraz zalogować.')
             logger.info(f"Zarejestrowano konto dla użytkownika: {user.username} ({user.email})")
-            return redirect('team_list')
+            return redirect('login') # Przekieruj na stronę logowania
         else:
             logger.warning(f"Błąd podczas rejestracji użytkownika: {form.errors}")
     else:
