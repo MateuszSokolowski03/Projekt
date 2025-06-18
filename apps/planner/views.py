@@ -18,6 +18,7 @@ from django.views.decorators.http import require_http_methods
 from .forms import CustomUserCreationForm
 from rest_framework import generics
 from .serializers import TeamSerializer, PlayerSerializer, LeagueSerializer, MatchSerializer
+from django.db import DatabaseError
 
 logger = logging.getLogger(__name__)
 
@@ -429,28 +430,36 @@ def round_detail(request, round_id):
 # Widok dodawania meczu
 def add_match(request):
     if request.method == 'POST':
-        form = MatchForm(request.POST) # Przekaż dane z formularza
+        form = MatchForm(request.POST)
         if form.is_valid():
             try:
-                match = form.save(commit=False) # Utwórz instancję meczu, ale nie zapisuj jeszcze do bazy danych
-                match.owner = request.user # Ustaw właściciela meczu na zalogowanego użytkownika
-                match.save() # Zapisz mecz do bazy danych
+                match = form.save(commit=False)
+                match.owner = request.user
+                match.save()
                 logger.info(f'Utworzono mecz: {match.team_1.name} vs {match.team_2.name} w lidze: {match.league.name} przez użytkownika: {request.user.username}')
                 return redirect('match_list')
-            except Exception as e:
+            except DatabaseError as e:
                 logger.error(f'Błąd podczas tworzenia meczu przez {request.user.username}: {e}')
                 error_msg = str(e)
-                if "co najmniej 7 zawodników" in error_msg: # Sprawdź, czy błąd dotyczy braku wystarczającej liczby zawodników
+                # Sprawdź różne wersje komunikatu
+                if (
+                    "co najmniej 7 zawodników" in error_msg
+                    or "muszą mieć co najmniej 7 zawodników" in error_msg
+                    or "at least 7 players" in error_msg
+                ):
                     error_msg = "Nie można utworzyć meczu: obie drużyny muszą mieć co najmniej 7 zawodników. Uzupełnij składy przed dodaniem meczu."
                 messages.error(request, error_msg)
+            except Exception as e:
+                logger.error(f'Nieoczekiwany błąd podczas tworzenia meczu przez {request.user.username}: {e}')
+                messages.error(request, "Wystąpił nieoczekiwany błąd.")
         else:
             logger.warning(f'Błąd podczas tworzenia meczu przez {request.user.username}: {form.errors}')
     else:
-        form = MatchForm() # Utwórz nowy formularz
-        form.fields['team_1'].queryset = Team.objects.filter(owner=request.user) # Ogranicz drużyny do tych, których owner to aktualny użytkownik
-        form.fields['team_2'].queryset = Team.objects.filter(owner=request.user) # Ogranicz ligi do tych, których owner to aktualny użytkownik
-        form.fields['league'].queryset = League.objects.filter(owner=request.user) # Ogranicz ligi do tych, których owner to aktualny użytkownik
-    leagues = League.objects.filter(owner=request.user) # Pobierz wszystkie ligi należące do zalogowanego użytkownika
+        form = MatchForm()
+        form.fields['team_1'].queryset = Team.objects.filter(owner=request.user)
+        form.fields['team_2'].queryset = Team.objects.filter(owner=request.user)
+        form.fields['league'].queryset = League.objects.filter(owner=request.user)
+    leagues = League.objects.filter(owner=request.user)
     return render(request, 'add_match.html', {'form': form, 'leagues': leagues})
 
 # Widok dodawania wydarzenia do meczu

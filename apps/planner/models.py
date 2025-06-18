@@ -46,7 +46,7 @@ class Player(models.Model):
     profile_picture = models.ImageField(upload_to='player_profiles/', null=True, blank=True) # Zdjęcie profilowe piłkarza, opcjonalne
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} ({self.get_position_display()})"
+        return f"{self.first_name} {self.last_name} ({self.get_position_display()}, {self.team.name})"
 
     # Metoda do zwrócenia pełnej nazwy piłkarza
     def save(self, *args, **kwargs):
@@ -110,6 +110,9 @@ class Match(models.Model):
             logger.info(f"Utworzono mecz: {self}")
         super().save(*args, **kwargs)
 
+
+    def __str__(self):
+        return f"{self.team_1.name} vs {self.team_2.name} ({self.match_date})"
     @property
     def dynamic_score_team_1(self): # Zlicza dynamicznie liczbę goli drużyny 1
         return self.events.filter(player__team=self.team_1, event_type='goal').count()

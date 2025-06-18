@@ -114,13 +114,10 @@
 const matchSelect = document.getElementById('match');
 const playerSelect = document.getElementById('player');
 
-matchSelect.addEventListener('change', function () {
-    const matchId = this.value;
+function loadPlayersForMatch(matchId) {
     if (!matchId) return;
-
     playerSelect.innerHTML = '<option disabled selected>Ładowanie...</option>';
     playerSelect.disabled = true;
-
     fetch(`/api/match_players/${matchId}/`)
         .then(response => response.json())
         .then(data => {
@@ -148,6 +145,16 @@ matchSelect.addEventListener('change', function () {
             playerSelect.innerHTML = '<option disabled selected>Błąd ładowania</option>';
             playerSelect.disabled = true;
         });
+}
+
+matchSelect.addEventListener('change', function () {
+    loadPlayersForMatch(this.value);
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    if (matchSelect.value) {
+        loadPlayersForMatch(matchSelect.value);
+    }
 });
 </script>
 {% endblock %}

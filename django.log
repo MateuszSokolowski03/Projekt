@@ -661,3 +661,76 @@ INFO 2025-06-07 23:17:46,770 views Wys�ano kod logowania na email: szwierzynski0
 INFO 2025-06-07 23:20:30,333 views Wys�ano kod logowania na email: szwierzynski03@gmail.com
 INFO 2025-06-07 23:20:51,561 views U�ytkownik szymonz zalogowany dwustopniowo pomy�lnie.
 INFO 2025-06-10 15:56:15,974 views Zarejestrowano konto dla użytkownika: testowy1 (test@gmail.com)
+INFO 2025-06-18 16:23:04,358 models Utworzono drużynę: FC Barcelona
+INFO 2025-06-18 16:23:04,366 views Utworzono drużynę: FC Barcelona przez użytkownika: mateusz
+INFO 2025-06-18 16:23:38,342 models Utworzono piłkarza: test 1
+INFO 2025-06-18 16:23:38,348 views Utworzono piłkarza: test 1 w drużynie: FC Barcelona przez użytkownika: mateusz
+INFO 2025-06-18 16:24:05,230 models Utworzono drużynę: Real Madryt
+INFO 2025-06-18 16:24:05,234 views Utworzono drużynę: Real Madryt przez użytkownika: mateusz
+INFO 2025-06-18 16:24:22,151 models Utworzono ligę: Testowa
+INFO 2025-06-18 16:24:22,163 views Utworzono ligę: Testowa przez użytkownika: mateusz
+INFO 2025-06-18 16:24:39,255 models Utworzono mecz: Match object (None)
+INFO 2025-06-18 16:24:39,262 views Utworzono mecz: FC Barcelona vs Real Madryt w lidze: Testowa przez użytkownika: mateusz
+INFO 2025-06-18 16:26:05,463 models Zapisano rundę: 1 w lidze: Testowa
+INFO 2025-06-18 16:26:05,476 views Utworzono rundę: 1 w lidze: Testowa przez użytkownika: mateusz
+INFO 2025-06-18 16:26:12,508 models Aktualizowano mecz: Match object (1)
+INFO 2025-06-18 17:08:27,795 views Zarejestrowano konto dla użytkownika: Mateusz (eusmateusz@gmail.com)
+INFO 2025-06-18 17:12:13,701 models Utworzono mecz: Match object (None)
+INFO 2025-06-18 17:12:13,785 views Utworzono mecz: FC Barcelona vs Real Madryt w lidze: La Liga przez użytkownika: superuser
+INFO 2025-06-18 17:28:18,433 models Utworzono mecz: Match object (None)
+ERROR 2025-06-18 17:28:18,528 views Błąd podczas tworzenia meczu przez superuser: Obie drużyny muszą mieć co najmniej 7 zawodników, aby utworzyć mecz.
+CONTEXT:  PL/pgSQL function check_min_players_for_match() line 10 at RAISE
+
+INFO 2025-06-18 17:28:50,123 models Utworzono piłkarza: test 1
+INFO 2025-06-18 17:28:50,221 views Utworzono piłkarza: test 1 w drużynie: FC Barcelona przez użytkownika: superuser
+INFO 2025-06-18 17:29:04,613 models Utworzono piłkarza: test 2
+INFO 2025-06-18 17:29:04,713 views Utworzono piłkarza: test 2 w drużynie: FC Barcelona przez użytkownika: superuser
+INFO 2025-06-18 17:29:18,729 models Utworzono piłkarza: test 3
+INFO 2025-06-18 17:29:18,838 views Utworzono piłkarza: test 3 w drużynie: FC Barcelona przez użytkownika: superuser
+INFO 2025-06-18 17:29:34,652 models Utworzono piłkarza: test 4
+INFO 2025-06-18 17:29:34,748 views Utworzono piłkarza: test 4 w drużynie: FC Barcelona przez użytkownika: superuser
+INFO 2025-06-18 17:30:05,822 models Utworzono piłkarza: test 5
+INFO 2025-06-18 17:30:05,919 views Utworzono piłkarza: test 5 w drużynie: FC Barcelona przez użytkownika: superuser
+INFO 2025-06-18 17:30:21,006 models Utworzono piłkarza: test 6
+INFO 2025-06-18 17:30:21,100 views Utworzono piłkarza: test 6 w drużynie: FC Barcelona przez użytkownika: superuser
+INFO 2025-06-18 17:30:37,292 models Utworzono piłkarza: test 7
+INFO 2025-06-18 17:30:37,374 views Utworzono piłkarza: test 7 w drużynie: FC Barcelona przez użytkownika: superuser
+INFO 2025-06-18 17:30:50,852 models Utworzono piłkarza: test 8
+INFO 2025-06-18 17:30:50,944 views Utworzono piłkarza: test 8 w drużynie: Real Madryt przez użytkownika: superuser
+INFO 2025-06-18 17:31:04,483 models Utworzono piłkarza: test 9
+INFO 2025-06-18 17:31:04,576 views Utworzono piłkarza: test 9 w drużynie: Real Madryt przez użytkownika: superuser
+INFO 2025-06-18 17:31:18,948 models Utworzono piłkarza: test 10
+INFO 2025-06-18 17:31:19,062 views Utworzono piłkarza: test 10 w drużynie: Real Madryt przez użytkownika: superuser
+INFO 2025-06-18 17:31:35,586 models Utworzono piłkarza: test 11
+INFO 2025-06-18 17:31:35,678 views Utworzono piłkarza: test 11 w drużynie: Real Madryt przez użytkownika: superuser
+INFO 2025-06-18 17:31:52,194 models Utworzono piłkarza: test 12
+INFO 2025-06-18 17:31:52,295 views Utworzono piłkarza: test 12 w drużynie: Real Madryt przez użytkownika: superuser
+INFO 2025-06-18 17:32:06,025 models Utworzono piłkarza: test 13
+INFO 2025-06-18 17:32:06,105 views Utworzono piłkarza: test 13 w drużynie: Real Madryt przez użytkownika: superuser
+INFO 2025-06-18 17:32:19,508 models Utworzono piłkarza: test 14
+INFO 2025-06-18 17:32:19,577 views Utworzono piłkarza: test 14 w drużynie: Real Madryt przez użytkownika: superuser
+INFO 2025-06-18 17:32:34,877 models Utworzono mecz: Match object (None)
+INFO 2025-06-18 17:32:34,967 views Utworzono mecz: FC Barcelona vs Real Madryt w lidze: La Liga przez użytkownika: superuser
+INFO 2025-06-18 17:32:49,789 models Zapisano rundę: 1 w lidze: La Liga
+INFO 2025-06-18 17:32:50,186 views Utworzono rundę: 1 w lidze: La Liga przez użytkownika: superuser
+INFO 2025-06-18 17:39:09,379 models Zapisano wydarzenie: goal (12 min) w meczu: FC Barcelona vs Real Madryt (2025-02-03)
+INFO 2025-06-18 17:39:09,484 views Utworzono wydarzenie: goal w meczu: FC Barcelona vs Real Madryt przez użytkownika: superuser
+INFO 2025-06-18 17:39:26,277 models Aktualizowano mecz: FC Barcelona vs Real Madryt (2025-02-03)
+INFO 2025-06-18 17:39:35,047 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.
+INFO 2025-06-18 17:40:02,769 models Utworzono mecz: Real Madryt vs FC Barcelona (2025-01-03)
+INFO 2025-06-18 17:40:02,867 views Utworzono mecz: Real Madryt vs FC Barcelona w lidze: La Liga przez użytkownika: superuser
+WARNING 2025-06-18 17:40:19,461 views Próba dodania wydarzenia do meczu bez kolejki przez superuser
+INFO 2025-06-18 17:40:33,250 models Zapisano rundę: 2 w lidze: La Liga
+INFO 2025-06-18 17:40:33,657 views Utworzono rundę: 2 w lidze: La Liga przez użytkownika: superuser
+INFO 2025-06-18 17:42:42,443 models Zapisano wydarzenie: yellow_card (15 min) w meczu: Real Madryt vs FC Barcelona (2025-01-03)
+INFO 2025-06-18 17:42:42,531 views Utworzono wydarzenie: yellow_card w meczu: Real Madryt vs FC Barcelona przez użytkownika: superuser
+INFO 2025-06-18 17:42:56,935 models Zapisano wydarzenie: red_card (17 min) w meczu: Real Madryt vs FC Barcelona (2025-01-03)
+INFO 2025-06-18 17:42:57,023 views Utworzono wydarzenie: red_card w meczu: Real Madryt vs FC Barcelona przez użytkownika: superuser
+INFO 2025-06-18 17:43:12,035 models Aktualizowano mecz: Real Madryt vs FC Barcelona (2025-01-03)
+INFO 2025-06-18 17:43:19,924 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.
+INFO 2025-06-18 17:43:24,984 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.
+INFO 2025-06-18 17:43:27,872 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.
+INFO 2025-06-18 17:43:29,699 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.
+INFO 2025-06-18 17:43:30,245 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.
+INFO 2025-06-18 17:43:31,089 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.
+INFO 2025-06-18 17:43:35,953 views Statystyki zawodników zaktualizowane przez funkcję SQL dla ligi La Liga.

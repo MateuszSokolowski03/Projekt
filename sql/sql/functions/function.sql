@@ -177,3 +177,12 @@ BEGIN
     RETURN OLD;
 END;
 $$ LANGUAGE plpgsql;
+
+-- Funkcja triggerowa: po zakończeniu meczu aktualizuje statystyki graczy w lidze
+CREATE OR REPLACE FUNCTION trigger_update_player_statistics()
+RETURNS TRIGGER AS $$
+BEGIN
+    PERFORM update_player_statistics(NEW.league_id);
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
